@@ -1,0 +1,31 @@
+{
+  "name": "project-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "nodemon main"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarryCaveMan/Project-2.git"
+  },
+  "keywords": [
+    "Restaurants"
+  ],
+  "author": "Sharon Cooper, Tony Gottschalk, Zach Harmon, Harris Joseph",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HarryCaveMan/Project-2/issues"
+  },
+  "homepage": "https://github.com/HarryCaveMan/Project-2#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "sequelize": "^4.37.4"
+  }
+}
