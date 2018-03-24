@@ -1,6 +1,8 @@
 # EventHop
 
 ## Team Name & Members
+
+* Team Name & Members
 	• Alper's Tech Chumps
 		• Sharron Cooper (919 813-9376)
 		• Zach Harmon (919 357-7962)
@@ -58,3 +60,5 @@ This option allows the user to choose from three locations (including restaurant
 	• MySQL
 	• Sequelize
 	• Handlebars
+
+	
