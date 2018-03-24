@@ -1,7 +1,7 @@
 # Project-2
 
 * Project Title
-	• Durham Night Life
+	• Event Hop
 
 * Team Name & Members
 	• Alper's Tech Chumps
