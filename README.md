@@ -1,21 +1,20 @@
-# Project-2
+# EventHop
 
-* Project Title
-	• Durham Night Life
-
-* Team Name & Members
+## Team Name & Members
 	• Alper's Tech Chumps
 		• Sharron Cooper (919 813-9376)
 		• Zach Harmon (919 357-7962)
 		• Tony Gottschalk (919 638-3658)
 		• Harris Joseph (828 620-0256)
 
-* Project Description
+## Project Description
+
+EventHop is an application that allows users to choose from three different 
 	• Real-time Polling
 	• Event Scheduling
 	• Payment Processing
 
-* Sketch of Final Product
+## Sketch of Final Product
 	• Poll Questions
 	• Poll Results
 	• Poll Discussion
@@ -24,7 +23,7 @@
 	• Real-time Polling Page
 	• Real-time Chat Discussion
 	
-* APIs to be used
+## APIs to be used
 	• Google Maps
 	• Google Places
 	• TinyURL
@@ -32,7 +31,7 @@
 	• Stripe
 	• Yelp API
 
-* Rough Breakdown of Tasks
+## Rough Breakdown of Tasks
 	• UI
 		• Tony
 		• Sharron
@@ -40,7 +39,7 @@
 		• Zach
 		• Harris
 
-* Libraries and Technology
+## Libraries and Technology
 	• Heroku
 	• Bootstrap 4
 	• GSAP
@@ -49,7 +48,7 @@
 	• Express.js
 	• Socket.io
 	• Passport.js
-	• JWT
+	• passport.jwt
 	• MySQL
 	• Sequelize
 	• Handlebars
