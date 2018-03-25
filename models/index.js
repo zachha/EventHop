@@ -1,7 +1,5 @@
 'use strict';
 
-var app       = require('express')();
-var socket    = require('socket.io');
 var fs        = require('fs');
 var path      = require('path');
 var Sequelize = require('sequelize');
