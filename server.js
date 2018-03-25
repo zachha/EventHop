@@ -23,8 +23,10 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // sets up routes and controllers with the express app
+/*
 require("./controllers/userController.js")(app);
 require("./controllers/groupController.js")(app);
+*/
 
 // syncs the database !!! CHANGE FORCE TO FALSE BEFORE DEPLOYMENT !!! and starts the server
 db.sequelize.sync({ force: true }).then(function() {

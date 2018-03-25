@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    const Groups = sequelize.define("group", {
+    var Groups = sequelize.define("Groups", {
         group_name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
     });
 
     Groups.associate = function(models) {
-        Groups.belongsToMany(models.User, {
+        models.Groups.belongsToMany(models.User, {
             through: 'UserGroups',
             foreignKey: {
                 allowNull: false
