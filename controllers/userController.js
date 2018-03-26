@@ -25,12 +25,13 @@ function createGroup(groupname, userId) {
     models.Groups.create({
         group_name: groupname
     });
-    models.Users.addGroups({
-
+    models.User.findbyId(userId).then(user =>
+      user.addGroups({
         where: {
-            id: userId
+          id: userId
         }
-    })
+      });
+    );
 }
 
 //updatePassword(1, "NEWPASSSS");
