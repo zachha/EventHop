@@ -16,15 +16,21 @@ function updatePassword(userId, password) {
         where: {
             id: userId
         }})
-        // result gives back array with user id in it for some reason, look back at this later
+        // result gives back array with user id in it for some reason, look back at this later (User.get should work?)
         .then(result => console.log(result))
         .catch(err => console.log(err));
 }
 
-function createGroup(groupname) {
+function createGroup(groupname, userId) {
     models.Groups.create({
         group_name: groupname
     });
+    models.Users.addGroups({
+
+        where: {
+            id: userId
+        }
+    })
 }
 
 //updatePassword(1, "NEWPASSSS");
