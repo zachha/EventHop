@@ -2,7 +2,7 @@
   "name": "project-2",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "server.js",
   "scripts": {
     "test": "nodemon main"
   },
@@ -23,7 +23,9 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
     "jsonwebtoken": "^8.2.0",
+    "mysql2": "^1.5.3",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "sequelize": "^4.37.4",
