@@ -29,7 +29,7 @@ require("./controllers/groupController.js")(app);
 */
 
 // syncs the database !!! CHANGE FORCE TO FALSE BEFORE DEPLOYMENT !!! and starts the server
-db.sequelize.sync({ force: true }).then(function() {
+db.sequelize.sync().then(function() {
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
