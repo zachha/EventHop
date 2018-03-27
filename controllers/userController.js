@@ -18,84 +18,29 @@ function updatePassword(userId, password) {
         where: {
             id: userId
         }})
-        // result gives back array with user id in it for some reason, look back at this later (User.get should work?)
-        .then(result => console.log(result))
+        // result gives back array with user id in it for some reason, look back at this later
+        .then(result => console.log("User: " + userId + "'s password was successfully changed!"))
         .catch(err => console.log(err));
 }
-// Allows the user to create a group and then links the user to the group
-// FIX CONSOLE.LOG AT SOME POINT !! 
-function createGroup(groupname, userId) {
-    models.Groups.create({
-        group_name: groupname
-    })
-    .then( function(group) { 
-        models.User.findById(userId)
-        .then( function (user) {
-            user.addGroups(group).then( user => {
-                console.log("user: " + userId + " has created group: " + groupname + "!");
-            });
-        }).catch(err => console.log(err));
-    }).catch(err => console.log(err));      
-}
 
-// FINISH THIS FUNCTION
-/*
-function leaveGroup(groupId, userId) {
-    models.User.findById(userId)
-    .then( user => {
-        models.Groups.findById(groupId)
-        .then( group => {
-            user.
-        })
-    })
-}
-*/
-
-// Finds and returns the top 5 groups by most users
-function searchPopularGroups() {
-    models.Groups.findAll({
-        order: [
-            ['group_members', 'DESC']
-        ],
-        limit: 3
-        // again brings large array back, will have to select info we need here or server side
-    }).then( groups => console.log(groups));
-}
-
-function searchGroup(groupName) {
-   models.Groups.findOne({
-     where: {
-       group_name: groupName
-     },
-   }).then(function(group) {
-     console.log(group.dataValues);
-   }).catch(err => console.log(err)); 
-}
-
-
-function findAllEvents() {
-    models.Groups.findAll({
+// Allows user to find another user by their user name
+function findUser(userName) {
+    models.User.findOne({
         where: {
-            is_event: true
+            user_name: userName
         }
-    }).then(function (events) {
-        console.log(events); //this info needs to be sifted through after it is sent back to the front end javascript    
-    })
+    }).then(user => console.log(user.dataValues)
+    ).catch(err => console.log(err));
+}
+
+// Allows user to see all other users, in descending order by how many groups the users are in
+function searchAllUsers() {
+    models.User.findAll({
+        order: [
+            ['number_of_Groups', 'DESC']
+        ]
+    }).then(users => console.log(users))
     .catch(err => console.log(err));
 }
-// Allows creation of pre-planned 'events' and allows us to set the price and put a limit oh how many people can join the event [eventSpots])
-function createEvent(groupName, eventCost, eventSpots, route) {
-    models.Groups.create({
-        group_name: groupName,
-        is_event: true,
-        eventCost: eventCost,
-        eventSpots: eventSpots,
-        route: route
-    }).then(group => console.log(group.get({
-        plain: true
-    }))).catch(err => console.log(err));
-}
 
-function groupIncrement() {
 
-}
