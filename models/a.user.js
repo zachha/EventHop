@@ -18,6 +18,12 @@ module.exports = function(sequelize, DataTypes) {
                 // ... 
             }
         },
+        /*
+        email: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        */
         user_route_one: {
             type: DataTypes.TEXT,
             allowNull: true
