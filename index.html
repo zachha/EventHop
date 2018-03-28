@@ -20,8 +20,10 @@
     <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,300" rel="stylesheet">
 
     <!-- Custom CSS -->
+    <link href="public/css/chat.css" rel="stylesheet">
     <link href="public/css/style.css" rel="stylesheet">
 
   </head>
@@ -197,8 +199,8 @@
               <img class="img-fluid" src="public/img/portfolio/event-06.jpg" alt="">
             </a>
             <div class="portfolio-caption">
-              <h4>Special EventHop</h4>
-              <p class="text-muted">Tailgate | Duke Sports | Hotel</p>
+              <h4>Customize Event</h4>
+              <p class="text-muted">Let's | Do | Something</p>
             </div>
           </div>
         </div>
@@ -273,12 +275,26 @@
                   </div>
                 </div>
               </li>
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="public/img/about/5.png" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>Step 5 (Optional)</h4>
+                    <h4 class="subheading">Pay it Forward</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">EventHop is a completely free service for members and their guests and we will never ask money for our services. We care about our local community and believe in connecting people with local events. We also believe in giving back. If you would like to donate to a local charity then we have made this a little easier too!</p>
+                  </div>
+                </div>
+              </li>
               <li class="timeline-inverted">
                 <div class="timeline-image">
-                  <h4>Donate
+                  <h4>Volunteer Time
                     <br><i>to</i>
-                    <br>a Local
-                    <br>Charity</h4>
+                    <br>Local Charity
+                  </h4>
                 </div>
               </li>
             </ul>
@@ -535,6 +551,17 @@
                   <p class="item-intro text-muted">Rise and Grind!</p>
                   <img class="img-fluid d-block mx-auto" src="public/img/portfolio/event-01m.jpg" alt="">
                   <p>Need to update. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+
+                  <div class="chatroom">
+                    <div class="chat-window">
+                      <div id="output01"></div>
+                      <div id="feedback01"></div>
+                    </div>
+                    <input id="handle01" type="text" placeholder="Handle"/>
+                    <input id="message01" type="text" placeholder="Message"/>
+                    <button id="send01">Send</button>
+                  </div>
+
                   <ul class="list-inline">
                     <li>Category: Morning Fitness</li>
                     <li>Date: Every Sunday morning through summer 2018</li>
@@ -571,6 +598,17 @@
                   <p class="item-intro text-muted">Let's go shopping!</p>
                   <img class="img-fluid d-block mx-auto" src="public/img/portfolio/event-02m.jpg" alt="">
                   <p>Need to update. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  
+                  <div class="chatroom">
+                    <div class="chat-window">
+                      <div id="output02"></div>
+                      <div id="feedback02"></div>
+                    </div>
+                    <input id="handle02" type="text" placeholder="Handle"/>
+                    <input id="message02" type="text" placeholder="Message"/>
+                    <button id="send02">Send</button>
+                  </div>
+
                   <ul class="list-inline">
                     <li>Category: Afternoon Relaxation</li>
                     <li>Date: Every Saturday afternoon through summer 2018</li>
@@ -607,6 +645,17 @@
                   <p class="item-intro text-muted">Finally the Weekend!</p>
                   <img class="img-fluid d-block mx-auto" src="public/img/portfolio/event-03m.jpg" alt="">
                   <p>Need to update. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+
+                  <div id="test-chat">
+                    <div id="chat-window">
+                      <div id="output"></div>
+                      <div id="feedback"></div>
+                    </div>
+                    <input id="handle" type="text" placeholder="Handle"/>
+                    <input id="ioMessage" type="text" placeholder="Message"/>
+                    <button id="send">Send</button>
+                  </div>
+
                   <ul class="list-inline">
                     <li>Category: Nighttime Fun</li>
                     <li>Date: Every Friday and Saturday night through summer 2018</li>
@@ -742,7 +791,11 @@
 
     <!-- Contact form JavaScript -->
 
+    <!-- Socket.io JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
     <!-- Custom Scripts -->
+    <script src="public/js/chat.js"></script>
     <script src="public/js/script.js"></script>
 
   </body>
