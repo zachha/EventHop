@@ -57,20 +57,19 @@ EventHop also contains several other features:
 	• MySQL
 	• Sequelize
 	• Handlebars
+	• Plotly
 
-
-## Team #c0ffee Members
+## Team #Worthless Without c0ffee
 	
-##### **[Sharron Cooper](https://www.github.com/swcooper2014) - UI and Frontend** 
+##### **[Sharron Cooper](https://www.github.com/swcooper2014) - UX/UI and Frontend**
 ##### sharon@email.com
 
-##### **[Zach Harmon](https://www.github.com/zachha) - Backend**
-##### zachha@gmail.com
-
-
-##### **[Tony Gottschalk](https://www.github.com/t-gottschalk) - UI and Frontend**
-##### tony@email.com 
+##### **[Tony Gottschalk](https://www.github.com/t-gottschalk) - UX/UI and Frontend**
+##### tony.gottschalk2017@gmail.com 
 
 ##### **[Harris Joseph](https://www.github.com/HarryCaveMan) - Backend**
 ##### harris@email.com
+
+##### **[Zach Harmon](https://www.github.com/zachha) - Backend**
+##### zachha@gmail.com
 	
