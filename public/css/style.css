@@ -1,19 +1,15 @@
 /*
 Colors:
 
-#132E5E;
-#fec503
-#fec810
+#647595; //primary text
+#132E5E; //secondary hover
+#e9ecef; //timeline border
+#ffffff; //secondary text
 
+#ced4da; //contact form
 
-#647595;
-#fed136;
-
-#212529
-#ffffff;
-
+#212529; //navbar
 #252628; //favicon
-
 
 */
 
@@ -654,27 +650,27 @@ section#contact .form-control:focus {
 }
 
 section#contact ::-webkit-input-placeholder {
-  font-weight: 700;
+  font-weight: 400;
   color: #ced4da;
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 section#contact :-moz-placeholder {
-  font-weight: 700;
+  font-weight: 400;
   color: #ced4da;
   /* Firefox 18- */
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 section#contact ::-moz-placeholder {
-  font-weight: 700;
+  font-weight: 400;
   color: #ced4da;
   /* Firefox 19+ */
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 section#contact :-ms-input-placeholder {
-  font-weight: 700;
+  font-weight: 400;
   color: #ced4da;
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
