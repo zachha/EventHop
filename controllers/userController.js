@@ -1,5 +1,6 @@
 const models = require('../models');
 
+// function for user to create username and password for user authentication
 function createUser(userName, password) {
     models.User.create({
         user_name: userName,
@@ -9,6 +10,7 @@ function createUser(userName, password) {
     .catch(err => console.log(err));
 }
 
+// Allows user to change their password
 function updatePassword(userId, password) {
     models.User.update({
         password: password
@@ -16,23 +18,29 @@ function updatePassword(userId, password) {
         where: {
             id: userId
         }})
-        // result gives back array with user id in it for some reason, look back at this later (User.get should work?)
-        .then(result => console.log(result))
+        // result gives back array with user id in it for some reason, look back at this later
+        .then(result => console.log("User: " + userId + "'s password was successfully changed!"))
         .catch(err => console.log(err));
 }
 
-function createGroup(groupname, userId) {
-    models.Groups.create({
-        group_name: groupname
-    });
-    models.User.findbyId(userId).then(user =>
-      user.addGroups({
+// Allows user to find another user by their user name
+function findUser(userName) {
+    models.User.findOne({
         where: {
-          id: userId
+            user_name: userName
         }
-      });
-    );
+    }).then(user => console.log(user.dataValues)
+    ).catch(err => console.log(err));
 }
 
-//updatePassword(1, "NEWPASSSS");
-createGroup("NEWGROUP");
+// Allows user to see all other users, in descending order by how many groups the users are in
+function searchAllUsers() {
+    models.User.findAll({
+        order: [
+            ['number_of_Groups', 'DESC']
+        ]
+    }).then(users => console.log(users))
+    .catch(err => console.log(err));
+}
+
+
