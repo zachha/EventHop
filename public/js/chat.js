@@ -4,45 +4,93 @@
 
 // Make connection
 
-var socket = io.connect('http://localhost:8080');
+var socket = io.connect('http://localhost:4000');
 
 // Query DOM
 
-var ioMessage = document.getElementById('ioMessage');
-var handle = document.getElementById('handle');
-var btn = document.getElementById('send');
-var output = document.getElementById('output');
-var feedback = document.getElementById('feedback');
+var message01 = document.getElementById('message01');
+var message02 = document.getElementById('message02');
+var handle01 = document.getElementById('handle01');
+var handle02 = document.getElementById('handle02');
+var btn01 = document.getElementById('send01');
+var btn02 = document.getElementById('send02');
+var output01 = document.getElementById('output01');
+var output02 = document.getElementById('output02');
+var feedback01 = document.getElementById('feedback01');
+var feedback02 = document.getElementById('feedback02');
 
-// Emit events
+/////////////////////////////////////////////////////
+// Chatroom 01
 
-btn.addEventListener('click', function() {
-	socket.emit('chat', {
-		ioMessage: ioMessage.value,
-		handle: handle.value
+// Emit events 01
+
+btn01.addEventListener('click', function() {
+	socket.emit('chat01', {
+		message01: message01.value,
+		handle01: handle01.value
 	});
-	// ioMessage.text = "";
 });
 
-ioMessage.addEventListener('keypress', function() {
-	socket.emit('typing',handle.value);
+message01.addEventListener('keypress', function() {
+	socket.emit('typing01', handle01.value);
 });
-
-// btn.addEventListener('click', function() {
-// 	ioMessage.innerHTML = "";
-// }
 
 // Listen for events
 
-socket.on('chat', function(data) {
-	feedback.innerHTML = "";
-	output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + data.ioMessage + '</p>';
+socket.on('chat01', function(data) {
+	feedback01.innerHTML = "";
+	output01.innerHTML += '<p><strong>' + data.handle01 + ': </strong>' + data.message01 + '</p>';
 });
 
-socket.on('typing', function(data) {
-	feedback.innerHTML = '<p><em>' + data + ' is typing a message ... </em></p>';
+socket.on('typing01', function(data) {
+	feedback01.innerHTML = '<p><em>' + data + ' is typing a message ... </em></p>';
 });
 
-$('button').click(function() {
-	$('#ioMessage').val("");
+$('#send01').click(function() {
+	$('#message01').val("");
 });
+
+/////////////////////////////////////////////////////
+// Chatroom 02
+
+// Emit events 02
+
+btn02.addEventListener('click', function() {
+	socket.emit('chat02', {
+		message02: message02.value,
+		handle02: handle02.value
+	});
+	// message02.text = "";
+});
+
+message02.addEventListener('keypress', function() {
+	socket.emit('typing02',handle02.value);
+});
+
+// btn02.addEventListener('click', function() {
+// 	message02.innerHTML = "";
+// }
+
+// Listen for events 02
+
+socket.on('chat02', function(data) {
+	feedback02.innerHTML = "";
+	output02.innerHTML += '<p><strong>' + data.handle02 + ': </strong>' + data.message02 + '</p>';
+});
+
+socket.on('typing02', function(data) {
+	feedback02.innerHTML = '<p><em>' + data + ' is typing a message ... </em></p>';
+});
+
+$('#send02').click(function() {
+	$('#message02').val("");
+});
+
+/////////////////////////////////////////////////////
+// Chatroom 03
+
+
+
+
+
+
