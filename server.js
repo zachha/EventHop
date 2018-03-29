@@ -16,11 +16,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // static directory
-app.use(express.static("public"));
+app.use('/public',express.static(path.join(__dirname+'/public')));
 
 // handlebars setup
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+require('./controllers/routes/html_routes')(app);
+require('./controllers/routes/user_api')(app);
 
 // sets up routes and controllers with the express app
 /*
@@ -34,3 +37,5 @@ db.sequelize.sync().then(function() {
     console.log("App listening on PORT " + PORT);
   });
 });
+
+
