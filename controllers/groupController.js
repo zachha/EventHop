@@ -1,9 +1,10 @@
 const models = require("../models");
 
 // Allows the user to create a group and then links the user to the group
-function createGroup(groupname, userId) {
+function createGroup(groupname, groupRouteObj, userId) {
     models.Groups.create({
-        group_name: groupname
+        group_name: groupname,
+        route: groupRouteObj
     })
     .then( function(group) { 
         models.User.findById(userId)
@@ -110,3 +111,6 @@ function findAllEvents() {
     })
     .catch(err => console.log(err));
 }
+
+let groupRouteObj = {};
+

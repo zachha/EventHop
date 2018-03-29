@@ -20,22 +20,22 @@ module.exports = function(sequelize, DataTypes) {
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
             validate: {
                 len: [1, 50],
                 isEmail: true
             }
         },
         user_route_one: {
-            type: DataTypes.TEXT,
+            type: DataTypes.JSON,
             allowNull: true
         },
         user_route_two: {
-            type: DataTypes.TEXT,
+            type: DataTypes.JSON,
             allowNull: true
         },
         user_route_three: {
-            type: DataTypes.TEXT,
+            type: DataTypes.JSON,
             allowNull: true
         },
         number_of_Groups: {

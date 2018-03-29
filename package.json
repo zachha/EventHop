@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/HarryCaveMan/Project-2#readme",
   "dependencies": {
+    "@google/maps": "^0.4.5",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "jsonwebtoken": "^8.2.0",
