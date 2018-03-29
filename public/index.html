@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebSockets | Socket.io</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,300" rel="stylesheet">
+  <link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+  
+  <div class="chatroom">
+    <div class="chat-window">
+      <div id="output01"></div>
+      <div id="feedback01"></div>
+    </div>
+    <input id="handle01" type="text" placeholder="Handle"/>
+    <input id="message01" type="text" placeholder="Message"/>
+    <button id="send01" class="chat-button">Send</button>
+  </div>
+
+  <div class="chatroom">
+    <div class="chat-window">
+      <div id="output02"></div>
+      <div id="feedback02"></div>
+    </div>
+    <input id="handle02" type="text" placeholder="Handle"/>
+    <input id="message02" type="text" placeholder="Message"/>
+    <button id="send02" class="chat-button">Send</button>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous">
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <script type="text/javascript" src="js/chat.js"></script>
+</body>
+</html>
