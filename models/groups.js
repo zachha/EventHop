@@ -28,10 +28,10 @@ module.exports = function(sequelize, DataTypes) {
 
     Groups.associate = function(models) {
         models.Groups.belongsToMany(models.User, {
-            through: 'UserGroups',
-            foreignKey: {
-                allowNull: false
-            }
+          through: 'UserGroups',
+          foreignKey: {
+            allowNull: false
+          }
         });
     };
 

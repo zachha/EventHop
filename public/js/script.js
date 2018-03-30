@@ -70,6 +70,7 @@ $('#login_form').on('submit', event =>{
 //
 
 // use the different category buttons to reload the map based on location types
+
             $("#cafes").on('click', () => initMap('cafe'));
             $("#bar").on('click', () => initMap('bar'));
             $("#art_gallery").on('click', () => initMap('art_gallery'));
@@ -78,6 +79,7 @@ $('#login_form').on('submit', event =>{
             $("#spa").on('click', () => initMap('spa'));
             $("#create_title_button").on("click", () => {
               console.log($('#group_title_input').val());
+
               $('#create-group-title').text($('#group_title_input').val());
             });
             var initMap = (category) => {
