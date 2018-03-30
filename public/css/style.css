@@ -183,7 +183,32 @@ img::-moz-selection {
     padding: 12px 0;
   }
 }
-
+#map {
+  height: 50%;
+  min-height:400px;
+  width: 100%;
+}
+#map-select{
+  width:100%;
+  overflow-x:scroll;
+}
+.mbr{
+  margin-top:10px;
+  margin-bottom:10px;
+}
+#group_title_input{
+  border-radius:0 5px 5px 5px;
+  background-color:#777;
+  color:#fff;
+}
+.btn{
+  margin-left:5px;
+  margin-right:5px;
+}
+#create_title_button{
+  margin-left:0;
+  border-radius:5px 5px 0 0;
+}
 header.masthead {
   text-align: center;
   color: white;
