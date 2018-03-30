@@ -19,10 +19,10 @@ app.use(bodyParser.json());
 app.use('/public',express.static(path.join(__dirname+'/public')));
 
 // handlebars setup
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+app.engine("hbs", exphbs({ defaultLayout: "main", extname: "hbs"}));
+app.set("view engine", "hbs");
 
-require('./controllers/routes/html_routes')(app);
+require('./controllers/routes/open_api')(app);
 require('./controllers/routes/user_api')(app);
 
 // sets up routes and controllers with the express app
