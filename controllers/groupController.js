@@ -76,13 +76,15 @@ function searchPopularGroups() {
 }
 
 // Finds and returns a specific group by group name
-function findGroup(groupName) {
+function findGroup(groupNames) {
    models.Groups.findOne({
      where: {
-       group_name: groupName
+       group_name: models.Sequelize.or(
+        {id:groupNames}
+        )
      }
    }).then(function(group) {
-     console.log(group.dataValues);
+      
    }).catch(err => console.log(err)); 
 }
 
