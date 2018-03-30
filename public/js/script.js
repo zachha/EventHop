@@ -74,8 +74,8 @@ $('#login_form').on('submit', event =>{
             $("#bar").on('click', () => initMap('bar'));
             $("#art_gallery").on('click', () => initMap('art_gallery'));
             $("#restaurant").on('click', () => initMap('restaurant'));
-            $("#museums").on('click', () => initMap('museum'));
-            $("#night_club").on('click', () => initMap('night_club'));
+            $("#movie_theater").on('click', () => initMap('movie_theater'));
+            $("#spa").on('click', () => initMap('spa'));
             $("#create_title_button").on("click", () => {
               console.log($('#group_title_input').val());
               $('#create-group-title').text($('#group_title_input').val());
