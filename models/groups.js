@@ -21,14 +21,14 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true
         },
         route: {
-            type: DataTypes.JSON,
+            type: DataTypes.TEXT,
             allowNull: true
         }
     });
 
     Groups.associate = function(models) {
         models.Groups.belongsToMany(models.User, {
-          through: "UserGroups",
+          through: 'UserGroups',
           foreignKey: {
             allowNull: false
           }

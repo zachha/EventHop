@@ -36,6 +36,7 @@
     <div id="map"></div>
     <div id="directionsPanel"></div>
     <div id="placesInfo"></div>
+    <div id="place-list"></div>
     <script>
         function initMap() {
             var directionsService = new google.maps.DirectionsService;
@@ -79,22 +80,34 @@
                     placeId: location
                 }, function (place, status) {
                     console.log('Place details:', place);
-                    createPhotoMarker(place);
+                    createInfoBox(place);
                 });
             }
 
-        function createPhotoMarker(place) {
+        function createInfoBox(place) {
                 var photos = place.photos;
                 if (!photos) {
                     return;
                 }
 
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: place.geometry.location,
-                    title: place.name,
-                    icon: photos[0].getUrl({ 'maxWidth': 35, 'maxHeight': 35 })
-                });
+            let newPostPanel = $("<div>");
+            newPostPanel.addClass("panel panel-default");
+            let newPostPanelHeading = $("<div>");
+            newPostPanelHeading.addClass("panel-heading");
+            let newPostTitle = $("<h2>");
+            let newPostAuthor = $("<h5>");
+            newPostAuthor.text(place.formatted_address);
+            let newPostPanelBody = $("<div>");
+            newPostPanelBody.addClass("panel-body");
+            let newPostBody = $("<p>");
+            newPostTitle.text(place.name);
+            newPostBody.text(place.formatted_phone_number + '<br>' + place.website);
+            newPostPanelHeading.append(newPostTitle);
+            newPostPanelHeading.append(newPostAuthor);
+            newPostPanelBody.append(newPostBody);
+            newPostPanel.append(newPostPanelHeading);
+            newPostPanel.append(newPostPanelBody);
+            $('#place-list').append(newPostPanel);
             }
     </script>
     

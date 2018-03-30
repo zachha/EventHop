@@ -65,11 +65,11 @@
             $("#restaurant").on('click', () => {
               initMap('restaurant');
             });
-            $("#museums").on('click', () => {
-              initMap('museum');
+            $("#movie_theater").on('click', () => {
+              initMap('movie_theater');
             });
-            $("#night_club").on('click', () => {
-              initMap('night_club');
+            $("#spa").on('click', () => {
+              initMap('spa');
             });
             $("#create_title_button").on("click",() => {
                 console.log($('#group_title_input').val());

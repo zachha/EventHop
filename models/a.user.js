@@ -27,15 +27,15 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         user_route_one: {
-            type: DataTypes.JSON,
+            type: DataTypes.TEXT,
             allowNull: true
         },
         user_route_two: {
-            type: DataTypes.JSON,
+            type: DataTypes.TEXT,
             allowNull: true
         },
         user_route_three: {
-            type: DataTypes.JSON,
+            type: DataTypes.TEXT,
             allowNull: true
         },
         number_of_Groups: {

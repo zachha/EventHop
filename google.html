@@ -34,10 +34,11 @@
         <button id="bar">Bars</button>
         <button id="restaurant">Restaurant</button>
         <button id="art_gallery">Art Galleries</button>
-        <button id="museums">Museums</button>
+        <button id="movie_theater">Movie Theater</button>
         <button id="spa">Spa</button>
     </div>
-    <div id="places"></div>
+    <div id="place-list"></div>
+    <div id="placesInfo"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3Cv_7tEcDnrolF56mQG__51eGn9DIa3g&libraries=places&callback=initMap" async defer>
         </script>
         <script>
@@ -58,8 +59,8 @@
             $("#restaurant").on('click', function () {
                     initMap('restaurant');
                 });
-            $("#museums").on('click', function () {
-                    initMap('museum');
+            $("#movie_theater").on('click', function () {
+                    initMap('movie_theater');
                 });
             $("#spa").on('click', function () {
                     initMap('spa');
@@ -67,6 +68,8 @@
 
             function initMap(category) {
                 $(".placeInfo").remove();
+                $("#place-list").text("");
+                //let placeInfoBox = "";
                 // Create the map.
                 var durham = { lat: 35.997, lng: -78.904 };
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -80,7 +83,7 @@
                 var moreButton = document.getElementById('more');
                 // Perform a nearby search.
                 service.nearbySearch(
-                    { location: durham, radius: 1800, type: [category] },
+                    { location: durham, radius: 1400, type: [category] },
                     function (results, status, pagination) {
                         if (status !== 'OK') return;
 
@@ -110,19 +113,42 @@
                         title: place.name,
                         position: place.geometry.location
                     });
-
-
-
+                    /*
                     var div = document.createElement('div');
                     $(div).addClass('placeInfo');
                     var li = document.createElement('li');
                     li.textContent = place.name;
                     div.appendChild(li);
                     placesList.appendChild(div);
-                    console.log(place.rating);
-                    console.log(place.photos["0"].getUrl);
+                    
+                    */
+                     bounds.extend(place.geometry.location);
+                    logPlaceDetails(place.place_id);
+                    function logPlaceDetails(location) {
+                        var service = new google.maps.places.PlacesService($('#placesInfo').get(0));
+                        service.getDetails({
+                            placeId: location
+                        }, function (place, status) {
+                            console.log('Place details:', place);
+                            createInfoBox(place);
+                        });
+                    }
 
-                    bounds.extend(place.geometry.location);
+                    function createInfoBox(place) {
+                        //var photos = place.photos;
+                        let placeInfoBox = 
+                        `<div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2>${place.name}</h2>
+                                <h3>${place.formatted_address}</h3>
+                                <p>${place.formatted_phone_number}</p>
+                            </div>
+                        </div>`;
+
+                        $("#place-list").append(placeInfoBox);
+
+                       
+                    }
                 }
                 map.fitBounds(bounds);
 
