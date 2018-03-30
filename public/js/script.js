@@ -46,5 +46,80 @@
   $('.portfolio-modal').on('hidden.bs.modal', function(e) {
     $(".navbar").removeClass("d-none");
   })
-
 })(jQuery);
+
+//
+//google maps api for create group
+//
+
+// use the different category buttons to reload the map based on location types
+            $("#cafes").on('click', () => {
+              initMap('cafe');
+            });
+            $("#bar").on('click', () => {
+              initMap('bar');
+            });
+            $("#art_gallery").on('click', () => {
+              initMap('art_gallery');
+            });
+            $("#restaurant").on('click', () => {
+              initMap('restaurant');
+            });
+            $("#museums").on('click', () => {
+              initMap('museum');
+            });
+            $("#night_club").on('click', () => {
+              initMap('night_club');
+            });
+            $("#create_title_button").on("click",() => {
+                console.log($('#group_title_input').val());
+              $('#create-group-title').text($('#group_title_input').val());
+            });
+            initMap = (category) => {
+              $(".placeInfo").remove();
+                // Create the map.
+                var durham = { lat: 35.997, lng: -78.904 };
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: durham,
+                  zoom: 15
+                });
+                // Create the places service.
+                this.service = new google.maps.places.PlacesService(map);
+                this.getNextPage = null;
+                this.moreButton = document.getElementById('more');
+                // Perform a nearby search.
+                service.nearbySearch(
+                  { location: durham, radius: 1800, type: [category] },
+                  function (results, status, pagination) {
+                    if (status !== 'OK') return;
+                    createMarkers(results);
+                  });
+              }
+              createMarkers = (places) => {
+                this.bounds = new google.maps.LatLngBounds();
+                this.placesList = document.getElementById('places');
+                $('#map-select').empty()
+                for (let i = 0, place; place = places[i]; i++) {
+                  this.image = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                  };
+                  this.marker = new google.maps.Marker({
+                    map: map,
+                    icon: image,
+                    title: place.name,
+                    position: place.geometry.location
+                  });                  
+                  $('#map-select').append($('<option>', {
+                    value: place.name,
+                    text: place.name
+                  }));
+                  console.log(place.rating);
+                  console.log(place.photos["0"].getUrl);
+                  bounds.extend(place.geometry.location);
+                }
+                map.fitBounds(bounds);
+              }
