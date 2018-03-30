@@ -35,7 +35,7 @@
         <button id="restaurant">Restaurant</button>
         <button id="art_gallery">Art Galleries</button>
         <button id="museums">Museums</button>
-        <button id="night_club">Night Club</button>
+        <button id="spa">Spa</button>
     </div>
     <div id="places"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3Cv_7tEcDnrolF56mQG__51eGn9DIa3g&libraries=places&callback=initMap" async defer>
@@ -61,8 +61,8 @@
             $("#museums").on('click', function () {
                     initMap('museum');
                 });
-            $("#night_club").on('click', function () {
-                    initMap('night_club');
+            $("#spa").on('click', function () {
+                    initMap('spa');
                 });
 
             function initMap(category) {
