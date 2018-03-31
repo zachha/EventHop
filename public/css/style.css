@@ -209,7 +209,6 @@ letter-spacing: 4px;
   border: 2px solid pink;
 }
 #map-select{
-  height: 400px;
   width:100%;
   overflow-x:scroll;
 }

@@ -83,6 +83,7 @@ authenticate = (user) => {
 //google maps api for create group
 //
 googleMapInit = () =>{
+            $("#create-group-button").on('click', () => initMap());
             $("#cafes").on('click', () => initMap('cafe'));
             $("#bar").on('click', () => initMap('bar'));
             $("#art_gallery").on('click', () => initMap('art_gallery'));
@@ -185,6 +186,8 @@ googleMapInit = () =>{
 }
 
 $(document).ready(event =>{
+
+          $(window).scrollTop(0);  
           let userToken = localStorage.getItem('EHUserToken');     
           console.log(userToken);
           $.ajaxSetup({
@@ -204,7 +207,7 @@ $(document).ready(event =>{
 //
 //Front end login receive signature
 //
-$('#login_form').on('submit', event =>{
+$('#login_form').on('submit', event => {
       event.preventDefault();
       let user = {email:$('#login-email').val(),password:$('#login-password').val()};
       authenticate(user);
