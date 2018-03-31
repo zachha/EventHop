@@ -19,7 +19,6 @@
                 <!-- Project Details Go Here -->
                 <div class="row mbr"></div>
                 
-
 <script>
   function initMap() {
     // Map options
@@ -99,29 +98,44 @@
 <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYMucjLuEBHnk5oDkrHxJ9idJOQpd94iU&callback=initMap">
 </script>
-                <div class="row mbr">
-                  <button class="btn btn-primary"  id="cafes">
-                  Cafes</button>
-                  <button class="btn btn-primary"  id="bar">
-                  Bars</button>
-                  <button class="btn btn-primary"  id="restaurant">
-                  Restaurant</button>
-                  <button class="btn btn-primary"  id="art_gallery">
-                  Art Galleries</button>
-                  <button class="btn btn-primary"  id="movie_theater">
-                  Movie Theaters</button>
-                  <button class="btn btn-primary" id="spa">
-                  Spa</button>
-                </div>
-                <div class="row mbr">
-                  <div class ="col-6">
-                   <select id="map-select"></select>                 
-                 </div>
-                 <div class ="col-6">
-                   <button class="btn btn-primary pull-left"  id="create_title_button">Prieview Title </button>
-                   <input type="text" id="group_title_input" value="Group Name">
-                 </div>
-               </div>
+                <div class="container">
+  <h2>Choose your events!</h2>
+  <p>Choose one or none for each event.</p>
+  <div class="dropdown">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Cafe
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">Cafe 1</a>
+      <a class="dropdown-item" href="#">Cafe 2</a>
+      <a class="dropdown-item" href="#">Cafe 3</a>
+    </div>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Bar
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">Bar 1</a>
+      <a class="dropdown-item" href="#">Bar 2</a>
+      <a class="dropdown-item" href="#">Bar 3</a>
+    </div>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Restaurant
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">Restaurant 1</a>
+      <a class="dropdown-item" href="#">Restaurant 2</a>
+      <a class="dropdown-item" href="#">Restaurant 3</a>
+    </div>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Event
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">Event 1</a>
+      <a class="dropdown-item" href="#">Event 2</a>
+      <a class="dropdown-item" href="#">Event 3</a>
+    </div>
+  </div>
+</div>
               <div class="pro-holder">
                 <ol class="pro-meter">
                   <li class="pro-point todo">Choose starting spot!</li><li class="pro-point todo">Choose next</li><li class="pro-point todo">Choose final spot!</li><li class="pro-point todo">Create Your Route!</li>
