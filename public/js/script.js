@@ -48,6 +48,23 @@
   })
 })(jQuery);
 
+//
+//Front end login receive signature
+//
+$('#login_form').on('submit', event =>{
+      event.preventDefault();
+      $.post("http://localhost:8080/auth",{email:$('#email').val(),password:$('#password').val()},
+        (data,status) => {
+          
+          $.get("http://localhost:8080/user")
+          .done(res => {
+              console.log(res);
+            });
+        }).fail(xhr =>console.log(JSON.parse(xhr.responseText).message));
+    });
+
+function createGroup(gname) {
+  $.post("/create-group", gname, () => {console.log("success!")} );
 authenticate = (user) => {
   let userToken = localStorage.getItem('EHUserToken');
   if(!userToken){
@@ -77,12 +94,46 @@ authenticate = (user) => {
             });
   }
 }
+}
+
 
 
 //
 //google maps api for create group
 //
+
+// use the different category buttons to reload the map based on location types
+
+            
 googleMapInit = () =>{
+            let markers = [];
+            let placesArr = [];
+            let routeMarkers = [];
+            let routePlaces = [];
+            let mapNum;
+            
+            $("#map-select").change(() => {
+              if( markers[mapNum] === true && markers[mapNum].getAnimation() != null) {
+                markers[mapNum].setAnimation(null);
+              }
+              var e = document.getElementById("map-select");
+              mapNum = e.options[e.selectedIndex].value;
+              console.log(markers[mapNum]);
+              markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
+            } );
+            $("#routeAdd").on('click', () => {
+              routeMarkers.push(markers[mapNum]);
+              routePlaces.push(placesArr[mapNum]);
+              console.log(routePlaces);
+              initMap();
+              console.log(routeMarkers);
+              populateRoute();
+              progressBar();
+              routeCompleteCheck();
+            })
+            $("#createGroup").on('click', () => {
+              createGroup("Cupcakes");
+            })
             $("#create-group-button").on('click', () => initMap());
             $("#cafes").on('click', () => initMap('cafe'));
             $("#bar").on('click', () => initMap('bar'));
@@ -95,7 +146,9 @@ googleMapInit = () =>{
 
               $('#create-group-title').text($('#group_title_input').val());
             });
+
             var initMap = (category) => {
+              markers = [];
               $(".placeInfo").remove();
               $("#place-list").text("");
               // Create the map.
@@ -116,6 +169,46 @@ googleMapInit = () =>{
                   createMarkers(results);
                 });
             }
+
+            function progressBar() {
+              if (!$("#progOne").hasClass('done')) {
+                $("#progOne").addClass("done");
+                $("#progOne").removeClass("todo");
+              } else if (!$("#progTwo").hasClass("done")) {
+                $("#progTwo").addClass("done");
+                $("#progTwo").removeClass("todo");
+              } else if (!$("#progThree").hasClass("done")) {
+                $("#progThree").addClass("done");
+                $("#progThree").removeClass("todo");
+              }
+            }
+
+            function routeCompleteCheck() {
+              if ($("#progThree").hasClass("done")) {
+                $("#routeAdd").toggle();
+                $("#createGroup").toggle();
+                console.log(routeMarkers);
+              }
+            }
+
+            function toggleBounce(marker) {
+              if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+              } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+              }
+            }
+            function populateRoute() {
+              for (i = 0; i < routeMarkers.length; i++) {
+                routeMarkers[i] = new google.maps.Marker({
+                  position: routeMarkers[i].position,
+                  map: map,
+                  title: routeMarkers[i].title
+                });
+                routeMarkers[i].setAnimation(google.maps.Animation.BOUNCE);
+              };
+            }
+
             var createMarkers = (places) => {
               this.bounds = new google.maps.LatLngBounds();
               this.placesList = document.getElementById('places');
@@ -134,8 +227,11 @@ googleMapInit = () =>{
                   title: place.name,
                   position: place.geometry.location
                 });                  
+                markers.push(marker);
+                placesArr.push(place);
+                populateRoute();
                 $('#map-select').append($('<option>', {
-                  value: place.name,
+                  value: i,
                   text: place.name
                 }));
                 bounds.extend(place.geometry.location);
@@ -182,8 +278,9 @@ googleMapInit = () =>{
                 }
               }
                 map.fitBounds(bounds);
+            }
 }  
-}
+
 
 $(document).ready(event =>{
 

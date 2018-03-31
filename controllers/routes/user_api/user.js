@@ -23,7 +23,7 @@ route.get('/profile', (req, res, next) => {
 });
 
 route.post('/create-group',(req,data,res) =>{
-    gdb.createGroup(data,user.id);
+    gdb.createGroup(data, 1);
 });
 
 module.exports = route;

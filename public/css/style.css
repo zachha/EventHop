@@ -206,7 +206,6 @@ letter-spacing: 4px;
 #map {
   height: 400px;
   width: 100%;
-  border: 2px solid pink;
 }
 #map-select{
   width:100%;
@@ -773,6 +772,10 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
 
 #group_title_input {
   margin-bottom: 0px;
+}
+
+#createGroup {
+  display: none;
 }
 
 #map-select {
