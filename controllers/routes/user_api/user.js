@@ -1,6 +1,7 @@
 const express = require('express');
 const route = express.Router();
 const db = require('../../userController');
+const google = require('google')
 
 /* GET users listing. */
 route.get('/', (req, res, next) => {
@@ -10,6 +11,7 @@ route.get('/', (req, res, next) => {
 /* GET user profile. */
 route.get('/profile', (req, res, next) => {    
     res.send(req.user);
+
 });
 
 module.exports = route;

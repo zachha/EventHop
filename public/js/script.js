@@ -117,8 +117,6 @@
                     value: place.name,
                     text: place.name
                   }));
-                  console.log(place.rating);
-                  console.log(place.photos["0"].getUrl);
                   bounds.extend(place.geometry.location);
                 }
                 map.fitBounds(bounds);
