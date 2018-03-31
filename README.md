@@ -61,10 +61,10 @@ EventHop also contains several other features:
 
 ## Team #Worthless Without c0ffee
 	
-##### **[Sharron Cooper](https://www.github.com/swcooper2014) - UX/UI and Frontend**
+##### **[Sharron Cooper](https://www.github.com/swcooper2014) - Frontend**
 ##### sharon@email.com
 
-##### **[Tony Gottschalk](https://www.github.com/t-gottschalk) - UX/UI and Frontend**
+##### **[Tony Gottschalk](https://www.github.com/t-gottschalk) - Frontend**
 ##### tony.gottschalk2017@gmail.com 
 
 ##### **[Harris Joseph](https://www.github.com/HarryCaveMan) - Backend**

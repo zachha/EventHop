@@ -1,4 +1,32 @@
-  {{#if user}}{{>user_nav}}{{else}}{{>default_nav}}{{/if}}
+   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">EventHop</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#services">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#portfolio">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#about">Planning</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#team">Team</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
   <!-- Header -->
   <header class="masthead">
     <div class="container">
@@ -23,7 +51,7 @@
         <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fa fa-circle fa-stack-2x text-primary"></i>
-            <i class="fa fa-coffee fa-stack-1x fa-inverse"></i>
+            <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
           </span>
           <h4 class="service-heading">Customize Your Event</h4>
           <p class="text-muted">Using EventHop you are able to create and customize an event. Whether you're planning some much needed "me" time for yourself or you're arranging an evening out with friends, you'll have an itinerary ready in no time.</p>
@@ -31,7 +59,7 @@
         <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fa fa-circle fa-stack-2x text-primary"></i>
-            <i class="fa fa-users fa-stack-1x fa-inverse"></i>
+            <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
           </span>
           <h4 class="service-heading">Join an EventHop Group</h4>
           <p class="text-muted">Let us do the planning for you! At EventHop, we specialize in planning events. Our Event Planners make all of the arrangements so you can relax. We specialize in social outings and bringing people together with similar interests.</p>
@@ -39,7 +67,7 @@
         <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fa fa-circle fa-stack-2x text-primary"></i>
-            <i class="fa fa-meetup fa-stack-1x fa-inverse"></i>
+            <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
           </span>
           <h4 class="service-heading">Join a Group meetup</h4>
           <p class="text-muted">EventHop partners with Meetup.com Organizers to schedule social events. Take the stress out of meeting new people while in a relaxed setting. Talk about similar interests, work, or whatever is on your mind. However you choose, let us help and have fun!</p>
@@ -47,10 +75,12 @@
       </div>
     </div>
   </section>
+
   <!-- Events -->
   {{>default-groups}}
-  <!--User Groups-->
+
   {{>user-groups}}
+
   <!-- About -->
   <section id="about">
     <div class="container">
@@ -165,7 +195,7 @@
             <ul class="list-inline social-buttons">
               <li class="list-inline-item">
                 <a href="#">
-                  <i class="fa fa-stack-overflow"></i>
+                  <i class="fa fa-twitter"></i>
                 </a>
               </li>
               <li class="list-inline-item">
@@ -189,7 +219,7 @@
             <ul class="list-inline social-buttons">
               <li class="list-inline-item">
                 <a href="#">
-                  <i class="fa fa-stack-overflow"></i>
+                  <i class="fa fa-twitter"></i>
                 </a>
               </li>
               <li class="list-inline-item">
@@ -213,7 +243,7 @@
             <ul class="list-inline social-buttons">
               <li class="list-inline-item">
                 <a href="#">
-                  <i class="fa fa-stack-overflow"></i>
+                  <i class="fa fa-twitter"></i>
                 </a>
               </li>
               <li class="list-inline-item">
@@ -237,7 +267,7 @@
             <ul class="list-inline social-buttons">
               <li class="list-inline-item">
                 <a href="#">
-                  <i class="fa fa-stack-overflow"></i>
+                  <i class="fa fa-twitter"></i>
                 </a>
               </li>
               <li class="list-inline-item">
@@ -374,9 +404,10 @@
       </div>
     </div>
   </footer>
-  <!--Login modal-->
-{{>login-modal}}
-<!-- Modal 6 (create group/event modal)-->
-{{>create-group-modal}}
-<!-- Portfolio Modals -->
-{{>standard-modals}}
+
+  <!-- Portfolio Modals -->
+
+  {{>standard-modals}}
+
+  <!-- Modal 6 (create group/event modal)-->
+{{>create-group-modal}} 
