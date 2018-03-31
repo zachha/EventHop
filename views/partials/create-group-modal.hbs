@@ -6,6 +6,8 @@
           <div class="rl"></div>
         </div>
       </div>
+      <h1>EventHop Map</h1>
+      <div id="map"></div>
       <div class="container">
         <div class="row">
           <div class="col-lg-12 mx-auto">
@@ -15,6 +17,7 @@
                   <h2 class="text-uppercase" id="create-group-title"></h2>
                 </div>
                 <!-- Project Details Go Here -->
+<<<<<<< HEAD
                 <div class="row mbr" id="map"></div>
                 <div class="row mbr">
                   <button class="btn btn-primary"  id="cafes">
@@ -39,6 +42,127 @@
                    <input type="text" id="group_title_input" value="Group Name">
                  </div>
                </div>
+=======
+                <div class="row mbr"></div>
+                
+<script>
+  function initMap() {
+    // Map options
+    var options = {
+      zoom: 12,
+      center: {lat:35.9940,lng:-78.8986}
+    };
+
+    // New map
+    var map = new 
+    google.maps.Map(document.getElementById('map'), options);
+
+    // Listen for click on map
+
+    google.maps.event.addListener(map, 'click',
+      function(event) {
+      // Add marker
+      addMarker({coords:event.latLng});
+    });
+
+    // Array of markers
+
+    var markers = [
+    {
+      coords:{lat:35.9132,lng:-79.0558},
+      iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+      content:'<h1>Chapel Hill</h1>'
+    },
+    {
+      coords:{lat:35.7796,lng:-78.6382},
+      content:'<h1>Raleigh</h1>'
+    },
+    {
+      coords:{lat:35.8235,lng:-78.8256}
+    }
+    ];
+
+    // Loop through markers
+
+    for (var i = 0; i < markers.length; i++) {
+      addMarker(markers[i]);
+    }
+
+    // Add marker function
+
+    function addMarker(props) {
+      var marker = new google.maps.Marker( {
+      position: props.coords,
+      map: map,
+      //icon: props.iconImage
+    });
+
+      // Check for custom icon
+      if (props.iconImage) {
+        // Set icon image
+        marker.setIcon(props.iconImage);
+      }
+
+      // Check content
+
+      if (props.content) {
+        var infoWindow = new google.maps.InfoWindow( {
+        content: props.content
+    });
+
+        marker.addListener('click', function(){
+          infoWindow.open(map, marker);
+        });
+
+      }
+
+    }
+
+
+  }
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYMucjLuEBHnk5oDkrHxJ9idJOQpd94iU&callback=initMap">
+</script>
+                <div class="container">
+  <h2>Choose your events!</h2>
+  <p>Choose one or none for each event.</p>
+  <div class="dropdown">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Cafe
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">Cafe 1</a>
+      <a class="dropdown-item" href="#">Cafe 2</a>
+      <a class="dropdown-item" href="#">Cafe 3</a>
+    </div>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Bar
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">Bar 1</a>
+      <a class="dropdown-item" href="#">Bar 2</a>
+      <a class="dropdown-item" href="#">Bar 3</a>
+    </div>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Restaurant
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">Restaurant 1</a>
+      <a class="dropdown-item" href="#">Restaurant 2</a>
+      <a class="dropdown-item" href="#">Restaurant 3</a>
+    </div>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Event
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">Event 1</a>
+      <a class="dropdown-item" href="#">Event 2</a>
+      <a class="dropdown-item" href="#">Event 3</a>
+    </div>
+  </div>
+</div>
+>>>>>>> 23b9b5fe5e4b2c1aff235dd7fe0cc0821cf66f33
               <div class="pro-holder">
                 <ol class="pro-meter">
                   <li class="pro-point todo" id="progOne">Choose starting spot!</li><li class="pro-point todo" id="progTwo">Choose next</li><li class="pro-point todo" id="progThree">Choose final spot!</li><li class="pro-point todo" id="progFour">Create Your Route!</li>

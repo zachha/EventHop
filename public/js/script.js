@@ -48,6 +48,7 @@
   })
 })(jQuery);
 
+<<<<<<< HEAD
 //
 //Front end login receive signature
 //
@@ -65,6 +66,36 @@ $('#login_form').on('submit', event =>{
 
 function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
+=======
+authenticate = (user) => {
+  let userToken = localStorage.getItem('EHUserToken');
+  if(!userToken){
+    $.post("http://localhost:8080/auth",{email:user.email,password:user.password},
+        (data,status) => {
+          $.ajaxSetup({
+            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
+          });
+          localStorage.setItem('EHUserToken',data.token);
+          console.log(JSON.stringify(localStorage.getItem('EHUserToken')));
+          $.get("http://localhost:8080/user/profile")
+          .done((data,status,xhr) => {
+              //$(document.body).html(res.status);
+              //document.documentElement.innerHTML = data;
+              //googleMapInit();
+              console.log(xhr.status);
+            });
+                   
+        }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));
+  }else{
+      $.get("http://localhost:8080/user/profile")
+          .done((data,status,xhr) => {
+              //$(document.body).html(res.status);
+              //document.documentElement.innerHTML = data;
+              //googleMapInit();
+              console.log(xhr.status);
+            });
+  }
+>>>>>>> 23b9b5fe5e4b2c1aff235dd7fe0cc0821cf66f33
 }
   
 
@@ -73,6 +104,7 @@ function createGroup(gname) {
 //
 //google maps api for create group
 //
+<<<<<<< HEAD
 
 // use the different category buttons to reload the map based on location types
 
@@ -104,6 +136,10 @@ function createGroup(gname) {
             $("#createGroup").on('click', () => {
               createGroup("Cupcakes");
             })
+=======
+googleMapInit = () =>{
+            $("#create-group-button").on('click', () => initMap());
+>>>>>>> 23b9b5fe5e4b2c1aff235dd7fe0cc0821cf66f33
             $("#cafes").on('click', () => initMap('cafe'));
             $("#bar").on('click', () => initMap('bar'));
             $("#art_gallery").on('click', () => initMap('art_gallery'));
@@ -247,4 +283,38 @@ function createGroup(gname) {
                 }
               }
                 map.fitBounds(bounds);
+<<<<<<< HEAD
             }
+=======
+}  
+}
+
+$(document).ready(event =>{
+
+          $(window).scrollTop(0);  
+          let userToken = localStorage.getItem('EHUserToken');     
+          console.log(userToken);
+          $.ajaxSetup({
+            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
+          });
+
+        $.get("http://localhost:8080/user/profile")
+          .done((data,status,xhr) => {
+              //$(document.body).html(res.status);
+              document.documentElement.innerHTML = data;
+              googleMapInit();
+              console.log(xhr.status);
+            }).fail(xhr => console.log(xhr.responseText).message);    
+
+});
+          
+//
+//Front end login receive signature
+//
+$('#login_form').on('submit', event => {
+      event.preventDefault();
+      let user = {email:$('#login-email').val(),password:$('#login-password').val()};
+      authenticate(user);
+    });
+googleMapInit();
+>>>>>>> 23b9b5fe5e4b2c1aff235dd7fe0cc0821cf66f33
