@@ -154,6 +154,19 @@ img::-moz-selection {
   color: #647595;
 }
 
+#login-modal-header{
+  text-align:center;
+}
+
+#login-title{
+color: #fff;
+font-family: 'Kaushan Script', 'Helvetica Neue', Helvetica, Arial, cursive;
+letter-spacing: 4px;
+}
+#login-card-header{
+  background-color:#647595;
+}
+
 @media (min-width: 992px) {
   #mainNav {
     padding-top: 25px;
@@ -272,6 +285,10 @@ header.masthead .intro-text .intro-heading {
 .service-heading {
   margin: 15px 0;
   text-transform: none;
+}
+
+#login-card{
+  max-height:500px;
 }
 
 #portfolio .portfolio-item {

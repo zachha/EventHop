@@ -48,39 +48,43 @@
   })
 })(jQuery);
 
-//
-//Front end login receive signature
-//
-$('#login_form').on('submit', event =>{
-      event.preventDefault();
-      $.post("http://localhost:8080/auth",{email:$('#email').val(),password:$('#password').val()},
+authenticate = (user) => {
+  $.post("http://localhost:8080/auth",{email:user.email,password:user.password},
         (data,status) => {
-          
-          $.get("http://localhost:8080/user")
-          .done(res => {
-              console.log(res);
+          $.ajaxSetup({
+            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
+          });
+          localStorage.setItem('EHUser',{email:user.email,password:user.password});
+          console.log(JSON.stringify(localStorage.getItem('EHUser')[0]));
+          $.get("http://localhost:8080/user/profile")
+          .done((data,status,xhr) => {
+              //$(document.body).html(res.status);
+              //document.documentElement.innerHTML = data;
+              //googleMapInit();
+              console.log(xhr.status);
             });
-        }).fail(xhr =>console.log(JSON.parse(xhr.responseText).message));
-    });
-
+                   
+        }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));
+}
 
 
 //
 //google maps api for create group
 //
 
-// use the different category buttons to reload the map based on location types
-            $("#cafes").on('click', () => initMap('cafe'));
-            $("#bar").on('click', () => initMap('bar'));
-            $("#art_gallery").on('click', () => initMap('art_gallery'));
-            $("#restaurant").on('click', () => initMap('restaurant'));
-            $("#movie_theater").on('click', () => initMap('movie_theater'));
-            $("#spa").on('click', () => initMap('spa'));
-            $("#create_title_button").on("click", () => {
-              console.log($('#group_title_input').val());
-              $('#create-group-title').text($('#group_title_input').val());
-            });
-            var initMap = (category) => {
+googleMapInit = ()=>{
+
+              $("#cafes").on('click', () => initMap('cafe'));
+              $("#bar").on('click', () => initMap('bar'));
+              $("#art_gallery").on('click', () => initMap('art_gallery'));
+              $("#restaurant").on('click', () => initMap('restaurant'));
+              $("#movie_theater").on('click', () => initMap('movie_theater'));
+              $("#spa").on('click', () => initMap('spa'));
+              $("#create_title_button").on("click", () => {
+                console.log($('#group_title_input').val());
+                $('#create-group-title').text($('#group_title_input').val());
+              });
+              var initMap = (category) => {
               $(".placeInfo").remove();
               // Create the map.
               this.durham = { lat: 35.997, lng: -78.904 };
@@ -100,7 +104,7 @@ $('#login_form').on('submit', event =>{
                   createMarkers(results);
                 });
             }
-            var createMarkers = (places) => {
+             var createMarkers = (places) => {
               this.bounds = new google.maps.LatLngBounds();
               this.placesList = document.getElementById('places');
               $('#map-select').empty()
@@ -128,3 +132,20 @@ $('#login_form').on('submit', event =>{
               }
                 map.fitBounds(bounds);
             }
+          }
+
+
+$(document).ready(event =>{
+          let userLogin = localStorage.getItem('EHUser');     
+          console.log({email:userLogin.email,password:userLogin.password});    
+          authenticate(userLogin);
+//
+//Front end login receive signature
+//
+$('#login_form').on('submit', event =>{
+      event.preventDefault();
+      let user = {email:$('#login-email').val(),password:$('#login-password').val()};
+      authenticate(user);
+    });
+});
+googleMapInit();
