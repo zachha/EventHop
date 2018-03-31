@@ -49,13 +49,15 @@
 })(jQuery);
 
 authenticate = (user) => {
-  $.post("http://localhost:8080/auth",{email:user.email,password:user.password},
+  let userToken = localStorage.getItem('EHUserToken');
+  if(!userToken){
+    $.post("http://localhost:8080/auth",{email:user.email,password:user.password},
         (data,status) => {
           $.ajaxSetup({
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
           });
           localStorage.setItem('EHUserToken',data.token);
-          console.log(JSON.stringify(localStorage.getItem('EHUser')[0]));
+          console.log(JSON.stringify(localStorage.getItem('EHUserToken')));
           $.get("http://localhost:8080/user/profile")
           .done((data,status,xhr) => {
               //$(document.body).html(res.status);
@@ -65,6 +67,15 @@ authenticate = (user) => {
             });
                    
         }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));
+  }else{
+      $.get("http://localhost:8080/user/profile")
+          .done((data,status,xhr) => {
+              //$(document.body).html(res.status);
+              //document.documentElement.innerHTML = data;
+              //googleMapInit();
+              console.log(xhr.status);
+            });
+  }
 }
 
 
@@ -72,7 +83,7 @@ authenticate = (user) => {
 //google maps api for create group
 //
 googleMapInit = () =>{
-                 $("#cafes").on('click', () => initMap('cafe'));
+            $("#cafes").on('click', () => initMap('cafe'));
             $("#bar").on('click', () => initMap('bar'));
             $("#art_gallery").on('click', () => initMap('art_gallery'));
             $("#restaurant").on('click', () => initMap('restaurant'));
@@ -180,13 +191,13 @@ $(document).ready(event =>{
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
           });
 
-          $.get("http://localhost:8080/user/profile")
+        $.get("http://localhost:8080/user/profile")
           .done((data,status,xhr) => {
               //$(document.body).html(res.status);
-              //document.documentElement.innerHTML = data;
-              //googleMapInit();
+              document.documentElement.innerHTML = data;
+              googleMapInit();
               console.log(xhr.status);
-            }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));    
+            }).fail(xhr => console.log(xhr.responseText).message);    
 
 });
           
@@ -196,6 +207,6 @@ $(document).ready(event =>{
 $('#login_form').on('submit', event =>{
       event.preventDefault();
       let user = {email:$('#login-email').val(),password:$('#login-password').val()};
-      authenticate(userToken);
+      authenticate(user);
     });
 googleMapInit();
