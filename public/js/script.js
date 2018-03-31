@@ -84,6 +84,7 @@ $('#login_form').on('submit', event =>{
             });
             var initMap = (category) => {
               $(".placeInfo").remove();
+              $("#place-list").text("");
               // Create the map.
               this.durham = { lat: 35.997, lng: -78.904 };
               map = new google.maps.Map(document.getElementById('map'), {
@@ -124,9 +125,48 @@ $('#login_form').on('submit', event =>{
                   value: place.name,
                   text: place.name
                 }));
-                console.log(place.rating);
-                console.log(place.photos["0"].getUrl);
                 bounds.extend(place.geometry.location);
+
+                logPlaceDetails(place.place_id);
+                function logPlaceDetails(location) {
+                  var service = new google.maps.places.PlacesService($("#placesInfo").get(0));
+                  service.getDetails(
+                    {
+                      placeId: location
+                    },
+                    function(place, status) {
+                      console.log("Place details:", place);
+                      createInfoBox(place);
+                    }
+                  );
+                }
+
+                function createInfoBox(place) {
+                  let photos = place.photos[0].getUrl({
+                    maxWidth: 270,
+                    maxHeight: 350
+                  });
+                  let placeInfoBox = ` 
+                    <div class="card bg-light">
+                        <div class="row">
+                            <div class="col-md-4 container-fluid">
+                                <img src="${photos}" class="w-100 img-responsive progress">
+                            </div>
+                            <div class="col-md-8 px-3">
+                                <div class="card-block px-3">
+                                    <br>
+                                    <h2 class="card-title">${place.name}<span><a href="${place.website}" target="_blank" class="btn btn-sm btn-primary card-btn">More Info</a></span></h2>
+                                    <p class="card-text"><em>Google rating: ${place.rating}</em></p>
+                                    <h5 class="card-text">${place.formatted_address}</h5>
+                                    <h5 class="card-text">${place.formatted_phone_number}</h5>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                        `;
+                  $("#place-list").append(placeInfoBox);
+                }
               }
                 map.fitBounds(bounds);
             }
