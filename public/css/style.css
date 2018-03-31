@@ -13,6 +13,8 @@ Colors:
 
 */
 
+
+
 body {
   overflow-x: hidden;
   font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -196,12 +198,18 @@ letter-spacing: 4px;
     padding: 12px 0;
   }
 }
-#map {
+/*#map {
   height: 50%;
   min-height:400px;
   width: 100%;
+}*/
+#map {
+  height: 400px;
+  width: 100%;
+  border: 2px solid pink;
 }
 #map-select{
+  height: 400px;
   width:100%;
   overflow-x:scroll;
 }
