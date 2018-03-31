@@ -105,11 +105,21 @@ authenticate = (user) => {
 //google maps api for create group
 //
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 // use the different category buttons to reload the map based on location types
 
             let markers = [];
             let placesArr = [];
+=======
+
+// use the different category buttons to reload the map based on location types
+
+            
+googleMapInit = () =>{
+
+  let markers = [];
+>>>>>>> 0b12b805426d66c76485930d967ceaaad900f43b
             let routeMarkers = [];
             let routePlaces = [];
             let mapNum;
