@@ -71,6 +71,30 @@ $('#login_form').on('submit', event =>{
 
 // use the different category buttons to reload the map based on location types
 
+            let markers = [];
+            let routeMarkers = [];
+            let mapNum;
+            
+            $("#map-select").change(() => {
+              if( markers[mapNum] === true && markers[mapNum].getAnimation() != null) {
+                markers[mapNum].setAnimation(null);
+              }
+              var e = document.getElementById("map-select");
+              mapNum = e.options[e.selectedIndex].value;
+              console.log(markers[mapNum]);
+              markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
+            } );
+            $("#routeAdd").on('click', () => {
+              routeMarkers.push(markers[mapNum]);
+              initMap();
+              console.log(routeMarkers);
+              populateRoute();
+              progressBar();
+              routeCompleteCheck();
+            })
+            $("#createGroup").on('click', () => {
+
+            })
             $("#cafes").on('click', () => initMap('cafe'));
             $("#bar").on('click', () => initMap('bar'));
             $("#art_gallery").on('click', () => initMap('art_gallery'));
@@ -82,7 +106,9 @@ $('#login_form').on('submit', event =>{
 
               $('#create-group-title').text($('#group_title_input').val());
             });
+
             var initMap = (category) => {
+              markers = [];
               $(".placeInfo").remove();
               $("#place-list").text("");
               // Create the map.
@@ -103,6 +129,46 @@ $('#login_form').on('submit', event =>{
                   createMarkers(results);
                 });
             }
+
+            function progressBar() {
+              if (!$("#progOne").hasClass('done')) {
+                $("#progOne").addClass("done");
+                $("#progOne").removeClass("todo");
+              } else if (!$("#progTwo").hasClass("done")) {
+                $("#progTwo").addClass("done");
+                $("#progTwo").removeClass("todo");
+              } else if (!$("#progThree").hasClass("done")) {
+                $("#progThree").addClass("done");
+                $("#progThree").removeClass("todo");
+              }
+            }
+
+            function routeCompleteCheck() {
+              if ($("#progThree").hasClass("done")) {
+                $("#routeAdd").toggle();
+                $("#createGroup").toggle();
+                console.log(routeMarkers);
+              }
+            }
+
+            function toggleBounce(marker) {
+              if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+              } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+              }
+            }
+            function populateRoute() {
+              for (i = 0; i < routeMarkers.length; i++) {
+                routeMarkers[i] = new google.maps.Marker({
+                  position: routeMarkers[i].position,
+                  map: map,
+                  title: routeMarkers[i].title
+                });
+                routeMarkers[i].setAnimation(google.maps.Animation.BOUNCE);
+              };
+            }
+
             var createMarkers = (places) => {
               this.bounds = new google.maps.LatLngBounds();
               this.placesList = document.getElementById('places');
@@ -121,8 +187,10 @@ $('#login_form').on('submit', event =>{
                   title: place.name,
                   position: place.geometry.location
                 });                  
+                markers.push(marker);
+                populateRoute();
                 $('#map-select').append($('<option>', {
-                  value: place.name,
+                  value: i,
                   text: place.name
                 }));
                 bounds.extend(place.geometry.location);
