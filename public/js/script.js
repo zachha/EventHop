@@ -128,32 +128,5 @@ $('#login_form').on('submit', event =>{
                 console.log(place.photos["0"].getUrl);
                 bounds.extend(place.geometry.location);
               }
-<<<<<<< HEAD
-              createMarkers = (places) => {
-                this.bounds = new google.maps.LatLngBounds();
-                this.placesList = document.getElementById('places');
-                $('#map-select').empty()
-                for (let i = 0, place; place = places[i]; i++) {
-                  this.image = {
-                    url: place.icon,
-                    size: new google.maps.Size(71, 71),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(17, 34),
-                    scaledSize: new google.maps.Size(25, 25)
-                  };
-                  this.marker = new google.maps.Marker({
-                    map: map,
-                    icon: image,
-                    title: place.name,
-                    position: place.geometry.location
-                  });                  
-                  $('#map-select').append($('<option>', {
-                    value: place.name,
-                    text: place.name
-                  }));
-                  bounds.extend(place.geometry.location);
-                }
-=======
->>>>>>> 032f07a4ec235e514860b400078de909ad3f53f1
                 map.fitBounds(bounds);
             }
