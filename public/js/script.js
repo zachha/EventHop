@@ -54,7 +54,7 @@ authenticate = (user) => {
           $.ajaxSetup({
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
           });
-          localStorage.setItem('EHUser',{email:user.email,password:user.password});
+          localStorage.setItem('EHUserToken',data.token);
           console.log(JSON.stringify(localStorage.getItem('EHUser')[0]));
           $.get("http://localhost:8080/user/profile")
           .done((data,status,xhr) => {
@@ -71,25 +71,8 @@ authenticate = (user) => {
 //
 //google maps api for create group
 //
-
-<<<<<<< HEAD
-googleMapInit = ()=>{
-
-              $("#cafes").on('click', () => initMap('cafe'));
-              $("#bar").on('click', () => initMap('bar'));
-              $("#art_gallery").on('click', () => initMap('art_gallery'));
-              $("#restaurant").on('click', () => initMap('restaurant'));
-              $("#movie_theater").on('click', () => initMap('movie_theater'));
-              $("#spa").on('click', () => initMap('spa'));
-              $("#create_title_button").on("click", () => {
-                console.log($('#group_title_input').val());
-                $('#create-group-title').text($('#group_title_input').val());
-              });
-              var initMap = (category) => {
-=======
-// use the different category buttons to reload the map based on location types
-
-            $("#cafes").on('click', () => initMap('cafe'));
+googleMapInit = () =>{
+                 $("#cafes").on('click', () => initMap('cafe'));
             $("#bar").on('click', () => initMap('bar'));
             $("#art_gallery").on('click', () => initMap('art_gallery'));
             $("#restaurant").on('click', () => initMap('restaurant'));
@@ -101,7 +84,6 @@ googleMapInit = ()=>{
               $('#create-group-title').text($('#group_title_input').val());
             });
             var initMap = (category) => {
->>>>>>> c431a1084c6b5205d68a6d1b99513876ba35519c
               $(".placeInfo").remove();
               $("#place-list").text("");
               // Create the map.
@@ -122,7 +104,7 @@ googleMapInit = ()=>{
                   createMarkers(results);
                 });
             }
-             var createMarkers = (places) => {
+            var createMarkers = (places) => {
               this.bounds = new google.maps.LatLngBounds();
               this.placesList = document.getElementById('places');
               $('#map-select').empty()
@@ -188,21 +170,32 @@ googleMapInit = ()=>{
                 }
               }
                 map.fitBounds(bounds);
-            }
-          }
-
+}  
+}
 
 $(document).ready(event =>{
-          let userLogin = localStorage.getItem('EHUser');     
-          console.log({email:userLogin.email,password:userLogin.password});    
-          authenticate(userLogin);
+          let userToken = localStorage.getItem('EHUserToken');     
+          console.log(userToken);
+          $.ajaxSetup({
+            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
+          });
+
+          $.get("http://localhost:8080/user/profile")
+          .done((data,status,xhr) => {
+              //$(document.body).html(res.status);
+              //document.documentElement.innerHTML = data;
+              //googleMapInit();
+              console.log(xhr.status);
+            }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));    
+
+});
+          
 //
 //Front end login receive signature
 //
 $('#login_form').on('submit', event =>{
       event.preventDefault();
       let user = {email:$('#login-email').val(),password:$('#login-password').val()};
-      authenticate(user);
+      authenticate(userToken);
     });
-});
 googleMapInit();
