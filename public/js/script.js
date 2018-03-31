@@ -48,21 +48,24 @@
   })
 })(jQuery);
 
-//
-//Front end login receive signature
-//
-$('#login_form').on('submit', event =>{
-      event.preventDefault();
-      $.post("http://localhost:8080/auth",{email:$('#email').val(),password:$('#password').val()},
+authenticate = (user) => {
+  $.post("http://localhost:8080/auth",{email:user.email,password:user.password},
         (data,status) => {
-          
-          $.get("http://localhost:8080/user")
-          .done(res => {
-              console.log(res);
+          $.ajaxSetup({
+            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
+          });
+          localStorage.setItem('EHUserToken',data.token);
+          console.log(JSON.stringify(localStorage.getItem('EHUser')[0]));
+          $.get("http://localhost:8080/user/profile")
+          .done((data,status,xhr) => {
+              //$(document.body).html(res.status);
+              //document.documentElement.innerHTML = data;
+              //googleMapInit();
+              console.log(xhr.status);
             });
-        }).fail(xhr =>console.log(JSON.parse(xhr.responseText).message));
-    });
-
+                   
+        }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));
+}
 
 
 //
@@ -71,7 +74,10 @@ $('#login_form').on('submit', event =>{
 
 // use the different category buttons to reload the map based on location types
 
-            let markers = [];
+            
+googleMapInit = () =>{
+
+  let markers = [];
             let routeMarkers = [];
             let mapNum;
             
@@ -237,4 +243,32 @@ $('#login_form').on('submit', event =>{
                 }
               }
                 map.fitBounds(bounds);
-            }
+}  
+}
+
+$(document).ready(event =>{
+          let userToken = localStorage.getItem('EHUserToken');     
+          console.log(userToken);
+          $.ajaxSetup({
+            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
+          });
+
+          $.get("http://localhost:8080/user/profile")
+          .done((data,status,xhr) => {
+              //$(document.body).html(res.status);
+              //document.documentElement.innerHTML = data;
+              //googleMapInit();
+              console.log(xhr.status);
+            }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));    
+
+});
+          
+//
+//Front end login receive signature
+//
+$('#login_form').on('submit', event =>{
+      event.preventDefault();
+      let user = {email:$('#login-email').val(),password:$('#login-password').val()};
+      authenticate(userToken);
+    });
+googleMapInit();
