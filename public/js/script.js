@@ -48,7 +48,6 @@
   })
 })(jQuery);
 
-<<<<<<< HEAD
 //
 //Front end login receive signature
 //
@@ -66,7 +65,6 @@ $('#login_form').on('submit', event =>{
 
 function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
-=======
 authenticate = (user) => {
   let userToken = localStorage.getItem('EHUserToken');
   if(!userToken){
@@ -95,31 +93,21 @@ authenticate = (user) => {
               console.log(xhr.status);
             });
   }
->>>>>>> 23b9b5fe5e4b2c1aff235dd7fe0cc0821cf66f33
 }
-  
+}
 
 
 
 //
 //google maps api for create group
 //
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-// use the different category buttons to reload the map based on location types
-
-            let markers = [];
-            let placesArr = [];
-=======
 
 // use the different category buttons to reload the map based on location types
 
             
 googleMapInit = () =>{
-
-  let markers = [];
->>>>>>> 0b12b805426d66c76485930d967ceaaad900f43b
+            let markers = [];
+            let placesArr = [];
             let routeMarkers = [];
             let routePlaces = [];
             let mapNum;
@@ -146,10 +134,7 @@ googleMapInit = () =>{
             $("#createGroup").on('click', () => {
               createGroup("Cupcakes");
             })
-=======
-googleMapInit = () =>{
             $("#create-group-button").on('click', () => initMap());
->>>>>>> 23b9b5fe5e4b2c1aff235dd7fe0cc0821cf66f33
             $("#cafes").on('click', () => initMap('cafe'));
             $("#bar").on('click', () => initMap('bar'));
             $("#art_gallery").on('click', () => initMap('art_gallery'));
@@ -293,11 +278,9 @@ googleMapInit = () =>{
                 }
               }
                 map.fitBounds(bounds);
-<<<<<<< HEAD
             }
-=======
 }  
-}
+
 
 $(document).ready(event =>{
 
@@ -327,4 +310,3 @@ $('#login_form').on('submit', event => {
       authenticate(user);
     });
 googleMapInit();
->>>>>>> 23b9b5fe5e4b2c1aff235dd7fe0cc0821cf66f33
