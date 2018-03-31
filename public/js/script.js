@@ -63,6 +63,11 @@ $('#login_form').on('submit', event =>{
         }).fail(xhr =>console.log(JSON.parse(xhr.responseText).message));
     });
 
+function createGroup(gname) {
+  $.post("/create-group", gname, () => {console.log("success!")} );
+}
+  
+
 
 
 //
@@ -72,7 +77,9 @@ $('#login_form').on('submit', event =>{
 // use the different category buttons to reload the map based on location types
 
             let markers = [];
+            let placesArr = [];
             let routeMarkers = [];
+            let routePlaces = [];
             let mapNum;
             
             $("#map-select").change(() => {
@@ -86,6 +93,8 @@ $('#login_form').on('submit', event =>{
             } );
             $("#routeAdd").on('click', () => {
               routeMarkers.push(markers[mapNum]);
+              routePlaces.push(placesArr[mapNum]);
+              console.log(routePlaces);
               initMap();
               console.log(routeMarkers);
               populateRoute();
@@ -93,7 +102,7 @@ $('#login_form').on('submit', event =>{
               routeCompleteCheck();
             })
             $("#createGroup").on('click', () => {
-
+              createGroup("Cupcakes");
             })
             $("#cafes").on('click', () => initMap('cafe'));
             $("#bar").on('click', () => initMap('bar'));
@@ -188,6 +197,7 @@ $('#login_form').on('submit', event =>{
                   position: place.geometry.location
                 });                  
                 markers.push(marker);
+                placesArr.push(place);
                 populateRoute();
                 $('#map-select').append($('<option>', {
                   value: i,
