@@ -103,8 +103,6 @@ authenticate = (user) => {
 //
 
 // use the different category buttons to reload the map based on location types
-
-            
 googleMapInit = () =>{
             let markers = [];
             let placesArr = [];
@@ -280,8 +278,6 @@ googleMapInit = () =>{
                 map.fitBounds(bounds);
             }
 }  
-
-
 $(document).ready(event =>{
 
           $(window).scrollTop(0);  
