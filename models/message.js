@@ -26,6 +26,12 @@ module.exports = (db,DB) => {
                 allowNull: false
             }
         });
+        Message.belongsTo(models.User, {
+            through: 'UserID',
+            foreignKey: {
+                allowNull: false
+            }
+        });
     };
     return Message;
 };
