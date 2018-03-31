@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Place searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href="css/progress-wizard.min.css" rel="stylesheet">
+    <style>
+        
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+
+        .card {
+            margin: 45px;
+        }
+        img {
+            height: auto;
+        }
+        
+        .pro-holder {
+            width: 1000px;
+            margin: 0 auto;
+        }   
+
+        .pro-meter {
+            padding: 0;
+        }
+
+        ol.pro-meter {
+            padding-bottom: 9.5px;
+            list-style-type: none;
+        }
+        ol.pro-meter li {
+            display: inline-block;
+            text-align: center;
+            text-indent: -19px;
+            height: 36px;
+            width: 24.99%;
+            font-size: 12px;
+            border-bottom-width: 4px;
+            border-bottom-style: solid;
+        }
+        ol.pro-meter li:before {
+            position: relative;
+            float: left;
+            text-indent: 0;
+            left: -webkit-calc(50% - 9.5px);
+            left: -moz-calc(50% - 9.5px);
+            left: -ms-calc(50% - 9.5px);
+            left: -o-calc(50% - 9.5px);
+            left: calc(50% - 9.5px);
+        }
+        ol.pro-meter li.done {
+            font-size: 12px;
+        }
+        ol.pro-meter li.done:before {
+            content: "\2713";
+            height: 19px;
+            width: 19px;
+            line-height: 21.85px;
+            bottom: -28.175px;
+            border: none;
+            border-radius: 19px;
+        }
+        ol.pro-meter li.todo {
+            font-size: 12px;
+        }
+        ol.pro-meter li.todo:before {
+            content: "\2B24";
+            font-size: 17.1px;
+            bottom: -26.95px;
+            line-height: 18.05px;
+        }
+        ol.pro-meter li.done {
+            color: black;
+            border-bottom-color: yellowgreen;
+        }
+        ol.pro-meter li.done:before {
+            color: white;
+            background-color: yellowgreen;
+        }
+        ol.pro-meter li.todo {
+            color: silver;
+            border-bottom-color: silver;
+        }
+        ol.pro-meter li.todo:before {
+            color: silver;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div>
+        <button id="cafes">Cafes</button>
+        <button id="bar">Bars</button>
+        <button id="restaurant">Restaurant</button>
+        <button id="art_gallery">Art Galleries</button>
+        <button id="movie_theater">Movie Theater</button>
+        <button id="spa">Spa</button>
+    </div>
+    <div class="pro-holder">
+        <ol class="pro-meter">
+            <li class="pro-point todo">Choose starting spot!</li><li class="pro-point todo">Choose next</li><li class="pro-point todo">Choose final spot!</li><li class="pro-point todo">Create Your Route!</li>
+        </ol>
+    </div>
+
+    <div id="place-list" class="container py-3">
+        
+    </div>
+    <div id="placesInfo"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3Cv_7tEcDnrolF56mQG__51eGn9DIa3g&libraries=places&callback=initMap" async defer>
+        </script>
+        <script>
+
+            var map;
+            var marker;
+        
+            // use the different category buttons to reload the map based on location types
+            $("#cafes").on('click', function() {
+                initMap('cafe');
+            });
+            $("#bar").on('click', function () {
+                    initMap('bar');
+                });
+            $("#art_gallery").on('click', function () {
+                    initMap('art_gallery');
+                });
+            $("#restaurant").on('click', function () {
+                    initMap('restaurant');
+                });
+            $("#movie_theater").on('click', function () {
+                    initMap('movie_theater');
+                });
+            $("#spa").on('click', function () {
+                    initMap('spa');
+                });
+
+            function initMap(category) {
+                $(".placeInfo").remove();
+                $("#place-list").text("");
+                //let placeInfoBox = "";
+                // Create the map.
+                var durham = { lat: 35.997, lng: -78.904 };
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: durham,
+                    zoom: 15
+                });
+
+                // Create the places service.
+                var service = new google.maps.places.PlacesService(map);
+                var getNextPage = null;
+                var moreButton = document.getElementById('more');
+                // Perform a nearby search.
+                service.nearbySearch(
+                    { location: durham, radius: 1400, type: [category] },
+                    function (results, status, pagination) {
+                        if (status !== 'OK') return;
+
+                        createMarkers(results);
+                    });
+
+
+
+            }
+
+            function createMarkers(places) {
+                var bounds = new google.maps.LatLngBounds();
+                var placesList = document.getElementById('places');
+
+                for (var i = 0, place; place = places[i]; i++) {
+                    var image = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        icon: image,
+                        title: place.name,
+                        position: place.geometry.location
+                    });
+                    
+                     bounds.extend(place.geometry.location);
+                    logPlaceDetails(place.place_id);
+                    function logPlaceDetails(location) {
+                        var service = new google.maps.places.PlacesService($('#placesInfo').get(0));
+                        service.getDetails({
+                            placeId: location
+                        }, function (place, status) {
+                            console.log('Place details:', place);
+                            createInfoBox(place);
+                        });
+                    }
+
+                    function createInfoBox(place) {
+                        let photos = place.photos[0].getUrl({'maxWidth': 270, 'maxHeight': 350});
+                        let placeInfoBox = 
+                            ` 
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-4 container-fluid">
+                                <img src="${photos}" class="w-100 img-responsive">
+                            </div>
+                            <div class="col-md-8 px-3">
+                                <div class="card-block px-3">
+                                    <br>
+                                    <h2 class="card-title">${place.name}<span><a href="${place.website}" target="_blank" class="btn btn-sm btn-primary card-btn">More Info</a></span></h2>
+                                    <p class="card-text"><em>Google rating: ${place.rating}</em></p>
+                                    <h5 class="card-text">${place.formatted_address}</h5>
+                                    <h5 class="card-text">${place.formatted_phone_number}</h5>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                        `;
+
+                        $("#place-list").append(placeInfoBox);
+
+                       
+                    }
+                }
+                map.fitBounds(bounds);
+
+
+            }
+        </script>
+</body>
+
+</html>
+
+<!--
+<div class="card" style="width:400px">
+    <img class="card-img-top" src="" alt="location picture" style="width:100%">
+    <div class="card-body">
+        <h4 class="card-title">${place.name}</h4>
+        <p class="card-text">${place.formatted_address}</p>
+        <a href="#" class="btn btn-primary">Website</a>
+    </div>
+</div>
+-->
