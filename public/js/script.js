@@ -65,8 +65,12 @@ $('#login_form').on('submit', event =>{
 
 function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
-authenticate = (user) => {
+}
+
+const authenticate = (user) => {
   let userToken = localStorage.getItem('EHUserToken');
+  console.log(!userToken);
+  console.log(user);
   if(!userToken){
     $.post("http://localhost:8080/auth",{email:user.email,password:user.password},
         (data,status) => {
@@ -78,13 +82,16 @@ authenticate = (user) => {
           $.get("http://localhost:8080/user/profile")
           .done((data,status,xhr) => {
               //$(document.body).html(res.status);
-              //document.documentElement.innerHTML = data;
-              //googleMapInit();
+              document.documentElement.innerHTML = data;
+              googleMapInit();
               console.log(xhr.status);
             });
                    
         }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));
   }else{
+      $.ajaxSetup({
+            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
+          });
       $.get("http://localhost:8080/user/profile")
           .done((data,status,xhr) => {
               //$(document.body).html(res.status);
@@ -93,7 +100,6 @@ authenticate = (user) => {
               console.log(xhr.status);
             });
   }
-}
 }
 
 
@@ -293,7 +299,7 @@ $(document).ready(event =>{
               document.documentElement.innerHTML = data;
               googleMapInit();
               console.log(xhr.status);
-            }).fail(xhr => console.log(xhr.responseText).message);    
+            }).fail(xhr => console.log(xhr.responseText.message));    
 
 });
           
