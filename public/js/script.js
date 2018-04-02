@@ -65,6 +65,7 @@ $('#login_form').on('submit', event =>{
 
 function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
+}
 authenticate = (user) => {
   let userToken = localStorage.getItem('EHUserToken');
   if(!userToken){
@@ -94,7 +95,6 @@ authenticate = (user) => {
             });
   }
 }
-}
 
 
 
@@ -110,8 +110,8 @@ googleMapInit = () =>{
             let placesArr = [];
             let routeMarkers = [];
             let routePlaces = [];
+            let categoryName;
             let mapNum;
-            
             $("#map-select").change(() => {
               if( markers[mapNum] === true && markers[mapNum].getAnimation() != null) {
                 markers[mapNum].setAnimation(null);
@@ -122,6 +122,7 @@ googleMapInit = () =>{
               markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
             } );
             $("#routeAdd").on('click', () => {
+              $(categoryName).toggle();
               routeMarkers.push(markers[mapNum]);
               routePlaces.push(placesArr[mapNum]);
               console.log(routePlaces);
@@ -135,16 +136,28 @@ googleMapInit = () =>{
               createGroup("Cupcakes");
             })
             $("#create-group-button").on('click', () => initMap());
-            $("#cafes").on('click', () => initMap('cafe'));
-            $("#bar").on('click', () => initMap('bar'));
-            $("#art_gallery").on('click', () => initMap('art_gallery'));
-            $("#restaurant").on('click', () => initMap('restaurant'));
-            $("#movie_theater").on('click', () => initMap('movie_theater'));
-            $("#spa").on('click', () => initMap('spa'));
+            $("#cafes").on('click', () => {
+              categoryName = "#cafes";
+              initMap('cafe')});
+            $("#bar").on('click', () => {
+              categoryName = "#bar";
+              initMap('bar')});
+            $("#art_gallery").on('click', () => {
+              categoryName = "#art_gallery";
+              initMap('art_gallery')});
+            $("#restaurant").on('click', () => {
+              categoryName = "#restaurant";
+              initMap('restaurant')});
+            $("#movie_theater").on('click', () => {
+              categoryName = "#movie_theater";
+              initMap('movie_theater')});
+            $("#spa").on('click', () => {
+              categoryName = "#spa";
+              initMap('spa')});
             $("#create_title_button").on("click", () => {
               console.log($('#group_title_input').val());
 
-              $('#create-group-title').text($('#group_title_input').val());
+            $('#create-group-title').text($('#group_title_input').val());
             });
 
             var initMap = (category) => {
@@ -159,8 +172,8 @@ googleMapInit = () =>{
               });
               // Create the places service.
               this.service = new google.maps.places.PlacesService(map);
-              this.getNextPage = null;
-              this.moreButton = document.getElementById('more');
+              //this.getNextPage = null;
+              //this.moreButton = document.getElementById('more');
               // Perform a nearby search.
               service.nearbySearch(
                 { location: durham, radius: 1800, type: [category] },
@@ -186,7 +199,7 @@ googleMapInit = () =>{
             function routeCompleteCheck() {
               if ($("#progThree").hasClass("done")) {
                 $("#routeAdd").toggle();
-                $("#createGroup").toggle();
+                $("#openRouteModal").toggle();
                 console.log(routeMarkers);
               }
             }
@@ -212,7 +225,7 @@ googleMapInit = () =>{
             var createMarkers = (places) => {
               this.bounds = new google.maps.LatLngBounds();
               this.placesList = document.getElementById('places');
-              $('#map-select').empty()
+              $('#map-select').empty();
               for (let i = 0, place; place = places[i]; i++) {
                 this.image = {
                   url: place.icon,
@@ -297,9 +310,10 @@ $(document).ready(event =>{
               document.documentElement.innerHTML = data;
               googleMapInit();
               console.log(xhr.status);
-            }).fail(xhr => console.log(xhr.responseText).message);    
+            }).fail(xhr => console.log(xhr.responseText.message));    
 
 });
+ 
           
 //
 //Front end login receive signature
@@ -309,4 +323,4 @@ $('#login_form').on('submit', event => {
       let user = {email:$('#login-email').val(),password:$('#login-password').val()};
       authenticate(user);
     });
-googleMapInit();
+

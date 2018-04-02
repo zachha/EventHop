@@ -774,12 +774,14 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
   margin-bottom: 0px;
 }
 
-#createGroup {
+#openRouteModal {
   display: none;
 }
 
 #map-select {
   margin-top: 30px;
+  width:100%;
+  overflow-x:scroll;
 }
 .card {
             margin: 45px;
