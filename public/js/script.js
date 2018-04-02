@@ -58,6 +58,10 @@ function createGroup(gname) {
 //Front end login receive signature
 //
 const authenticate =(user) => {
+
+  let userToken = localStorage.getItem('EHUserToken');
+  console.log(user);
+
     $.post("http://localhost:8080/auth",user)
     .done(
       (data,status,xhr) => {
@@ -65,7 +69,9 @@ const authenticate =(user) => {
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
           });
           localStorage.setItem('EHUserToken',data.token); 
-          console.log(data);
+
+          console.log(data.user+"---user---");
+
         }
       ).fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
 }
@@ -73,7 +79,9 @@ const authenticate =(user) => {
 $('#login_form').on('submit', event => {
       event.preventDefault();
       //console.log({email:$('#username').val(),password:$('#password').val()});
-      authenticate({email:$('#login-email').val(),password:$('#password').val()});
+
+      authenticate({email:$('#username').val(),password:$('#password').val()});
+
     });
 
 //
