@@ -48,32 +48,34 @@
   })
 })(jQuery);
 
-//
-//Front end login receive signature
-//
-$('#login_form').on('submit', event =>{
-      event.preventDefault();
-      $.post("http://localhost:8080/auth",{email:$('#email').val(),password:$('#password').val()},
-        (data,status) => {
-          
-          $.get("http://localhost:8080/user")
-          .done(res => {
-              console.log(res);
-            });
-        }).fail(xhr =>console.log(JSON.parse(xhr.responseText).message));
-    });
 
 function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
 }
+
+//front end handshake
+//
+//Front end login receive signature
+//
+const authenticate =(user) => {
+
+<<<<<<< HEAD
+function createGroup(gname) {
+  $.post("/create-group", gname, () => {console.log("success!")} );
+}
 authenticate = (user) => {
+=======
+>>>>>>> c7d6d8bfc4b56094d3b053f801a93f337f43b9bf
   let userToken = localStorage.getItem('EHUserToken');
-  if(!userToken){
-    $.post("http://localhost:8080/auth",{email:user.email,password:user.password},
-        (data,status) => {
+  console.log(user);
+
+    $.post("http://localhost:8080/auth",user)
+    .done(
+      (data,status,xhr) => {
           $.ajaxSetup({
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
           });
+<<<<<<< HEAD
           localStorage.setItem('EHUserToken',data.token);
           console.log(JSON.stringify(localStorage.getItem('EHUserToken')));
           $.get("http://localhost:8080/user/profile")
@@ -94,17 +96,29 @@ authenticate = (user) => {
               console.log(xhr.status);
             });
   }
+=======
+          localStorage.setItem('EHUserToken',data.token); 
+
+          console.log(data.user+"---user---");
+
+        }
+      ).fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
+>>>>>>> c7d6d8bfc4b56094d3b053f801a93f337f43b9bf
 }
 
+$('#login_form').on('submit', event => {
+      event.preventDefault();
+      //console.log({email:$('#username').val(),password:$('#password').val()});
 
+      authenticate({email:$('#username').val(),password:$('#password').val()});
+
+    });
 
 //
 //google maps api for create group
 //
 
 // use the different category buttons to reload the map based on location types
-
-            
 googleMapInit = () =>{
             let markers = [];
             let placesArr = [];
@@ -293,13 +307,10 @@ googleMapInit = () =>{
                 map.fitBounds(bounds);
             }
 }  
-
-
 $(document).ready(event =>{
 
           $(window).scrollTop(0);  
           let userToken = localStorage.getItem('EHUserToken');     
-          console.log(userToken);
           $.ajaxSetup({
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
           });
@@ -309,6 +320,7 @@ $(document).ready(event =>{
               //$(document.body).html(res.status);
               document.documentElement.innerHTML = data;
               googleMapInit();
+<<<<<<< HEAD
               console.log(xhr.status);
             }).fail(xhr => console.log(xhr.responseText.message));    
 
@@ -324,3 +336,10 @@ $('#login_form').on('submit', event => {
       authenticate(user);
     });
 
+=======
+              //console.log(xhr.status);
+            }).fail(xhr => console.log(xhr.responseText.message));    
+
+});
+googleMapInit();
+>>>>>>> c7d6d8bfc4b56094d3b053f801a93f337f43b9bf
