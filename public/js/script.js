@@ -57,46 +57,24 @@ function createGroup(gname) {
 //
 //Front end login receive signature
 //
-$('#login_form').on('submit', event => {
-      event.preventDefault();
-      let user = {email:$('#login-email').val(),password:$('#login-password').val()};
-      authenticate(user);
-    });
-
-const authenticate = (user) => {
-  let userToken = localStorage.getItem('EHUserToken');
-  if(!userToken){
-    $.post("http://localhost:8080/auth",{email:user.email,password:user.password},
-        (data,status) => {
+const authenticate =(user) => {
+    $.post("http://localhost:8080/auth",user)
+    .done(
+      (data,status,xhr) => {
           $.ajaxSetup({
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
           });
+          localStorage.setItem('EHUserToken',data.token); 
           console.log(data);
-          localStorage.setItem('EHUserToken',data.token);
-          $.get("http://localhost:8080/user/profile")
-          .done((data,status,xhr) => {
-              //$(document.body).html(res.status);
-              document.documentElement.innerHTML = data;
-              googleMapInit();
-              console.log(xhr.status);
-            });
-                   
-        }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));
-  }else{
-      $.ajaxSetup({
-            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
-          });
-      $.get("http://localhost:8080/user/profile")
-          .done((data,status,xhr) => {
-              //$(document.body).html(res.status);
-              //document.documentElement.innerHTML = data;
-              //googleMapInit();
-              console.log(xhr.status);
-            });
-  }
+        }
+      ).fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
 }
 
-
+$('#login_form').on('submit', event => {
+      event.preventDefault();
+      //console.log({email:$('#username').val(),password:$('#password').val()});
+      authenticate({email:$('#login-email').val(),password:$('#password').val()});
+    });
 
 //
 //google maps api for create group
@@ -282,7 +260,6 @@ $(document).ready(event =>{
 
           $(window).scrollTop(0);  
           let userToken = localStorage.getItem('EHUserToken');     
-          console.log(userToken);
           $.ajaxSetup({
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
           });
@@ -292,7 +269,7 @@ $(document).ready(event =>{
               //$(document.body).html(res.status);
               document.documentElement.innerHTML = data;
               googleMapInit();
-              console.log(xhr.status);
+              //console.log(xhr.status);
             }).fail(xhr => console.log(xhr.responseText.message));    
 
 });

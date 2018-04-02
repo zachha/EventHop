@@ -24,7 +24,14 @@ route.post('/', function (req, res, next) {
             console.log("-------"+user.id+"-------")
             const token = jwt.sign(user.id, 'secret');
 
-            return res.json({user:user,token: token});
+            return res.json({
+                user:{
+                    name:user.user_name,
+                    email:user.email,
+                    id:user.id
+                } ,
+                token: token
+            });
         });
     })
     (req, res);
