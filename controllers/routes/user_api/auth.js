@@ -23,8 +23,8 @@ route.post('/', function (req, res, next) {
             }
             console.log("-------"+user.id+"-------")
             const token = jwt.sign(user.id, 'flubbybunny');
+            return res.json({user:user,token: token});
 
-            return res.json({'user': user , 'token': token});
         });
     })
     (req, res);

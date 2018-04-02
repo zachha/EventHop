@@ -48,14 +48,15 @@
   })
 })(jQuery);
 
-//
-//Front end login receive signature
-//
 
 function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
 }
 
+//front end handshake
+//
+//Front end login receive signature
+//
 const authenticate =(user) => {
   let userToken = localStorage.getItem('EHUserToken');
   console.log(user);
@@ -71,6 +72,11 @@ const authenticate =(user) => {
       ).fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
 }
 
+$('#login_form').on('submit', event => {
+      event.preventDefault();
+      //console.log({email:$('#username').val(),password:$('#password').val()});
+      authenticate({email:$('#username').val(),password:$('#password').val()});
+    });
 
 //
 //google maps api for create group
@@ -269,13 +275,4 @@ $(document).ready(event =>{
             }).fail(xhr => console.log(xhr.responseText.message));    
 
 });
-          
-//
-//Front end login receive signature
-//
-$('#login_form').on('submit', event => {
-      event.preventDefault();
-      //console.log({email:$('#username').val(),password:$('#password').val()});
-      authenticate({email:$('#username').val(),password:$('#password').val()});
-    });
 googleMapInit();
