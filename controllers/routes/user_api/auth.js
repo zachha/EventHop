@@ -22,9 +22,9 @@ route.post('/', function (req, res, next) {
                 res.send(err);
             }
             console.log("-------"+user.id+"-------")
-            const token = jwt.sign(user.id, 'secret');
+            const token = jwt.sign(user.id, 'flubbybunny');
 
-            return res.json({message:"okay",token: token});
+            return res.json({'user': user , 'token': token});
         });
     })
     (req, res);

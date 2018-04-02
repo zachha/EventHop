@@ -51,57 +51,25 @@
 //
 //Front end login receive signature
 //
-$('#login_form').on('submit', event =>{
-      event.preventDefault();
-      $.post("http://localhost:8080/auth",{email:$('#email').val(),password:$('#password').val()},
-        (data,status) => {
-          
-          $.get("http://localhost:8080/user")
-          .done(res => {
-              console.log(res);
-            });
-        }).fail(xhr =>console.log(JSON.parse(xhr.responseText).message));
-    });
 
 function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
 }
 
-const authenticate = (user) => {
+const authenticate =(user) => {
   let userToken = localStorage.getItem('EHUserToken');
-  console.log(!userToken);
   console.log(user);
-  if(!userToken){
-    $.post("http://localhost:8080/auth",{email:user.email,password:user.password},
-        (data,status) => {
+    $.post("http://localhost:8080/auth",user)
+    .done(
+      (data,status,xhr) => {
           $.ajaxSetup({
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
           });
-          localStorage.setItem('EHUserToken',data.token);
-          console.log(JSON.stringify(localStorage.getItem('EHUserToken')));
-          $.get("http://localhost:8080/user/profile")
-          .done((data,status,xhr) => {
-              //$(document.body).html(res.status);
-              document.documentElement.innerHTML = data;
-              googleMapInit();
-              console.log(xhr.status);
-            });
-                   
-        }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));
-  }else{
-      $.ajaxSetup({
-            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
-          });
-      $.get("http://localhost:8080/user/profile")
-          .done((data,status,xhr) => {
-              //$(document.body).html(res.status);
-              //document.documentElement.innerHTML = data;
-              //googleMapInit();
-              console.log(xhr.status);
-            });
-  }
+          localStorage.setItem('EHUserToken',data.token); 
+          console.log(data.user+"---user---");
+        }
+      ).fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
 }
-
 
 
 //
@@ -288,7 +256,6 @@ $(document).ready(event =>{
 
           $(window).scrollTop(0);  
           let userToken = localStorage.getItem('EHUserToken');     
-          console.log(userToken);
           $.ajaxSetup({
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
           });
@@ -298,7 +265,7 @@ $(document).ready(event =>{
               //$(document.body).html(res.status);
               document.documentElement.innerHTML = data;
               googleMapInit();
-              console.log(xhr.status);
+              //console.log(xhr.status);
             }).fail(xhr => console.log(xhr.responseText.message));    
 
 });
@@ -308,7 +275,7 @@ $(document).ready(event =>{
 //
 $('#login_form').on('submit', event => {
       event.preventDefault();
-      let user = {email:$('#login-email').val(),password:$('#login-password').val()};
-      authenticate(user);
+      //console.log({email:$('#username').val(),password:$('#password').val()});
+      authenticate({email:$('#username').val(),password:$('#password').val()});
     });
 googleMapInit();
