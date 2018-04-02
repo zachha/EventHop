@@ -33,19 +33,19 @@ CREATE TABLE user2groups (
     PRIMARY KEY(user_id, group_id)
 );
 
-INSERT INTO user (user_name, password)
-VALUES ("Andy", "password");
+INSERT INTO user (email, user_name, password)
+VALUES ("user@email.com","Andy", "123456");
 
 INSERT INTO user (user_name, password)
-VALUES ("Zach", "password2");
+VALUES ("user2@email.com", "Zach", "12345");
 
-INSERT INTO user (user_name, password)
-VALUES ("Kaitlyn", "password3");
+INSERT INTO user (email, user_name, password)
+VALUES ("user3@email.com", "Kaitlyn", "password3");
 
-INSERT INTO groups (group_name, group_members, is_event)
-VALUES ("PartyTown", "32", False);
+INSERT INTO groups (email, group_name, group_members, is_event)
+VALUES ("user3@email.com", "PartyTown", "32", False);
 
-INSERT INTO groups (group_name, group_members, is_event)
+INSERT INTO groups (email, group_name, group_members, is_event)
 VALUES ("Radville", "13", True);
 
 INSERT INTO groups (group_name, group_members, is_event)

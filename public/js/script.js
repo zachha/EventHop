@@ -48,37 +48,31 @@
   })
 })(jQuery);
 
-//
-//Front end login receive signature
-//
-$('#login_form').on('submit', event =>{
-      event.preventDefault();
-      $.post("http://localhost:8080/auth",{email:$('#email').val(),password:$('#password').val()},
-        (data,status) => {
-          
-          $.get("http://localhost:8080/user")
-          .done(res => {
-              console.log(res);
-            });
-        }).fail(xhr =>console.log(JSON.parse(xhr.responseText).message));
-    });
 
 function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
 }
 
+//front end handshake
+//
+//Front end login receive signature
+//
+$('#login_form').on('submit', event => {
+      event.preventDefault();
+      let user = {email:$('#login-email').val(),password:$('#login-password').val()};
+      authenticate(user);
+    });
+
 const authenticate = (user) => {
   let userToken = localStorage.getItem('EHUserToken');
-  console.log(!userToken);
-  console.log(user);
   if(!userToken){
     $.post("http://localhost:8080/auth",{email:user.email,password:user.password},
         (data,status) => {
           $.ajaxSetup({
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
           });
+          console.log(data);
           localStorage.setItem('EHUserToken',data.token);
-          console.log(JSON.stringify(localStorage.getItem('EHUserToken')));
           $.get("http://localhost:8080/user/profile")
           .done((data,status,xhr) => {
               //$(document.body).html(res.status);
@@ -302,13 +296,4 @@ $(document).ready(event =>{
             }).fail(xhr => console.log(xhr.responseText.message));    
 
 });
-          
-//
-//Front end login receive signature
-//
-$('#login_form').on('submit', event => {
-      event.preventDefault();
-      let user = {email:$('#login-email').val(),password:$('#login-password').val()};
-      authenticate(user);
-    });
 googleMapInit();
