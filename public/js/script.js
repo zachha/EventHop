@@ -59,13 +59,6 @@ function createGroup(gname) {
 //
 const authenticate =(user) => {
 
-<<<<<<< HEAD
-function createGroup(gname) {
-  $.post("/create-group", gname, () => {console.log("success!")} );
-}
-authenticate = (user) => {
-=======
->>>>>>> c7d6d8bfc4b56094d3b053f801a93f337f43b9bf
   let userToken = localStorage.getItem('EHUserToken');
   console.log(user);
 
@@ -75,35 +68,12 @@ authenticate = (user) => {
           $.ajaxSetup({
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
           });
-<<<<<<< HEAD
-          localStorage.setItem('EHUserToken',data.token);
-          console.log(JSON.stringify(localStorage.getItem('EHUserToken')));
-          $.get("http://localhost:8080/user/profile")
-          .done((data,status,xhr) => {
-              //$(document.body).html(res.status);
-              //document.documentElement.innerHTML = data;
-              //googleMapInit();
-              console.log(xhr.status);
-            });
-                   
-        }).fail(xhr => console.log(JSON.parse(xhr.responseText).message));
-  }else{
-      $.get("http://localhost:8080/user/profile")
-          .done((data,status,xhr) => {
-              //$(document.body).html(res.status);
-              //document.documentElement.innerHTML = data;
-              //googleMapInit();
-              console.log(xhr.status);
-            });
-  }
-=======
           localStorage.setItem('EHUserToken',data.token); 
 
           console.log(data.user+"---user---");
 
         }
       ).fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
->>>>>>> c7d6d8bfc4b56094d3b053f801a93f337f43b9bf
 }
 
 $('#login_form').on('submit', event => {
@@ -118,171 +88,170 @@ $('#login_form').on('submit', event => {
 //google maps api for create group
 //
 
-// use the different category buttons to reload the map based on location types
-googleMapInit = () =>{
-            let markers = [];
-            let placesArr = [];
-            let routeMarkers = [];
-            let routePlaces = [];
-            let categoryName;
-            let mapNum;
-            $("#map-select").change(() => {
-              if( markers[mapNum] === true && markers[mapNum].getAnimation() != null) {
-                markers[mapNum].setAnimation(null);
-              }
-              var e = document.getElementById("map-select");
-              mapNum = e.options[e.selectedIndex].value;
-              console.log(markers[mapNum]);
-              markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
-            } );
-            $("#routeAdd").on('click', () => {
-              $(categoryName).toggle();
-              routeMarkers.push(markers[mapNum]);
-              routePlaces.push(placesArr[mapNum]);
-              console.log(routePlaces);
-              initMap();
-              console.log(routeMarkers);
-              populateRoute();
-              progressBar();
-              routeCompleteCheck();
-            })
-            $("#createGroup").on('click', () => {
-              createGroup("Cupcakes");
-            })
-            $("#create-group-button").on('click', () => initMap());
-            $("#cafes").on('click', () => {
-              categoryName = "#cafes";
-              initMap('cafe')});
-            $("#bar").on('click', () => {
-              categoryName = "#bar";
-              initMap('bar')});
-            $("#art_gallery").on('click', () => {
-              categoryName = "#art_gallery";
-              initMap('art_gallery')});
-            $("#restaurant").on('click', () => {
-              categoryName = "#restaurant";
-              initMap('restaurant')});
-            $("#movie_theater").on('click', () => {
-              categoryName = "#movie_theater";
-              initMap('movie_theater')});
-            $("#spa").on('click', () => {
-              categoryName = "#spa";
-              initMap('spa')});
-            $("#create_title_button").on("click", () => {
-              console.log($('#group_title_input').val());
+googleMapInit = () => {
+  let markers = [];
+  let placesArr = [];
+  let routeMarkers = [];
+  let routePlaces = [];
+  let categoryName;
+  let mapNum;
 
-            $('#create-group-title').text($('#group_title_input').val());
-            });
+  //on change, gets the value from the selected location and makes the marker bounce to show the user where it is
+  $("#map-select").change(() => {
+    if (markers[mapNum] === true && markers[mapNum].getAnimation() != null) {
+      markers[mapNum].setAnimation(null);
+    }
+    var e = document.getElementById("map-select");
+    mapNum = e.options[e.selectedIndex].value;
+    console.log(markers[mapNum]);
+    markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
+  });
 
-            var initMap = (category) => {
-              markers = [];
-              $(".placeInfo").remove();
-              $("#place-list").text("");
-              // Create the map.
-              this.durham = { lat: 35.997, lng: -78.904 };
-              map = new google.maps.Map(document.getElementById('map'), {
-                center: durham,
-                zoom: 15
-              });
-              // Create the places service.
-              this.service = new google.maps.places.PlacesService(map);
-              //this.getNextPage = null;
-              //this.moreButton = document.getElementById('more');
-              // Perform a nearby search.
-              service.nearbySearch(
-                { location: durham, radius: 1800, type: [category] },
-                function (results, status, pagination) {
-                  if (status !== 'OK') return;
-                  createMarkers(results);
-                });
-            }
+  // Adds the user's chosen location as a bouncing red marker so they can see their previously chosen locations.  Also increases progress bar and checks if route is complete to toggle the 'Create Route' button
+  $("#routeAdd").on("click", () => {
+    $(categoryName).toggle();
+    routeMarkers.push(markers[mapNum]);
+    routePlaces.push(placesArr[mapNum]);
+    console.log(routePlaces);
+    initMap();
+    console.log(routeMarkers);
+    populateRoute();
+    progressBar();
+    routeCompleteCheck();
+  });
 
-            function progressBar() {
-              if (!$("#progOne").hasClass('done')) {
-                $("#progOne").addClass("done");
-                $("#progOne").removeClass("todo");
-              } else if (!$("#progTwo").hasClass("done")) {
-                $("#progTwo").addClass("done");
-                $("#progTwo").removeClass("todo");
-              } else if (!$("#progThree").hasClass("done")) {
-                $("#progThree").addClass("done");
-                $("#progThree").removeClass("todo");
-              }
-            }
+  // Allows the user to Create a Group, pushing the route to the database and allowing others to search for and join the group.
+  $("#createGroup").on("click", () => {
+    createGroup("Cupcakes");
+  });
 
-            function routeCompleteCheck() {
-              if ($("#progThree").hasClass("done")) {
-                $("#routeAdd").toggle();
-                $("#openRouteModal").toggle();
-                console.log(routeMarkers);
-              }
-            }
+  // initializes the map so it is visible when the modal pops up
+  $("#create-group-button").on("click", () => initMap());
 
-            function toggleBounce(marker) {
-              if (marker.getAnimation() !== null) {
-                marker.setAnimation(null);
-              } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-              }
-            }
-            function populateRoute() {
-              for (i = 0; i < routeMarkers.length; i++) {
-                routeMarkers[i] = new google.maps.Marker({
-                  position: routeMarkers[i].position,
-                  map: map,
-                  title: routeMarkers[i].title
-                });
-                routeMarkers[i].setAnimation(google.maps.Animation.BOUNCE);
-              };
-            }
+  // these do google Places search around the downtown area based on the location type the user chooses.  categoryName is saved so the category button is toggled off if the user chooses a location from that group (so they can't choose from the same category twice)
+  $("#cafes").on("click", () => {
+    categoryName = "#cafes";
+    initMap("cafe");
+  });
+  $("#bar").on("click", () => {
+    categoryName = "#bar";
+    initMap("bar");
+  });
+  $("#art_gallery").on("click", () => {
+    categoryName = "#art_gallery";
+    initMap("art_gallery");
+  });
+  $("#restaurant").on("click", () => {
+    categoryName = "#restaurant";
+    initMap("restaurant");
+  });
+  $("#movie_theater").on("click", () => {
+    categoryName = "#movie_theater";
+    initMap("movie_theater");
+  });
+  $("#spa").on("click", () => {
+    categoryName = "#spa";
+    initMap("spa");
+  });
 
-            var createMarkers = (places) => {
-              this.bounds = new google.maps.LatLngBounds();
-              this.placesList = document.getElementById('places');
-              $('#map-select').empty();
-              for (let i = 0, place; place = places[i]; i++) {
-                this.image = {
-                  url: place.icon,
-                  size: new google.maps.Size(71, 71),
-                  origin: new google.maps.Point(0, 0),
-                  anchor: new google.maps.Point(17, 34),
-                  scaledSize: new google.maps.Size(25, 25)
-                };
-                this.marker = new google.maps.Marker({
-                  map: map,
-                  icon: image,
-                  title: place.name,
-                  position: place.geometry.location
-                });                  
-                markers.push(marker);
-                placesArr.push(place);
-                populateRoute();
-                $('#map-select').append($('<option>', {
-                  value: i,
-                  text: place.name
-                }));
-                bounds.extend(place.geometry.location);
+  // allows the User to name their group and display the title above the map
+  $("#create_title_button").on("click", () => {
+    console.log($("#group_title_input").val());
 
-                logPlaceDetails(place.place_id);
-                function logPlaceDetails(location) {
-                  var service = new google.maps.places.PlacesService($("#placesInfo").get(0));
-                  service.getDetails(
-                    {
-                      placeId: location
-                    },
-                    function(place, status) {
-                      console.log("Place details:", place);
-                      createInfoBox(place);
-                    }
-                  );
-                }
+    $("#create-group-title").text($("#group_title_input").val());
+  });
 
-                function createInfoBox(place) {
-                  let photos = place.photos[0].getUrl({
-                    maxWidth: 270,
-                    maxHeight: 350
-                  });
-                  let placeInfoBox = ` 
+  //this initializes the google map and sets the marker in downtown durham
+  var initMap = category => {
+    // clears these variables/elements so they can be repopulated based on the location categories when the user changes them
+    markers = [];
+    $(".placeInfo").remove();
+    $("#place-list").text("");
+
+    // Create the map.
+    this.durham = { lat: 35.997, lng: -78.904 };
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: durham,
+      zoom: 15
+    });
+
+    // Create the places service.
+    this.service = new google.maps.places.PlacesService(map);
+    this.directionsService = new google.maps.DirectionsService();
+    this.directionsDisplay = new google.maps.DirectionsRenderer();
+
+    // Perform a nearby search.
+    service.nearbySearch(
+      {
+        location: durham,
+        radius: 1800,
+        type: [category]
+      },
+      function(results, status, pagination) {
+        if (status !== "OK") return;
+        createMarkers(results);
+      }
+    );
+  };
+
+  // creates the markers for the google map
+  var createMarkers = places => {
+    this.bounds = new google.maps.LatLngBounds();
+    this.placesList = document.getElementById("places");
+    //empties select drop-down so it can be repopulated appropriately
+    $("#map-select").empty();
+    // loops through all the found locations in the category and creates appropriate icon
+    for (let i = 0, place; (place = places[i]); i++) {
+      this.image = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+      this.marker = new google.maps.Marker({
+        map: map,
+        icon: image,
+        title: place.name,
+        position: place.geometry.location
+      });
+      // markers and their place objects are then pushed to arrays in the same order the map-select drop-down is populated so the value can be used to link the correct marker/place
+      markers.push(marker);
+      placesArr.push(place);
+      populateRoute();
+      $("#map-select").append(
+        $("<option>", {
+          value: i,
+          text: place.name
+        })
+      );
+      bounds.extend(place.geometry.location);
+
+      //google Places Details API is used to get more specific information on each location in the loop
+      logPlaceDetails(place.place_id);
+      function logPlaceDetails(location) {
+        var service = new google.maps.places.PlacesService(
+          $("#placesInfo").get(0)
+        );
+        service.getDetails(
+          {
+            placeId: location
+          },
+          function(place, status) {
+            console.log("Place details:", place);
+            //see comment above createInfoBox function
+            createInfoBox(place);
+          }
+        );
+      }
+
+      // Takes the google Places Details object and parses out useful information and builds a card for each location in the loop.  Card div is then pushed to the DOM
+      function createInfoBox(place) {
+        let photos = place.photos[0].getUrl({
+          maxWidth: 270,
+          maxHeight: 350
+        });
+        let placeInfoBox = ` 
                     <div class="card bg-light">
                         <div class="row">
                             <div class="col-md-4 container-fluid">
@@ -291,22 +260,67 @@ googleMapInit = () =>{
                             <div class="col-md-8 px-3">
                                 <div class="card-block px-3">
                                     <br>
-                                    <h2 class="card-title">${place.name}<span><a href="${place.website}" target="_blank" class="btn btn-sm btn-primary card-btn">More Info</a></span></h2>
-                                    <p class="card-text"><em>Google rating: ${place.rating}</em></p>
-                                    <h5 class="card-text">${place.formatted_address}</h5>
-                                    <h5 class="card-text">${place.formatted_phone_number}</h5>
+                                    <h2 class="card-title">${
+                                      place.name
+                                    }<span><a href="${
+          place.website
+        }" target="_blank" class="btn btn-sm btn-primary card-btn">More Info</a></span></h2>
+                                    <p class="card-text"><em>Google rating: ${
+                                      place.rating
+                                    }</em></p>
+                                    <h5 class="card-text">${
+                                      place.formatted_address
+                                    }</h5>
+                                    <h5 class="card-text">${
+                                      place.formatted_phone_number
+                                    }</h5>
                                     <br>
                                 </div>
                             </div>
                         </div>
                     </div>    
                         `;
-                  $("#place-list").append(placeInfoBox);
-                }
-              }
-                map.fitBounds(bounds);
-            }
-}  
+        $("#place-list").append(placeInfoBox);
+      }
+    }
+    map.fitBounds(bounds);
+  };
+
+  //updates progress bar [WRITE A MORE CONCISE FUNCTION WHEN YOU HAVE TIME!]
+  function progressBar() {
+    if (!$("#progOne").hasClass("done")) {
+      $("#progOne").addClass("done");
+      $("#progOne").removeClass("todo");
+    } else if (!$("#progTwo").hasClass("done")) {
+      $("#progTwo").addClass("done");
+      $("#progTwo").removeClass("todo");
+    } else if (!$("#progThree").hasClass("done")) {
+      $("#progThree").addClass("done");
+      $("#progThree").removeClass("todo");
+    }
+  }
+
+  //checks if route is complete based on progress bar, then toggles the two buttons so 'Create Route' button appears if appropriate
+  function routeCompleteCheck() {
+    if ($("#progThree").hasClass("done")) {
+      $("#routeAdd").toggle();
+      $("#openRouteModal").toggle();
+      console.log(routeMarkers);
+    }
+  }
+
+  // keeps track of the user's previously chosen location markers and repopulates the map with them whenever the user switches categories
+  function populateRoute() {
+    for (i = 0; i < routeMarkers.length; i++) {
+      routeMarkers[i] = new google.maps.Marker({
+        position: routeMarkers[i].position,
+        map: map,
+        title: routeMarkers[i].title
+      });
+      routeMarkers[i].setAnimation(google.maps.Animation.BOUNCE);
+    }
+  }
+};                 
 $(document).ready(event =>{
 
           $(window).scrollTop(0);  
@@ -320,26 +334,8 @@ $(document).ready(event =>{
               //$(document.body).html(res.status);
               document.documentElement.innerHTML = data;
               googleMapInit();
-<<<<<<< HEAD
-              console.log(xhr.status);
-            }).fail(xhr => console.log(xhr.responseText.message));    
-
-});
- 
-          
-//
-//Front end login receive signature
-//
-$('#login_form').on('submit', event => {
-      event.preventDefault();
-      let user = {email:$('#login-email').val(),password:$('#login-password').val()};
-      authenticate(user);
-    });
-
-=======
               //console.log(xhr.status);
             }).fail(xhr => console.log(xhr.responseText.message));    
 
 });
 googleMapInit();
->>>>>>> c7d6d8bfc4b56094d3b053f801a93f337f43b9bf
