@@ -62,18 +62,17 @@ const authenticate =(user) => {
   let userToken = localStorage.getItem('EHUserToken');
   console.log(user);
 
-    $.post("http://localhost:8080/auth",user)
-    .done(
-      (data,status,xhr) => {
-          $.ajaxSetup({
-            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
-          });
-          localStorage.setItem('EHUserToken',data.token); 
+    $.post("http://eventhop.herokuapp.com/auth", user)
+      .done((data, status, xhr) => {
+        $.ajaxSetup({
+          beforeSend: xhr =>
+            xhr.setRequestHeader("Authorization", `Bearer ${data.token}`)
+        });
+        localStorage.setItem("EHUserToken", data.token);
 
-          console.log(data.user+"---user---");
-
-        }
-      ).fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
+        console.log(data.user + "---user---");
+      })
+      .fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
 }
 
 $('#login_form').on('submit', event => {
@@ -329,13 +328,14 @@ $(document).ready(event =>{
             beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
           });
 
-        $.get("http://localhost:8080/user/profile")
-          .done((data,status,xhr) => {
-              //$(document.body).html(res.status);
-              document.documentElement.innerHTML = data;
-              googleMapInit();
-              //console.log(xhr.status);
-            }).fail(xhr => console.log(xhr.responseText.message));    
+        $.get("http://eventhop.herokuapp.com/user/profile")
+          .done((data, status, xhr) => {
+            //$(document.body).html(res.status);
+            document.documentElement.innerHTML = data;
+            googleMapInit();
+            //console.log(xhr.status);
+          })
+          .fail(xhr => console.log(xhr.responseText.message));    
 
 });
 googleMapInit();
