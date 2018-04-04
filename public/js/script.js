@@ -209,8 +209,7 @@ googleMapInit = () => {
     $("#map-select").empty();
     $("#map-select").append($("<option>", { id: 'map-select-title', text: "Select a location!", selected: true, disabled: true }));
     // loops through all the found locations in the category and creates appropriate icon
-    for (let i = 0; i < places.length; i++) {
-      place = places[i];
+    for (let i = 0, place; (place = places[i]); i++) {
       this.image = {
         url: place.icon,
         size: new google.maps.Size(71, 71),
@@ -228,12 +227,6 @@ googleMapInit = () => {
       markers.push(marker);
       placesArr.push(place);
       populateRoute();
-      $("#map-select").append(
-        $("<option>", {
-          value: i,
-          text: place.name
-        })
-      );
       bounds.extend(place.geometry.location);
 
       //google Places Details API is used to get more specific information on each location in the loop
@@ -256,6 +249,10 @@ googleMapInit = () => {
 
       // Takes the google Places Details object and parses out useful information and builds a card for each location in the loop.  Card div is then pushed to the DOM
       function createInfoBox(place) {
+        $("#map-select").append($("<option>", {
+            value: i,
+            text: place.name
+          }));
         let photos = place.photos[0].getUrl({
           maxWidth: 270,
           maxHeight: 350
