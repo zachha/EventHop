@@ -77,8 +77,8 @@ module.exports = {
   },
 
   // Finds and returns a specific group by group name
-  findGroup: (groupNames) => {
-     models.Groups.findOne({
+  findGroups: (groupNames) => {
+     models.Groups.findAll({
        where: {
          group_name: models.Sequelize.or(
           {id:groupNames}
