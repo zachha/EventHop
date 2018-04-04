@@ -28,7 +28,7 @@ passport.use(new LocalStrategy({
 
 passport.use(new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-        secretOrKey   : 'secret'
+        secretOrKey   : 'flubbybunny'
     },
     function (jwtPayload, cb) {
         //find the user in db if needed

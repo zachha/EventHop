@@ -27,7 +27,7 @@
   });
 
   // Collapse Navbar
-   let navbarCollapse = () => {
+  let navbarCollapse = () => {
     if ($("#mainNav").offset().top > 100) {
       $("#mainNav").addClass("navbar-shrink");
     } else {
@@ -62,26 +62,27 @@ const authenticate =(user) => {
   let userToken = localStorage.getItem('EHUserToken');
   console.log(user);
 
-    $.post("http://localhost:8080/auth",user)
-    .done(
-      (data,status,xhr) => {
-          $.ajaxSetup({
-            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
-          });
-          localStorage.setItem('EHUserToken',data.token); 
-
-          console.log(data.user+"---user---");
-
-        }
-      ).fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
+  $.post("http://localhost:8080/auth",user)
+  .done(
+    (data,status,xhr) => {
+      $.ajaxSetup({
+        beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
+      });
+      localStorage.setItem('EHUserToken',data.token);
+      console.log(data.user);
+      $('.def-nav').remove();
+       $.get("http://localhost:8080/user/nav")
+            .done((data,status,xhr) => {
+              $('#mainNav_items').append(data);
+              googleMapInit();
+            })
+          })
+      .fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
 }
 
 $('#login_form').on('submit', event => {
-      event.preventDefault();
-      //console.log({email:$('#username').val(),password:$('#password').val()});
-
+  event.preventDefault();
       authenticate({email:$('#username').val(),password:$('#password').val()});
-
     });
 
 //
@@ -90,51 +91,51 @@ $('#login_form').on('submit', event => {
 
 // use the different category buttons to reload the map based on location types
 googleMapInit = () =>{
-            let markers = [];
-            let placesArr = [];
-            let routeMarkers = [];
-            let routePlaces = [];
-            let mapNum;
-            
-            $("#map-select").change(() => {
-              if( markers[mapNum] === true && markers[mapNum].getAnimation() != null) {
-                markers[mapNum].setAnimation(null);
-              }
-              var e = document.getElementById("map-select");
-              mapNum = e.options[e.selectedIndex].value;
-              console.log(markers[mapNum]);
-              markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
-            } );
-            $("#routeAdd").on('click', () => {
-              routeMarkers.push(markers[mapNum]);
-              routePlaces.push(placesArr[mapNum]);
-              console.log(routePlaces);
-              initMap();
-              console.log(routeMarkers);
-              populateRoute();
-              progressBar();
-              routeCompleteCheck();
-            })
-            $("#createGroup").on('click', () => {
-              createGroup("Cupcakes");
-            })
-            $("#create-group-button").on('click', () => initMap());
-            $("#cafes").on('click', () => initMap('cafe'));
-            $("#bar").on('click', () => initMap('bar'));
-            $("#art_gallery").on('click', () => initMap('art_gallery'));
-            $("#restaurant").on('click', () => initMap('restaurant'));
-            $("#movie_theater").on('click', () => initMap('movie_theater'));
-            $("#spa").on('click', () => initMap('spa'));
-            $("#create_title_button").on("click", () => {
-              console.log($('#group_title_input').val());
+  let markers = [];
+  let placesArr = [];
+  let routeMarkers = [];
+  let routePlaces = [];
+  let mapNum;
 
-              $('#create-group-title').text($('#group_title_input').val());
-            });
+  $("#map-select").change(() => {
+    if( markers[mapNum] === true && markers[mapNum].getAnimation() != null) {
+      markers[mapNum].setAnimation(null);
+    }
+    var e = document.getElementById("map-select");
+    mapNum = e.options[e.selectedIndex].value;
+    console.log(markers[mapNum]);
+    markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
+  } );
+  $("#routeAdd").on('click', () => {
+    routeMarkers.push(markers[mapNum]);
+    routePlaces.push(placesArr[mapNum]);
+    console.log(routePlaces);
+    initMap();
+    console.log(routeMarkers);
+    populateRoute();
+    progressBar();
+    routeCompleteCheck();
+  })
+  $("#createGroup").on('click', () => {
+    createGroup("Cupcakes");
+  })
+  $("#create-group-button").on('click', () => initMap());
+  $("#cafes").on('click', () => initMap('cafe'));
+  $("#bar").on('click', () => initMap('bar'));
+  $("#art_gallery").on('click', () => initMap('art_gallery'));
+  $("#restaurant").on('click', () => initMap('restaurant'));
+  $("#movie_theater").on('click', () => initMap('movie_theater'));
+  $("#spa").on('click', () => initMap('spa'));
+  $("#create_title_button").on("click", () => {
+    console.log($('#group_title_input').val());
 
-            var initMap = (category) => {
-              markers = [];
-              $(".placeInfo").remove();
-              $("#place-list").text("");
+    $('#create-group-title').text($('#group_title_input').val());
+  });
+
+  var initMap = (category) => {
+    markers = [];
+    $(".placeInfo").remove();
+    $("#place-list").text("");
               // Create the map.
               this.durham = { lat: 35.997, lng: -78.904 };
               map = new google.maps.Map(document.getElementById('map'), {
@@ -224,13 +225,13 @@ googleMapInit = () =>{
                 function logPlaceDetails(location) {
                   var service = new google.maps.places.PlacesService($("#placesInfo").get(0));
                   service.getDetails(
-                    {
-                      placeId: location
-                    },
-                    function(place, status) {
-                      console.log("Place details:", place);
-                      createInfoBox(place);
-                    }
+                  {
+                    placeId: location
+                  },
+                  function(place, status) {
+                    console.log("Place details:", place);
+                    createInfoBox(place);
+                  }
                   );
                 }
 
@@ -240,45 +241,48 @@ googleMapInit = () =>{
                     maxHeight: 350
                   });
                   let placeInfoBox = ` 
-                    <div class="card bg-light">
-                        <div class="row">
-                            <div class="col-md-4 container-fluid">
-                                <img src="${photos}" class="w-100 img-responsive progress">
-                            </div>
-                            <div class="col-md-8 px-3">
-                                <div class="card-block px-3">
-                                    <br>
-                                    <h2 class="card-title">${place.name}<span><a href="${place.website}" target="_blank" class="btn btn-sm btn-primary card-btn">More Info</a></span></h2>
-                                    <p class="card-text"><em>Google rating: ${place.rating}</em></p>
-                                    <h5 class="card-text">${place.formatted_address}</h5>
-                                    <h5 class="card-text">${place.formatted_phone_number}</h5>
-                                    <br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>    
-                        `;
+                  <div class="card bg-light">
+                  <div class="row">
+                  <div class="col-md-4 container-fluid">
+                  <img src="${photos}" class="w-100 img-responsive progress">
+                  </div>
+                  <div class="col-md-8 px-3">
+                  <div class="card-block px-3">
+                  <br>
+                  <h2 class="card-title">${place.name}<span><a href="${place.website}" target="_blank" class="btn btn-sm btn-primary card-btn">More Info</a></span></h2>
+                  <p class="card-text"><em>Google rating: ${place.rating}</em></p>
+                  <h5 class="card-text">${place.formatted_address}</h5>
+                  <h5 class="card-text">${place.formatted_phone_number}</h5>
+                  <br>
+                  </div>
+                  </div>
+                  </div>
+                  </div>    
+                  `;
                   $("#place-list").append(placeInfoBox);
                 }
               }
-                map.fitBounds(bounds);
+              map.fitBounds(bounds);
             }
-}  
-$(document).ready(event =>{
+          }  
+          $(document).ready(event =>{
 
-          $(window).scrollTop(0);  
-          let userToken = localStorage.getItem('EHUserToken');     
-          $.ajaxSetup({
-            beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
-          });
-
-        $.get("http://localhost:8080/user/profile")
-          .done((data,status,xhr) => {
-              //$(document.body).html(res.status);
-              document.documentElement.innerHTML = data;
+            $(window).scrollTop(0);  
+            let userToken = localStorage.getItem('EHUserToken');     
+            $.ajaxSetup({
+              beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
+            });
+            $.get("http://localhost:8080/user/nav")
+            .done((data,status,xhr) => {
+              $('#mainNav_items').append(data);
               googleMapInit();
-              //console.log(xhr.status);
-            }).fail(xhr => console.log(xhr.responseText.message));    
+            }).fail(xhr => {
+              console.log(xhr.responseText.message);
+              $.get('http://localhost:8080/nav')
+              .done((data,status,xhr) => {
+                $('#mainNav_items').append(data);
+              });
+            });    
 
-});
-googleMapInit();
+          });
+          googleMapInit();
