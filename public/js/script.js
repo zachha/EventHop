@@ -120,7 +120,7 @@ googleMapInit = () => {
     console.log("places array: " + JSON.stringify(placesArr[mapNum]));
     routeLocations();
     initMap();
-    console.log("route markers: " + JSON.stringify(routeMarkers));
+    console.log("route markers: " + routeMarkers);
     populateRoute();
     progressBar();
     routeCompleteCheck();
@@ -307,12 +307,23 @@ googleMapInit = () => {
     }
   }
 
+  // resets the classes for the progress bar
+  function resetProgress() {
+    $("#progOne").addClass("todo");
+    $("#progOne").removeClass("done"); 
+    $("#progTwo").addClass("todo");
+    $("#progTwo").removeClass("done"); 
+    $("#progThree").addClass("todo");
+    $("#progThree").removeClass("done"); 
+  }
+
   //checks if route is complete based on progress bar, then toggles the two buttons so 'Create Route' button appears if appropriate
   function routeCompleteCheck() {
     if ($("#progThree").hasClass("done")) {
       $("#routeAdd").toggle();
       $("#openRouteModal").toggle();
       console.log(routeMarkers);
+      resetProgress();
     }
   }
 
