@@ -43,6 +43,3 @@ function searchAllUsers() {
     .catch(err => console.log(err));
 }
 
-
-createUser("guest@gmail.com", "guest");
-
