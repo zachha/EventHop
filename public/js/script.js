@@ -209,7 +209,8 @@ googleMapInit = () => {
     $("#map-select").empty();
     $("#map-select").append($("<option>", { id: 'map-select-title', text: "Select a location!", selected: true, disabled: true }));
     // loops through all the found locations in the category and creates appropriate icon
-    for (let i = 0, place; (place = places[i]); i++) {
+    for (let i = 0; i < places.length; i++) {
+      place = places[i];
       this.image = {
         url: place.icon,
         size: new google.maps.Size(71, 71),
