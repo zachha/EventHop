@@ -333,17 +333,17 @@ googleMapInit = () => {
       startLoc = placesArr[mapNum].name;
       startLoc += ", ";
       startLoc += placesArr[mapNum].formatted_address;
-      console.log(startLoc);
+      console.log("Start Location: " + startLoc);
     } else if (secondLoc === "") {
       secondLoc = placesArr[mapNum].name;
       secondLoc += ", ";
       secondLoc += placesArr[mapNum].formatted_address;
-      console.log(secondLoc);
+      console.log("Middle Location: " + secondLoc);
     } else if (lastLoc === "") {
       lastLoc = placesArr[mapNum].name;
       lastLoc += ", ";
       lastLoc += placesArr[mapNum].formatted_address;
-      console.log(lastLoc);
+      console.log("Last Location: " + lastLoc);
     }
   }
   
