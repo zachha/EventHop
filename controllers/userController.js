@@ -1,16 +1,10 @@
 const models = require('../models');
 
 // function for user to create username and password for user authentication
-<<<<<<< HEAD
-function createUser(email, password) {
-    models.User.create({
-        email: email,
-=======
 function createUser(email, userName, password) {
     models.User.create({
         email: email,
         user_name: userName,
->>>>>>> f342467c033d64d39e5521892c979bd65776b5cc
         password: password
     })
     .then(data => console.log(data.dataValues))
