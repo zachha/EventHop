@@ -117,10 +117,10 @@ googleMapInit = () => {
     $(categoryName).toggle();
     routeMarkers.push(markers[mapNum]);
     routePlaces.push(placesArr[mapNum]);
-    console.log("places array: " + placesArr[mapNum]);
+    console.log("places array: " + JSON.stringify(placesArr[mapNum]));
     routeLocations();
     initMap();
-    console.log("route markers: " + routeMarkers);
+    console.log("route markers: " + JSON.stringify(routeMarkers));
     populateRoute();
     progressBar();
     routeCompleteCheck();
@@ -225,7 +225,7 @@ googleMapInit = () => {
       });
       // markers and their place objects are then pushed to arrays in the same order the map-select drop-down is populated so the value can be used to link the correct marker/place
       markers.push(marker);
-      placesArr.push(place);
+      
       populateRoute();
       bounds.extend(place.geometry.location);
 
@@ -249,6 +249,7 @@ googleMapInit = () => {
 
       // Takes the google Places Details object and parses out useful information and builds a card for each location in the loop.  Card div is then pushed to the DOM
       function createInfoBox(place) {
+        placesArr.push(place);
         $("#map-select").append($("<option>", {
             value: i,
             text: place.name
