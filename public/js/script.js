@@ -115,9 +115,10 @@ googleMapInit = () => {
     $(categoryName).toggle();
     routeMarkers.push(markers[mapNum]);
     routePlaces.push(placesArr[mapNum]);
-    console.log(placesArr[mapNum]);
+    console.log("places array: " + placesArr[mapNum]);
+    routeLocations();
     initMap();
-    console.log(routeMarkers);
+    console.log("route markers: " + routeMarkers);
     populateRoute();
     progressBar();
     routeCompleteCheck();
@@ -180,6 +181,7 @@ googleMapInit = () => {
 
     // Create the places service.
     this.service = new google.maps.places.PlacesService(map);
+    //Create the directions services
     this.directionsService = new google.maps.DirectionsService();
     this.directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -324,13 +326,26 @@ googleMapInit = () => {
     }
   }
 
-  /*
+  // stores the name and address of the user's selected locations to be used in google map's route directions and pushed to the database for route information
   function routeLocations() {
     if(startLoc === "") {
-      startLoc = 
+      startLoc = placesArr[mapNum].name;
+      startLoc += ", ";
+      startLoc += placesArr[mapNum].formatted_address;
+      console.log(startLoc);
+    } else if (secondLoc === "") {
+      secondLoc = placesArr[mapNum].name;
+      secondLoc += ", ";
+      secondLoc += placesArr[mapNum].formatted_address;
+      console.log(secondLoc);
+    } else if (lastLoc === "") {
+      lastLoc = placesArr[mapNum].name;
+      lastLoc += ", ";
+      lastLoc += placesArr[mapNum].formatted_address;
+      console.log(lastLoc);
     }
   }
-  */
+  
 };                 
 $(document).ready(event =>{
 
