@@ -9,17 +9,20 @@ route.get('/', (req, res, next) => {
 });
 
 /* GET user profile. */
-route.get('/profile', (req, res, next) => {
-    let user = req.user;
-    let groups = gdb;  
-    /*let userData = {user:req.user, groups:gdb.findGroup([
+route.get('/groups', (req, res, next) => {
+    let user = req.user;  
+    let userData = {user:req.user, groups:gdb.findGroups([
             user.user_route_one,
             user.user_route_two,
             user.user_route_three
-    	]).get({plain:true})}*/
+    	]).get({plain:true})}
 
-    //send object containing
-    res.render('index',{user:true});
+    
+});
+
+route.get('/nav', (req,res,next) => {
+    //send tiny partial to get appended to navbar
+    res.render('partials/user_nav',{layout:false});
 });
 
 route.post('/create-group',(req,data,res) =>{

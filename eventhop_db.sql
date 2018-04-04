@@ -1,21 +1,21 @@
-DROP DATABASE IF EXISTS eventhop_db;
-CREATE DATABASE eventhop_db;
+drop table groups;
+drop table usergroups;
 
-USE eventhop_db;
+USE heroku_8a54e8cb305632e;
 
 CREATE TABLE user (
-	user_id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL AUTO_INCREMENT,
     user_name VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL,
     user_route_one TEXT,
     user_route_two TEXT,
     user_route_three TEXT,
     number_of_groups INT,
-	PRIMARY KEY (user_id)
+    PRIMARY KEY (user_id)
 );
 
 CREATE TABLE groups (
-	group_id INT NOT NULL AUTO_INCREMENT,
+    group_id INT NOT NULL AUTO_INCREMENT,
     group_name VARCHAR(80) NOT NULL,
     group_members INT,
     is_event BOOLEAN,
@@ -25,8 +25,8 @@ CREATE TABLE groups (
     PRIMARY KEY(group_id)
 );
     
-CREATE TABLE user2groups (
-	user_id INT NOT NULL,
+CREATE TABLE usergroups (
+    user_id INT NOT NULL,
     group_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (group_id) REFERENCES groups (group_id) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -54,6 +54,3 @@ VALUES ("Margaritaville", "80", False);
 INSERT INTO user2groups (user_id, group_id)
 VALUES ("1", "3");
 
-Select * FROM user;
-SELECT * FROM groups;
-SELECT * FROM user2groups;
