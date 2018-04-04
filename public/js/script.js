@@ -170,6 +170,7 @@ googleMapInit = () => {
   //this initializes the google map and sets the marker in downtown durham
   var initMap = category => {
     // clears these variables/elements so they can be repopulated based on the location categories when the user changes them
+    placesArr = [];
     markers = [];
     $(".placeInfo").remove();
     $("#place-list").text("");
@@ -225,7 +226,6 @@ googleMapInit = () => {
       });
       // markers and their place objects are then pushed to arrays in the same order the map-select drop-down is populated so the value can be used to link the correct marker/place
       markers.push(marker);
-      
       populateRoute();
       bounds.extend(place.geometry.location);
 
