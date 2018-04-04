@@ -67,9 +67,10 @@ const authenticate =(user) => {
         $.ajaxSetup({
           beforeSend: xhr =>
             xhr.setRequestHeader("Authorization", `Bearer ${data.token}`)
+            
         });
         localStorage.setItem("EHUserToken", data.token);
-
+        $("#loginModal").modal('toggle');
         console.log(data.user + "---user---");
       })
       .fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
@@ -94,6 +95,9 @@ googleMapInit = () => {
   let routePlaces = [];
   let categoryName;
   let mapNum;
+  let startLoc = "";
+  let secondLoc = "";
+  let lastLoc = "";
 
   //on change, gets the value from the selected location and makes the marker bounce to show the user where it is
   $("#map-select").change(() => {
@@ -111,7 +115,7 @@ googleMapInit = () => {
     $(categoryName).toggle();
     routeMarkers.push(markers[mapNum]);
     routePlaces.push(placesArr[mapNum]);
-    console.log(routePlaces);
+    console.log(placesArr[mapNum]);
     initMap();
     console.log(routeMarkers);
     populateRoute();
@@ -319,6 +323,14 @@ googleMapInit = () => {
       routeMarkers[i].setAnimation(google.maps.Animation.BOUNCE);
     }
   }
+
+  /*
+  function routeLocations() {
+    if(startLoc === "") {
+      startLoc = 
+    }
+  }
+  */
 };                 
 $(document).ready(event =>{
 

@@ -1,9 +1,9 @@
 const models = require('../models');
 
 // function for user to create username and password for user authentication
-function createUser(userName, password) {
+function createUser(email, password) {
     models.User.create({
-        user_name: userName,
+        email: email,
         password: password
     })
     .then(data => console.log(data.dataValues))
@@ -44,4 +44,5 @@ function searchAllUsers() {
 }
 
 
+createUser("guest@gmail.com", "guest");
 
