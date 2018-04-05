@@ -100,6 +100,7 @@ googleMapInit = () => {
   let startLoc = "";
   let secondLoc = "";
   let lastLoc = "";
+  let completeRoute = "";
 
   //on change, gets the value from the selected location and makes the marker bounce to show the user where it is
   $("#map-select").change(() => {
@@ -128,6 +129,11 @@ googleMapInit = () => {
 
   $("#openRouteModal").on('click', () => {
     resetProgress();
+    completeRoute = startLoc + "&";
+    completeRoute += secondLoc + "&";
+    completeRoute += lastLoc;
+    console.log(completeRoute);
+    displayRoute(startLoc, secondLoc, lastLoc);
   })
 
   // Allows the user to Create a Group, pushing the route to the database and allowing others to search for and join the group.
@@ -232,34 +238,31 @@ googleMapInit = () => {
 
       //google Places Details API is used to get more specific information on each location in the loop
       logPlaceDetails(place.place_id);
-      function logPlaceDetails(location) {
-        var service = new google.maps.places.PlacesService(
-          $("#placesInfo").get(0)
-        );
-        service.getDetails(
-          {
-            placeId: location
-          },
-          function(place, status) {
-            console.log("Place details:", place);
-            //see comment above createInfoBox function
-            createInfoBox(place);
-          }
-        );
-      }
+    }
+    map.fitBounds(bounds);
+  };
 
-      // Takes the google Places Details object and parses out useful information and builds a card for each location in the loop.  Card div is then pushed to the DOM
-      function createInfoBox(place) {
-        placesArr.push(place);
-        $("#map-select").append($("<option>", {
-            value: i,
-            text: place.name
-          }));
-        let photos = place.photos[0].getUrl({
-          maxWidth: 270,
-          maxHeight: 350
-        });
-        let placeInfoBox = ` 
+  //Uses the google Places Details API to get more detailed information and passes it into createInfoBox function to build divs with specific info for each place
+  function logPlaceDetails(location) {
+    var service = new google.maps.places.PlacesService($("#placesInfo").get(0));
+    service.getDetails(
+      {
+        placeId: location
+      },
+      function(place, status) {
+        console.log("Place details:", place);
+        //see comment above createInfoBox function
+        createInfoBox(place);
+      }
+    );
+  }
+
+  // Takes the google Places Details object and parses out useful information and builds a card for each location in the loop.  Card div is then pushed to the DOM
+  function createInfoBox(place) {
+    placesArr.push(place);
+    $("#map-select").append($("<option>", { value: i, text: place.name }));
+    let photos = place.photos[0].getUrl({ maxWidth: 270, maxHeight: 350 });
+    let placeInfoBox = ` 
                     <div class="card bg-light">
                         <div class="row">
                             <div class="col-md-4 container-fluid">
@@ -268,31 +271,19 @@ googleMapInit = () => {
                             <div class="col-md-8 px-3">
                                 <div class="card-block px-3">
                                     <br>
-                                    <h2 class="card-title">${
-                                      place.name
-                                    }<span><a href="${
-          place.website
-        }" target="_blank" class="btn btn-sm btn-primary card-btn">More Info</a></span></h2>
-                                    <p class="card-text"><em>Google rating: ${
-                                      place.rating
-                                    }</em></p>
-                                    <h5 class="card-text">${
-                                      place.formatted_address
-                                    }</h5>
-                                    <h5 class="card-text">${
-                                      place.formatted_phone_number
-                                    }</h5>
+                                    <h2 class="card-title">${place.name}<span><a href="${place.website}" target="_blank" class="btn btn-sm btn-primary card-btn">More Info</a></span></h2>
+                                    <p class="card-text"><em>Google rating: ${place.rating}</em></p>
+                                    <h5 class="card-text">${place.formatted_address}</h5>
+                                    <h5 class="card-text">${place.formatted_phone_number}</h5>
                                     <br>
                                 </div>
                             </div>
                         </div>
                     </div>    
                         `;
-        $("#place-list").append(placeInfoBox);
-      }
-    }
-    map.fitBounds(bounds);
-  };
+    $("#place-list").append(placeInfoBox);
+    $("#route-place-list").append(placeInfoBox);
+  }
 
   //updates progress bar [WRITE A MORE CONCISE FUNCTION WHEN YOU HAVE TIME!]
   function progressBar() {
@@ -358,7 +349,7 @@ googleMapInit = () => {
       console.log("Last Location: " + lastLoc);
     }
   }
-  /*
+  
 
   function displayRoute(firstLocation, secondLocation, lastLocation) {
     //Create the directions services
@@ -369,14 +360,15 @@ googleMapInit = () => {
       center: durham,
       zoom: 15
     });
+    $("#route-place-list").text("");
     directionsDisplay.setMap(routemap);
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 
-    calculateAndDisplayRoute(directionsService, directionsDisplay);
+    calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation);
 
   }
 
-  function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+  function calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation) {
     directionsService.route(
       {
         origin: firstLocation,
@@ -392,6 +384,7 @@ googleMapInit = () => {
       function(response, status) {
         if (status === "OK") {
           directionsDisplay.setDirections(response);
+          console.log(response);
           logPlaceDetails(response.geocoded_waypoints[0].place_id);
           logPlaceDetails(response.geocoded_waypoints[1].place_id);
           logPlaceDetails(response.geocoded_waypoints[2].place_id);
@@ -401,7 +394,7 @@ googleMapInit = () => {
       }
     );
   }
-  */
+  
   
 };                 
 $(document).ready(event =>{
@@ -414,10 +407,9 @@ $(document).ready(event =>{
             $.get("http://eventhop.herokuapp.com/user/nav")
             .done((data,status,xhr) => {
               $('#mainNav_items').append(data);
-              googleMapInit();
             }).fail(xhr => {
               console.log(xhr.responseText.message);
-              $.get('http://eventhop.herokuapp.com//nav')
+              $.get('http://eventhop.herokuapp.com/nav')
               .done((data,status,xhr) => {
                 $('#mainNav_items').append(data);
               });

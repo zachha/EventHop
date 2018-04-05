@@ -304,6 +304,10 @@ header.masthead .intro-text .intro-heading {
   max-height:500px;
 }
 
+#show-route-modal {
+  overflow-y:auto;
+}
+
 .portfolio-item {
   right: 0;
   margin: 0 0 15px;
