@@ -271,10 +271,13 @@ googleMapInit = () => {
   // Takes the google Places Details object and parses out useful information and builds a card for each location in the loop.  Card div is then pushed to the DOM
   function createInfoBox(place) {
     
-    if(place.photos) {
-      let photos = place.photos[0].getUrl({ maxWidth: 270, maxHeight: 350 });
-    } else {
+    if(place.photos === undefined) {
       let photos = "public/img/portfolio/durham.jpeg";
+    } else {
+      let photos = place.photos[0].getUrl({
+        maxWidth: 270,
+        maxHeight: 350
+      });
     }
     let placeInfoBox = ` 
                     <div class="card bg-light">
