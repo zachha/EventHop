@@ -182,7 +182,7 @@ googleMapInit = () => {
     // clears these variables/elements so they can be repopulated based on the location categories when the user changes them
     placesArr = [];
     markers = [];
-    $(".placeInfo").remove();
+    //$(".placeInfo").remove();
     $("#place-list").text("");
 
     // Create the map.
