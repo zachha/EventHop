@@ -210,8 +210,12 @@ letter-spacing: 4px;
   height: 400px;
   width: 100%;
 }
+#map-select-div{
+  width: 200px;
+  float: right;
+}
 #map-select{
-  width:100%;
+  width: 100%;
   overflow-x:scroll;
 }
 .mbr{

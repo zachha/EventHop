@@ -188,9 +188,6 @@ googleMapInit = () => {
 
     // Create the places service.
     this.service = new google.maps.places.PlacesService(map);
-    //Create the directions services
-    this.directionsService = new google.maps.DirectionsService();
-    this.directionsDisplay = new google.maps.DirectionsRenderer();
 
     // Perform a nearby search.
     service.nearbySearch(
@@ -230,7 +227,7 @@ googleMapInit = () => {
       });
       // markers and their place objects are then pushed to arrays in the same order the map-select drop-down is populated so the value can be used to link the correct marker/place
       markers.push(marker);
-      //populateRoute();
+      populateRoute();
       bounds.extend(place.geometry.location);
 
       //google Places Details API is used to get more specific information on each location in the loop
@@ -361,10 +358,50 @@ googleMapInit = () => {
       console.log("Last Location: " + lastLoc);
     }
   }
+  /*
 
-  function displayRoute() {
+  function displayRoute(firstLocation, secondLocation, lastLocation) {
+    //Create the directions services
+    let directionsService = new google.maps.DirectionsService();
+    let directionsDisplay = new google.maps.DirectionsRenderer();
+    this.durham = { lat: 35.997, lng: -78.904 };
+    routemap = new google.maps.Map(document.getElementById("routemap"), {
+      center: durham,
+      zoom: 15
+    });
+    directionsDisplay.setMap(routemap);
+    directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
 
   }
+
+  function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    directionsService.route(
+      {
+        origin: firstLocation,
+        destination: secondLocation,
+        waypoints: [
+          {
+            location: lastLocation,
+            stopover: true
+          }
+        ],
+        travelMode: "WALKING"
+      },
+      function(response, status) {
+        if (status === "OK") {
+          directionsDisplay.setDirections(response);
+          logPlaceDetails(response.geocoded_waypoints[0].place_id);
+          logPlaceDetails(response.geocoded_waypoints[1].place_id);
+          logPlaceDetails(response.geocoded_waypoints[2].place_id);
+        } else {
+          window.alert("Directions request failed due to " + status);
+        }
+      }
+    );
+  }
+  */
   
 };                 
 $(document).ready(event =>{
