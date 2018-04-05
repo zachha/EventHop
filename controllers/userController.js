@@ -44,5 +44,3 @@ function searchAllUsers() {
     .catch(err => console.log(err));
 }
 
-
-
