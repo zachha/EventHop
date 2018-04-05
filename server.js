@@ -25,6 +25,7 @@ app.use(function(req, res, next) {
   );
   next();
 });
+
 // static directory
 app.use('/public',express.static(path.join(__dirname+'/public')));
 

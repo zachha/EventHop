@@ -53,6 +53,7 @@ function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
 }
 
+
 //front end handshake
 //
 //Front end login receive signature
@@ -109,17 +110,20 @@ googleMapInit = () => {
     }
     var e = document.getElementById("map-select");
     mapNum = e.options[e.selectedIndex].value;
-    console.log(markers[mapNum]);
+    console.log("markers[mapNum]: " + markers[mapNum]);
+    console.log("mapNum: " + mapNum);
     markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
   });
 
+  
+
   // Adds the user's chosen location as a bouncing red marker so they can see their previously chosen locations.  Also increases progress bar and checks if route is complete to toggle the 'Create Route' button
   $("#routeAdd").on("click", () => {
+    routeLocations();
     $(categoryName).toggle();
     routeMarkers.push(markers[mapNum]);
     routePlaces.push(placesArr[mapNum]);
     console.log("places array: " + JSON.stringify(placesArr[mapNum]));
-    routeLocations();
     initMap();
     console.log("route markers: " + routeMarkers);
     populateRoute();
@@ -208,16 +212,17 @@ googleMapInit = () => {
       }
     );
   };
-
   // creates the markers for the google map
-  var createMarkers = places => {
+  function createMarkers(places) {
     this.bounds = new google.maps.LatLngBounds();
-    this.placesList = document.getElementById("places");
+
     //empties select drop-down so it can be repopulated appropriately
     $("#map-select").empty();
     $("#map-select").append($("<option>", { id: 'map-select-title', text: "Select a location!", selected: true, disabled: true }));
+
     // loops through all the found locations in the category and creates appropriate icon
     for (let i = 0, place; (place = places[i]); i++) {
+      
       this.image = {
         url: place.icon,
         size: new google.maps.Size(71, 71),
@@ -232,24 +237,30 @@ googleMapInit = () => {
         position: place.geometry.location
       });
       // markers and their place objects are then pushed to arrays in the same order the map-select drop-down is populated so the value can be used to link the correct marker/place
+      console.log("index: " + i);
       markers.push(marker);
       populateRoute();
       bounds.extend(place.geometry.location);
 
       //google Places Details API is used to get more specific information on each location in the loop
-      logPlaceDetails(place.place_id);
+      logPlaceDetails(place.place_id, i);
     }
     map.fitBounds(bounds);
   };
 
   //Uses the google Places Details API to get more detailed information and passes it into createInfoBox function to build divs with specific info for each place
-  function logPlaceDetails(location) {
-    var service = new google.maps.places.PlacesService($("#placesInfo").get(0));
+  function logPlaceDetails(location, i) {
+    //var service = new google.maps.places.PlacesService($("#placesInfo").get(0));
     service.getDetails(
       {
         placeId: location
       },
       function(place, status) {
+        $("#map-select").append($("<option>", {
+            value: i,
+            text: place.name
+          }));
+        placesArr.push(place);
         console.log("Place details:", place);
         //see comment above createInfoBox function
         createInfoBox(place);
@@ -259,8 +270,7 @@ googleMapInit = () => {
 
   // Takes the google Places Details object and parses out useful information and builds a card for each location in the loop.  Card div is then pushed to the DOM
   function createInfoBox(place) {
-    placesArr.push(place);
-    $("#map-select").append($("<option>", { value: i, text: place.name }));
+    
     let photos = place.photos[0].getUrl({ maxWidth: 270, maxHeight: 350 });
     let placeInfoBox = ` 
                     <div class="card bg-light">
