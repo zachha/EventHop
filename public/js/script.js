@@ -126,6 +126,10 @@ googleMapInit = () => {
     routeCompleteCheck();
   });
 
+  $("#openRouteModal").on('click', () => {
+    resetProgress();
+  })
+
   // Allows the user to Create a Group, pushing the route to the database and allowing others to search for and join the group.
   $("#createGroup").on("click", () => {
     createGroup("Cupcakes");
@@ -226,7 +230,7 @@ googleMapInit = () => {
       });
       // markers and their place objects are then pushed to arrays in the same order the map-select drop-down is populated so the value can be used to link the correct marker/place
       markers.push(marker);
-      populateRoute();
+      //populateRoute();
       bounds.extend(place.geometry.location);
 
       //google Places Details API is used to get more specific information on each location in the loop
@@ -323,7 +327,6 @@ googleMapInit = () => {
       $("#routeAdd").toggle();
       $("#openRouteModal").toggle();
       console.log(routeMarkers);
-      resetProgress();
     }
   }
 
@@ -357,6 +360,10 @@ googleMapInit = () => {
       lastLoc += placesArr[mapNum].formatted_address;
       console.log("Last Location: " + lastLoc);
     }
+  }
+
+  function displayRoute() {
+
   }
   
 };                 
