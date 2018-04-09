@@ -115,8 +115,6 @@ googleMapInit = () => {
     markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
   });
 
-  
-
   // Adds the user's chosen location as a bouncing red marker so they can see their previously chosen locations.  Also increases progress bar and checks if route is complete to toggle the 'Create Route' button
   $("#routeAdd").on("click", () => {
     routeLocations();
@@ -124,11 +122,11 @@ googleMapInit = () => {
     routeMarkers.push(markers[mapNum]);
     routePlaces.push(placesArr[mapNum]);
     console.log("places array: " + JSON.stringify(placesArr[mapNum]));
-    initMap();
+    resetMap();
     console.log("route markers: " + routeMarkers);
-    populateRoute();
     progressBar();
     routeCompleteCheck();
+    populateRoute();
   });
 
   $("#openRouteModal").on('click', () => {
@@ -186,7 +184,6 @@ googleMapInit = () => {
     // clears these variables/elements so they can be repopulated based on the location categories when the user changes them
     placesArr = [];
     markers = [];
-    //$(".placeInfo").remove();
     $("#place-list").text("");
 
     // Create the map.
@@ -219,12 +216,13 @@ googleMapInit = () => {
     //empties select drop-down so it can be repopulated appropriately
     $("#map-select").empty();
     $("#map-select").append($("<option>", { id: 'map-select-title', text: "Select a location!", selected: true, disabled: true }));
-
+    placesRecursion(places, function() {console.log("recursion done!")} );
     // loops through all the found locations in the category and creates appropriate icon
-    for (let i = 0, place; (place = places[i]); i++) {
+    //for (let i = 0, place; (place = places[i]); i++) {
+    for (let i = 0; i<places.length; i++) {
       
       this.image = {
-        url: place.icon,
+        url: places[i].icon,
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),
@@ -233,24 +231,39 @@ googleMapInit = () => {
       this.marker = new google.maps.Marker({
         map: map,
         icon: image,
-        title: place.name,
-        position: place.geometry.location
+        title: places[i].name,
+        position: places[i].geometry.location
       });
       // markers and their place objects are then pushed to arrays in the same order the map-select drop-down is populated so the value can be used to link the correct marker/place
       console.log("index: " + i);
       markers.push(marker);
       populateRoute();
-      bounds.extend(place.geometry.location);
+      bounds.extend(places[i].geometry.location);
 
       //google Places Details API is used to get more specific information on each location in the loop
-      logPlaceDetails(place.place_id, i);
+      //await logPlaceDetails(place.place_id, i);
     }
     map.fitBounds(bounds);
   };
 
+  //recursive function so that all of the async API calls come back in the right index and so the map-select matches the marker index
+  function placesRecursion(places, ondone) {
+    function go(i) {
+      if (i >= places.length) {
+        ondone();
+      } else {
+          setTimeout(function() {
+            logPlaceDetails(places[i].place_id, i, function(i) {
+            return go(i + 1);
+            });
+          }, 400);
+        }
+      }
+    go(0);
+  }
+
   //Uses the google Places Details API to get more detailed information and passes it into createInfoBox function to build divs with specific info for each place
-  function logPlaceDetails(location, i) {
-    //var service = new google.maps.places.PlacesService($("#placesInfo").get(0));
+  function logPlaceDetails(location, i, callback) {
     service.getDetails(
       {
         placeId: location
@@ -261,11 +274,11 @@ googleMapInit = () => {
             text: place.name
           }));
         placesArr.push(place);
-        console.log("Place details:", place);
         //see comment above createInfoBox function
-        createInfoBox(place);
+       createInfoBox(place);
       }
     );
+    callback(i);
   }
 
   // Takes the google Places Details object and parses out useful information and builds a card for each location in the loop.  Card div is then pushed to the DOM
@@ -413,8 +426,21 @@ googleMapInit = () => {
       }
     );
   }
-  
-  
+
+  var resetMap = () => {
+    // clears these variables/elements so they can be repopulated based on the location categories when the user changes them
+    placesArr = [];
+    markers = [];
+    $("#place-list").text("");
+
+    // Create the map.
+    this.durham = { lat: 35.997, lng: -78.904 };
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: durham,
+      zoom: 15
+    });
+  }
+
 };                 
 $(document).ready(event =>{
 
