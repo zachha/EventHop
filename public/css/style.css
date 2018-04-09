@@ -967,3 +967,11 @@ ol.pro-meter li.todo:before {
      color:  #db0011;
      border: 2px solid #db0011;
  }
+
+ .red {
+   color: #db0011;
+ }
+
+ h1, h2, h3, h4, h5 {
+   color: #db0011;
+ }
