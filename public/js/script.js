@@ -428,6 +428,7 @@ googleMapInit = () => {
     startLoc = routeArr[0];
     secondLoc = routeArr[1];
     lastLoc = routeArr[2];
+    displayRoute(startLoc, secondLoc, lastLoc);
   }
 
   // this function resets the map without doing an area search on downtown durham with no category, so that the user won't get rate limited between picking route locations
