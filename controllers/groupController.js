@@ -88,10 +88,17 @@ module.exports = {
       limit: 5
       // again brings large array back, will have to select info we need here or server side
     }).then(groups => {
-      return groups.map(group => {
-         return { id: group.id,
-          members:group.group_members };
-      })
+      let top5 = groups.map(group => {
+        return { id: group.id, members: group.group_members };
+      });
+      let dataOut = {};
+      if (top5) {
+        for (let i = 0; i < top5.length; i++) {
+          dataOut[`id${i + 1}`] = top5[i].id;
+          dataOut[`count${i + 1}`] = top5[i].members;
+        }
+      }
+      res.render("index", dataOut);
     });
   },
 

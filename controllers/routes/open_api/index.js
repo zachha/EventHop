@@ -1,18 +1,7 @@
 gdb = require("../../groupController");
 module.exports = app => {
-  app.get("/", (req, res) => {
-    let top5 = gdb.searchPopularGroups();
-    console.log(top5);
-    let dataOut = {};
-    if (top5) {
-      for (let i = 0; i < top5.length; i++) {
-        dataOut[`id${i + 1}`] = top5[i].id;
-        dataOut[`count${i + 1}`] = top5[i].members;
-      }
-      console.log(dataOut);
-    }
-    res.render("index", dataOut);
-  });
+  app.get("/", (req, res) => gdb.searchPopularGroups(res));
+
   app.get("/nav", (req, res) =>
     res.render("partials/default_nav", { layout: false })
   );
