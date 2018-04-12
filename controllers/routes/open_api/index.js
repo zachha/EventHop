@@ -2,6 +2,7 @@ gdb = require("../../groupController");
 module.exports = app => {
   app.get("/", (req, res) => {
     let top5 = gdb.searchPopularGroups();
+    console.log(top5);
     let dataOut = {};
     if (top5) {
       for (let i = 0; i < top5.length; i++) {

@@ -46,6 +46,7 @@
   $('.portfolio-modal').on('hidden.bs.modal', e => {
     $(".navbar").removeClass("d-none");
   })
+
 })(jQuery);
 
 
@@ -53,6 +54,32 @@ function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
 }
 
+const getUser = () => {
+  $.get("http://eventhop.herokuapp.com/user") //request user groups form server
+    .done((data, status, xhr) => {
+      data.Groups.forEach(group => {
+        //generate buttons for user groups
+        $("#user-groups").append(`<div class="col-md-4 col-sm-6 portfolio-item">
+                <a class="portfolio-link" data-toggle="modal" href="#show-route-modal" data-group="${group.id}">
+                  <div class="portfolio-hover">
+                    <div class="portfolio-hover-content">
+                      <i class="fa fa-plus fa-3x"></i>
+                    </div>
+                  </div>
+                  <img class="img-fluid" src="public/img/portfolio/event-02.jpg" alt="">
+                </a>
+                <div class="portfolio-caption">
+                 <p class="text-muted">|${group.members} members|</p>
+                </div>
+              </div>`);
+      });
+    })
+    .fail(err =>
+      $("#user-groups").html(
+        '<h3 class="section-subheading text-muted">Create custom groups!</h3>'
+      )
+    ); //no user, no groups D`:
+};
 
 //front end handshake
 //

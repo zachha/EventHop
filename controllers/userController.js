@@ -39,11 +39,12 @@ module.exports = {
       },
       include: [
         {
-          model: models.Groups,
-          through: ["id"]
+          model: models.Groups
         }
       ]
     })
+    // TAKE OUT THE CONSOLE.LOG WHEN THE FUNCTION IS TESTED AND WORKS!!
+    // TAKE OUT THE CONSOLE.LOG WHEN THE FUNCTION IS TESTED AND WORKS!!
       .then(user => user.get({ plain: true }))
       .catch(err => console.log(err));
   },
@@ -57,3 +58,12 @@ module.exports = {
       .catch(err => console.log(err));
   }
 };
+
+/*
+module.exports.createUser("guest@gmail.com", "guest", "guest");
+module.exports.createUser("zach@email.com", "Zach", "zach");
+module.exports.createUser("kaitlyn@email.com", "Kaitlyn", "kaitlyn");
+module.exports.createUser("sarah@email.com", "Sarah", "sarah");
+module.exports.createUser("john@email.com", "John", "john");
+module.exports.createUser("tom@email.com", "Tom", "tom");
+*/

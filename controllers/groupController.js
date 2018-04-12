@@ -87,11 +87,11 @@ module.exports = {
       order: [["group_members", "DESC"]],
       limit: 5
       // again brings large array back, will have to select info we need here or server side
-    }).then(groups =>
+    }).then(groups => {
       groups.map(group => {
         return { id: group.id, members: group.group_members };
       })
-    );
+    });
   },
 
   // Finds and returns a specific group by group name
@@ -142,3 +142,11 @@ module.exports = {
       .catch(err => console.log(err));
   }
 };
+
+/*
+module.exports.createGroup("Early Bird", 1,"Saladelia Cafe, 406 Blackwell St, Durham, NC 27701, USA&American Tobacco Campus, 318 Blackwell St, Durham, NC 27701&Bull City Burger and Brewery, 3318, 107 E Parrish St, Durham, NC 27701, USA");
+module.exports.createGroup("Streets at Southpoint", 1, "Firebirds Wood Fired Grill, 8030 Renaissance Pkwy, Durham, NC 27713&Barnes and Noble, 8030 Renaissance Pkwy, Durham, NC 27713&The Cheesecake Factory, 8030 Renaissance Pkwy, Durham, NC 27713");
+module.exports.createGroup("Nightlife Cabaret", 1, "Fullsteam Brewery, 726 Rigsbee Ave, Durham, NC 27701, USA&NanaSteak, 345 Blackwell St, Durham, NC 27701&West End Wine Bar of Durham, 601 W Main St, Durham, NC 27701, USA");
+module.exports.createGroup("Baseball and Brews", 1, "Brightleaf Square, 905 W Main St, Durham, NC 27701&Durham Bulls Athletic Park, 409 Blackwell St, Durham, NC 27701, USA&Tyler's Restaurant & Taproom, 324 Blackwell St, Durham, NC 27701, USA");
+module.exports.createGroup("One Night on Broadway", 1, "Bar Virgile, 105 S Mangum St, Durham, NC 27701&Durham Performing Arts Center, 123 Vivian Street, Durham, NC 27701&Luna Rotisserie and Empanadas, 112 W Main St, Durham, NC 27701");
+*/
