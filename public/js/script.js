@@ -85,6 +85,7 @@ const getUser = () => {
 //
 //Front end login receive signature
 //
+let getUserId;
 const authenticate =(user) => {
 
   let userToken = localStorage.getItem('EHUserToken');
@@ -99,6 +100,8 @@ const authenticate =(user) => {
       localStorage.setItem('EHUserToken',data.token);
       $("#loginModal").modal('toggle');
       console.log(data.user);
+      getUserId = data.user.id;
+      console.log(getUserId);
       $('.def-nav').remove();
        $.get("http://eventhop.herokuapp.com/user/nav")
             .done((data,status,xhr) => {
