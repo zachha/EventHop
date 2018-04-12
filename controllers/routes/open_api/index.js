@@ -9,6 +9,7 @@ module.exports = app => {
         dataOut[`id${i + 1}`] = top5[i].id;
         dataOut[`count${i + 1}`] = top5[i].members;
       }
+      console.log(dataOut);
     }
     res.render("index", dataOut);
   });

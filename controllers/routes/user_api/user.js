@@ -5,7 +5,7 @@ const gdb = require("../../groupController");
 
 /* GET users listing. */
 route.get("/", (req, res, next) => {
-  res.json(udb.findUser(user.id));
+  res.json(udb.findUser(req.user.id));
 });
 
 route.get("/nav", (req, res, next) => {
@@ -14,7 +14,7 @@ route.get("/nav", (req, res, next) => {
 });
 
 route.post("/create-group", (req, data, res) => {
-  gdb.createGroup(data, 1);
+  gdb.createGroup(data, req.user.id);
 });
 
 module.exports = route;

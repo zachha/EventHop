@@ -88,8 +88,8 @@ module.exports = {
       limit: 5
       // again brings large array back, will have to select info we need here or server side
     }).then(groups => {
-      groups.map(group => {
-        return { id: group.id, members: group.group_members };
+      return groups.map(group => {
+         { id: group.id, members:group.group_members };
       })
     });
   },
@@ -150,3 +150,4 @@ module.exports.createGroup("Nightlife Cabaret", 1, "Fullsteam Brewery, 726 Rigsb
 module.exports.createGroup("Baseball and Brews", 1, "Brightleaf Square, 905 W Main St, Durham, NC 27701&Durham Bulls Athletic Park, 409 Blackwell St, Durham, NC 27701, USA&Tyler's Restaurant & Taproom, 324 Blackwell St, Durham, NC 27701, USA");
 module.exports.createGroup("One Night on Broadway", 1, "Bar Virgile, 105 S Mangum St, Durham, NC 27701&Durham Performing Arts Center, 123 Vivian Street, Durham, NC 27701&Luna Rotisserie and Empanadas, 112 W Main St, Durham, NC 27701");
 */
+
