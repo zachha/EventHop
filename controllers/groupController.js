@@ -89,7 +89,8 @@ module.exports = {
       // again brings large array back, will have to select info we need here or server side
     }).then(groups => {
       return groups.map(group => {
-         { id: group.id, members:group.group_members };
+         return { id: group.id,
+          members:group.group_members };
       })
     });
   },
