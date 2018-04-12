@@ -82,7 +82,7 @@ module.exports = {
   },
 
   // Finds and returns the top 5 groups by most users
-  searchPopularGroups: () => {
+  searchPopularGroups: (res) => {
     models.Groups.findAll({
       order: [["group_members", "DESC"]],
       limit: 5
