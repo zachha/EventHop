@@ -86,8 +86,14 @@ section h3.section-subheading {
 }
 
 .btn-primary {
-  background-color: #647595;
-  border-color: #647595;
+  background-color: #db0011;
+  border-color: #db0011;
+}
+
+.loc-btn {
+  background-color: #fff;
+  border-color: #fff;
+  color: #db0011;
 }
 
 .btn-primary:active, .btn-primary:focus, .btn-primary:hover {
@@ -211,6 +217,9 @@ letter-spacing: 4px;
 #map {
   height: 400px;
   width: 100%;
+}
+#mapTitle {
+  font-size: 150%;
 }
 #map-select-div{
   width: 200px;
@@ -803,6 +812,7 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
 
 .card {
   margin: 45px;
+  background-color:#DCDCDC;
 }
 
 img.progress {

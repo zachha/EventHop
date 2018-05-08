@@ -320,7 +320,7 @@ googleMapInit = () => {
       var photos = "public/img/portfolio/durham.jpeg";
     }    
     let placeInfoBox = ` 
-                    <div class="card bg-light">
+                    <div class="card">
                         <div class="row">
                             <div class="col-md-4 container-fluid">
                                 <img src="${photos}" class="w-100 img-responsive progress">
@@ -328,7 +328,7 @@ googleMapInit = () => {
                             <div class="col-md-8 px-3">
                                 <div class="card-block px-3">
                                     <br>
-                                    <h2 class="card-title">${place.name}<span><a href="${place.website}" target="_blank" class="btn btn-sm btn-primary card-btn">More Info</a></span></h2>
+                                    <h2 class="card-title">${place.name}<span><a href="${place.website}" target="_blank" class="btn btn-sm loc-btn btn-primary card-btn">More Info</a></span></h2>
                                     <p class="card-text"><em>Google rating: ${place.rating}</em></p>
                                     <h5 class="card-text">${place.formatted_address}</h5>
                                     <h5 class="card-text">${place.formatted_phone_number}</h5>
