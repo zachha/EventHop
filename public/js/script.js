@@ -101,7 +101,6 @@ const authenticate =(user) => {
       $("#loginModal").modal('toggle');
       console.log(data.user);
       getUserId = data.user.id;
-      console.log(getUserId);
       $('.def-nav').remove();
        $.get("http://eventhop.herokuapp.com/user/nav")
             .done((data,status,xhr) => {
