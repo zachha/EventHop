@@ -2,7 +2,7 @@ const models = require("../models");
 
 module.exports = {
   // Allows the user to create a group and then links the user to the group
-  createGroup: (groupname, userId, route) => {
+  createGroup: (groupname, userId, route, res) => {
     models.Groups.create({
       group_name: groupname,
       route: route
