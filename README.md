@@ -52,8 +52,6 @@ We've provided a guest login for curious users to check out the application with
 * [Google Maps](https://developers.google.com/maps/documentation/javascript/)
 * [Google Places](https://developers.google.com/places/)
 * [Google Maps Directions API](https://developers.google.com/maps/documentation/directions/intro)
-* [TinyURL](https://tinyurl.com/)
-* [D3 Visualization](https://d3js.org/)
 * [Stripe](https://stripe.com/docs/payment-request-api)
 
 ## Libraries and Technology
@@ -71,8 +69,8 @@ We've provided a guest login for curious users to check out the application with
 
 ## Known Bugs Being Investigated
 
-- Google Maps dropdown is *sometimes* selecting the wrong location info
-- The location info cards are coming back out of order, probably async issue (possible cause of first bug)
+- Google Maps is *sometimes* loading the map with a zoomed out view of the U.S. instead of zoomed in
+- Google maps uncommonly creates location duplicates in the list 
 
 ## Things to Come
 
@@ -87,15 +85,5 @@ We are planning on adding/making changes! Check back soon to see:
 - UI improvements
 ## Our Dev Team - Worthless Without #c0ffee
 	
-##### **[Sharron Cooper](https://www.github.com/swcooper2014) - Frontend**
-##### sharon@email.com
-
-##### **[Tony Gottschalk](https://www.github.com/t-gottschalk) - Frontend**
-##### tony.gottschalk2017@gmail.com 
-
-##### **[Harris Joseph](https://www.github.com/HarryCaveMan) - Full-Stack**
-##### harris@email.com
-
-##### **[Zach Harmon](https://www.github.com/zachha) - Full-Stack**
-##### zachha@gmail.com
-	
+* Zach Harmon [Github](https://www.github.com/zachha) - zachha@gmail.com
+* Harris Joseph [Github](https://www.github.com/HarryCaveMan) - harris.joseph.088@gmail.com
