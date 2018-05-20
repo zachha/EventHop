@@ -318,7 +318,13 @@ googleMapInit = () => {
       });
     } else {
       var photos = "public/img/portfolio/durham.jpeg";
-    }    
+    }
+
+    // validates and filters the location information if some variables are undefined
+    let phone = place.formatted_phone_number ? `Phone Number: ${place.formatted_phone_number}` : "No Phone Number Available";
+    let rating = place.rating ? `Google Rating: ${place.rating}` : "No Google Ratings Available";
+    let website = place.website ? `<span><a href="${place.website}" target="_blank" class="btn btn-sm loc-btn btn-primary card-btn">Website</a></span>` : "";    
+    console.log(phone, rating, website);
     let placeInfoBox = ` 
                     <div class="card">
                         <div class="row">
@@ -328,10 +334,10 @@ googleMapInit = () => {
                             <div class="col-md-8 px-3">
                                 <div class="card-block px-3">
                                     <br>
-                                    <h2 class="card-title">${place.name}<span><a href="${place.website}" target="_blank" class="btn btn-sm loc-btn btn-primary card-btn">More Info</a></span></h2>
-                                    <p class="card-text"><em>Google rating: ${place.rating}</em></p>
+                                    <h2 class="card-title">${place.name}${website}</h2>
+                                    <p class="card-text"><em>${rating}</em></p>
                                     <h5 class="card-text">${place.formatted_address}</h5>
-                                    <h5 class="card-text">${place.formatted_phone_number}</h5>
+                                    <h5 class="card-text">${phone}</h5>
                                     <br>
                                 </div>
                             </div>
