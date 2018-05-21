@@ -131,98 +131,34 @@ googleMapInit = () => {
   let secondLoc = "";
   let lastLoc = "";
   let completeRoute = "";
-  //on change, gets the value from the selected location and makes the marker bounce to show the user where it is
-  $("#map-select").change(() => {
-    if (markers[mapNum] === true && markers[mapNum].getAnimation() != null) {
-      markers[mapNum].setAnimation(null);
-    }
-    var e = document.getElementById("map-select");
-    mapNum = e.options[e.selectedIndex].value;
-    console.log("markers[mapNum]: " + markers[mapNum]);
-    console.log("mapNum: " + mapNum);
-    markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
+  let isRoute = "";
+  const durham = { lat: 35.997, lng: -78.904 };
+  // Initializes the location map.
+  let map = new google.maps.Map(document.getElementById("map"), {
+    center: durham,
+    zoom: 15
   });
-
-  // Adds the user's chosen location as a bouncing red marker so they can see their previously chosen locations.  Also increases progress bar and checks if route is complete to toggle the 'Create Route' button
-  $("#routeAdd").on("click", () => {
-    routeLocations();
-    $(categoryName).toggle();
-    routeMarkers.push(markers[mapNum]);
-    routePlaces.push(placesArr[mapNum]);
-    //console.log("places array: " + JSON.stringify(placesArr[mapNum]));
-    resetMap();
-    console.log("route markers: " + routeMarkers);
-    progressBar();
-    routeCompleteCheck();
-    populateRoute();
+  // Initializes the route map.
+  const routemap = new google.maps.Map(document.getElementById("routemap"), {
+    center: durham,
+    zoom: 15
   });
-
-  $("#openRouteModal").on('click', () => {
-    resetProgress();
-    completeRoute = startLoc + "&";
-    completeRoute += secondLoc + "&";
-    completeRoute += lastLoc;
-    console.log(completeRoute);
-    displayRoute(startLoc, secondLoc, lastLoc);
-  })
-
-  // Allows the user to Create a Group, pushing the route to the database and allowing others to search for and join the group.
-  $("#createGroup").on("click", () => {
-    createGroup("Cupcakes");
-  });
-
-  // initializes the map so it is visible when the modal pops up
-  $("#create-group-button").on("click", () => initMap());
-
-  // these do google Places search around the downtown area based on the location type the user chooses.  categoryName is saved so the category button is toggled off if the user chooses a location from that group (so they can't choose from the same category twice)
-  $("#cafes").on("click", () => {
-    categoryName = "#cafes";
-    initMap("cafe");
-  });
-  $("#bar").on("click", () => {
-    categoryName = "#bar";
-    initMap("bar");
-  });
-  $("#art_gallery").on("click", () => {
-    categoryName = "#art_gallery";
-    initMap("art_gallery");
-  });
-  $("#restaurant").on("click", () => {
-    categoryName = "#restaurant";
-    initMap("restaurant");
-  });
-  $("#movie_theater").on("click", () => {
-    categoryName = "#movie_theater";
-    initMap("movie_theater");
-  });
-  $("#spa").on("click", () => {
-    categoryName = "#spa";
-    initMap("spa");
-  });
-
-  // allows the User to name their group and display the title above the map
-  $("#create_title_button").on("click", () => {
-    console.log($("#group_title_input").val());
-
-    $("#create-group-title").text($("#group_title_input").val());
-  });
-
-  //this initializes the google map and sets the marker in downtown durham
-  var initMap = category => {
+  // Create the places service.
+  const service = new google.maps.places.PlacesService(map);
+  //Create the google directions services
+  const directionsService = new google.maps.DirectionsService();
+  const directionsDisplay = new google.maps.DirectionsRenderer();
+  //Sets the route map and panel for route directions
+  directionsDisplay.setMap(routemap);
+  directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+  
+  //this initializes the google category map and the route map and sets the marker in downtown durham
+  
+  function populateLocMap(service, category) {
     // clears these variables/elements so they can be repopulated based on the location categories when the user changes them
     placesArr = [];
     markers = [];
     $("#place-list").text("");
-
-    // Create the map.
-    this.durham = { lat: 35.997, lng: -78.904 };
-    map = new google.maps.Map(document.getElementById("map"), {
-      center: durham,
-      zoom: 15
-    });
-
-    // Create the places service.
-    this.service = new google.maps.places.PlacesService(map);
 
     // Perform a nearby search.
     service.nearbySearch(
@@ -235,8 +171,13 @@ googleMapInit = () => {
         if (status !== "OK") return;
         createMarkers(results);
       }
-    );
-  };
+    );  
+  }
+
+  function populateRouteMap() {
+    calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation);
+  }
+  
   // creates the markers for the google map
   function createMarkers(places) {
     this.bounds = new google.maps.LatLngBounds();
@@ -277,24 +218,22 @@ googleMapInit = () => {
   //recursive function so that all of the async API calls come back in the right index and so the map-select matches the marker index
   function placesRecursion(places, ondone) {
     function go(i) {
+      // if building the route using google API, use this function
       if (places.geocoded_waypoints) {
          if (i >= places.geocoded_waypoints.length) {
            ondone();
          } else {
             setTimeout(function() {
-            logPlaceDetails(places.geocoded_waypoints[i].place_id, i, function(i) {
-            return go(i + 1);
-            });
+            logPlaceDetails(places.geocoded_waypoints[i].place_id, i, true, (i) => go(i + 1));
           }, 150);
          }
+      // if showing the map for creating the route, use this function
       } else {
         if (i >= places.length) {
           ondone();
         } else {
           setTimeout(function() {
-            logPlaceDetails(places[i].place_id, i, function(i) {
-              return go(i + 1);
-            });
+            logPlaceDetails(places[i].place_id, i, false, (i) => go(i + 1));
           }, 250);
         }
       }
@@ -303,20 +242,22 @@ googleMapInit = () => {
   }
 
   //Uses the google Places Details API to get more detailed information and passes it into createInfoBox function to build divs with specific info for each place
-  function logPlaceDetails(location, i, callback) {
+  function logPlaceDetails(location, i, isRoute, callback) {
     service.getDetails(
       {
         placeId: location
       },
-      function(place, status) {
-        $("#map-select").append($("<option>", {
+        function(place, status, isRoute) {
+          if (!isRoute) {
+            $("#map-select").append($("<option>", {
             value: i,
             text: place.name
           }));
-        placesArr.push(place);
+          placesArr.push(place);
+          }
         //see comment above createInfoBox function
-       createInfoBox(place);
-      }
+        createInfoBox(place);
+        } 
     );
       callback(i);
   }
@@ -409,43 +350,29 @@ googleMapInit = () => {
   function routeLocations() {
     if(startLoc === "") {
       startLoc = `${placesArr[mapNum].name}, ${placesArr[mapNum].formatted_address}`;
-      /*
-      startLoc = placesArr[mapNum].name;
-      startLoc += ", ";
-      startLoc += placesArr[mapNum].formatted_address;
-      */
       console.log("Start Location: " + startLoc);
     } else if (secondLoc === "") {
       secondLoc = `${placesArr[mapNum].name}, ${placesArr[mapNum].formatted_address}`;
-      /*
-      secondLoc = placesArr[mapNum].name;
-      secondLoc += ", ";
-      secondLoc += placesArr[mapNum].formatted_address;
-      */
       console.log("Middle Location: " + secondLoc);
     } else if (lastLoc === "") {
       lastLoc = `${placesArr[mapNum].name}, ${placesArr[mapNum].formatted_address}`;
-      /*
-      lastLoc = placesArr[mapNum].name;
-      lastLoc += ", ";
-      lastLoc += placesArr[mapNum].formatted_address;
-      */
       console.log("Last Location: " + lastLoc);
     }
   }
   
   // sets the downtown area as the center and then passes through the chosen locations to the Google Directions services to create a route between them
+  /*
   function displayRoute(firstLocation, secondLocation, lastLocation) {
     console.log("first: ", firstLocation);
     console.log("second: ", secondLocation);
     console.log("third: ", lastLocation);
     //Create the directions services
-    let directionsService = new google.maps.DirectionsService();
-    let directionsDisplay = new google.maps.DirectionsRenderer();
-    this.durham = { lat: 35.997, lng: -78.904 };
-    routemap = new google.maps.Map(document.getElementById("routemap"), {
-      center: durham,
-      zoom: 15
+    let directionsService = new google.maps.DirectionsService;
+    let directionsDisplay = new google.maps.DirectionsRenderer;
+    //let durham = { lat: 35.997, lng: -78.904 };
+    let routemap = new google.maps.Map(document.getElementById("routemap"), {
+      zoom: 15,
+      center: durham
     });
     $("#route-place-list").text("");
     directionsDisplay.setMap(routemap);
@@ -453,8 +380,13 @@ googleMapInit = () => {
 
     calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation);
   }
+  */
   // this function uses the Google Directions API to take the three locations the user has selected and form the fastest walking route between the three and give walking directions/walk time/distance in a toggleable section
   function calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation) {
+    console.log("origin: ", firstLocation);
+    console.log("second: ", secondLocation);
+    console.log("destination: ", lastLocation);
+    $("#route-place-list").text("");
     directionsService.route(
       {
         origin: firstLocation,
@@ -493,20 +425,94 @@ googleMapInit = () => {
     displayRoute(startLoc, secondLoc, lastLoc);
   }
 
-  // this function resets the map without doing an area search on downtown durham with no category, so that the user won't get rate limited between picking route locations
+  // this function resets the map without doing an area search on downtown durham with no category, to prevent rate limiting between category searches
   var resetMap = () => {
-    // clears these variables/elements so they can be repopulated based on the location categories when the user changes them
     placesArr = [];
     markers = [];
     $("#place-list").text("");
 
-    // Create the map.
-    this.durham = { lat: 35.997, lng: -78.904 };
+    // resets location map.
     map = new google.maps.Map(document.getElementById("map"), {
       center: durham,
       zoom: 15
     });
   }
+
+  //on change, gets the value from the selected location and makes the marker bounce to show the user where it is
+  $("#map-select").change(() => {
+    if (markers[mapNum] === true && markers[mapNum].getAnimation() != null) {
+      markers[mapNum].setAnimation(null);
+    }
+    var e = document.getElementById("map-select");
+    mapNum = e.options[e.selectedIndex].value;
+    console.log("markers[mapNum]: " + markers[mapNum]);
+    console.log("mapNum: " + mapNum);
+    markers[mapNum].setAnimation(google.maps.Animation.BOUNCE);
+  });
+
+  // toggles category buton, pushes route markers/places to arrays
+  $("#routeAdd").on("click", () => {
+    routeLocations();
+    $(categoryName).toggle();
+    routeMarkers.push(markers[mapNum]);
+    routePlaces.push(placesArr[mapNum]);
+    //console.log("places array: " + JSON.stringify(placesArr[mapNum]));
+    resetMap();
+    //console.log("route markers: " + routeMarkers);
+    progressBar();
+    routeCompleteCheck();
+    populateRoute();
+  });
+
+  $("#openRouteModal").on('click', () => {
+    resetProgress();
+    completeRoute = startLoc + "&";
+    completeRoute += secondLoc + "&";
+    completeRoute += lastLoc;
+    console.log(completeRoute);
+    calculateAndDisplayRoute(directionsService, directionsDisplay, startLoc, secondLoc, lastLoc);
+  })
+
+  // Allows the user to Create a Group, pushing the route to the database and allowing others to search for and join the group.
+  $("#createGroup").on("click", () => {
+    createGroup("Cupcakes");
+  });
+
+  // initializes the map so it is visible when the modal pops up
+  //$("#create-group-button").on("click", () => populateLocMap(service));
+
+  // these do google Places search around the downtown area based on the location type the user chooses.  categoryName is saved so the category button is toggled off if the user chooses a location from that group (so they can't choose from the same category twice)
+  $("#cafes").on("click", () => {
+    categoryName = "#cafes";
+    populateLocMap(service, "cafe");
+  });
+  $("#bar").on("click", () => {
+    categoryName = "#bar";
+    populateLocMap(service, "bar");
+  });
+  $("#art_gallery").on("click", () => {
+    categoryName = "#art_gallery";
+    populateLocMap(service, "art_gallery");
+  });
+  $("#restaurant").on("click", () => {
+    categoryName = "#restaurant";
+    populateLocMap(service, "restaurant");
+  });
+  $("#movie_theater").on("click", () => {
+    categoryName = "#movie_theater";
+    populateLocMap(service, "movie_theater");
+  });
+  $("#spa").on("click", () => {
+    categoryName = "#spa";
+    populateLocMap(service, "spa");
+  });
+
+  // allows the User to name their group and display the title above the map
+  $("#create_title_button").on("click", () => {
+    console.log($("#group_title_input").val());
+    $("#create-group-title").text($("#group_title_input").val());
+  });
+
 
 };                 
 
