@@ -149,7 +149,7 @@ googleMapInit = () => {
     $(categoryName).toggle();
     routeMarkers.push(markers[mapNum]);
     routePlaces.push(placesArr[mapNum]);
-    console.log("places array: " + JSON.stringify(placesArr[mapNum]));
+    //console.log("places array: " + JSON.stringify(placesArr[mapNum]));
     resetMap();
     console.log("route markers: " + routeMarkers);
     progressBar();
@@ -277,15 +277,27 @@ googleMapInit = () => {
   //recursive function so that all of the async API calls come back in the right index and so the map-select matches the marker index
   function placesRecursion(places, ondone) {
     function go(i) {
-      if (i >= places.length) {
-        ondone();
-      } else {
-          setTimeout(function() {
-            logPlaceDetails(places[i].place_id, i, function(i) {
+      if (places.geocoded_waypoints) {
+         if (i >= places.geocoded_waypoints.length) {
+           ondone();
+         } else {
+            setTimeout(function() {
+            logPlaceDetails(places.geocoded_waypoints[i].place_id, i, function(i) {
             return go(i + 1);
             });
-          }, 400);
+          }, 150);
+         }
+      } else {
+        if (i >= places.length) {
+          ondone();
+        } else {
+          setTimeout(function() {
+            logPlaceDetails(places[i].place_id, i, function(i) {
+              return go(i + 1);
+            });
+          }, 250);
         }
+      }
       }
     go(0);
   }
@@ -306,11 +318,12 @@ googleMapInit = () => {
        createInfoBox(place);
       }
     );
-    callback(i);
+      callback(i);
   }
 
   // Takes the google Places Details object and parses out useful information and builds a card for each location in the loop.  Card div is then pushed to the DOM
   function createInfoBox(place) {
+    // adds photo of durham to info box if there are no pictures pulled from google api
     if(place.photos) {
       var photos = place.photos[0].getUrl({
         maxWidth: 270,
@@ -324,7 +337,6 @@ googleMapInit = () => {
     let phone = place.formatted_phone_number ? `Phone Number: ${place.formatted_phone_number}` : "No Phone Number Available";
     let rating = place.rating ? `Google Rating: ${place.rating}` : "No Google Ratings Available";
     let website = place.website ? `<span><a href="${place.website}" target="_blank" class="btn btn-sm loc-btn btn-primary card-btn">Website</a></span>` : "";    
-    console.log(phone, rating, website);
     let placeInfoBox = ` 
                     <div class="card">
                         <div class="row">
@@ -396,25 +408,37 @@ googleMapInit = () => {
   // stores the name and address of the user's selected locations to be used in google map's route directions and pushed to the database for route information
   function routeLocations() {
     if(startLoc === "") {
+      startLoc = `${placesArr[mapNum].name}, ${placesArr[mapNum].formatted_address}`;
+      /*
       startLoc = placesArr[mapNum].name;
       startLoc += ", ";
       startLoc += placesArr[mapNum].formatted_address;
+      */
       console.log("Start Location: " + startLoc);
     } else if (secondLoc === "") {
+      secondLoc = `${placesArr[mapNum].name}, ${placesArr[mapNum].formatted_address}`;
+      /*
       secondLoc = placesArr[mapNum].name;
       secondLoc += ", ";
       secondLoc += placesArr[mapNum].formatted_address;
+      */
       console.log("Middle Location: " + secondLoc);
     } else if (lastLoc === "") {
+      lastLoc = `${placesArr[mapNum].name}, ${placesArr[mapNum].formatted_address}`;
+      /*
       lastLoc = placesArr[mapNum].name;
       lastLoc += ", ";
       lastLoc += placesArr[mapNum].formatted_address;
+      */
       console.log("Last Location: " + lastLoc);
     }
   }
   
   // sets the downtown area as the center and then passes through the chosen locations to the Google Directions services to create a route between them
   function displayRoute(firstLocation, secondLocation, lastLocation) {
+    console.log("first: ", firstLocation);
+    console.log("second: ", secondLocation);
+    console.log("third: ", lastLocation);
     //Create the directions services
     let directionsService = new google.maps.DirectionsService();
     let directionsDisplay = new google.maps.DirectionsRenderer();
@@ -434,10 +458,10 @@ googleMapInit = () => {
     directionsService.route(
       {
         origin: firstLocation,
-        destination: secondLocation,
+        destination: lastLocation,
         waypoints: [
           {
-            location: lastLocation,
+            location: secondLocation,
             stopover: true
           }
         ],
@@ -447,9 +471,12 @@ googleMapInit = () => {
         if (status === "OK") {
           directionsDisplay.setDirections(response);
           console.log(response);
+          placesRecursion(response, ()=> console.log("Recursion complete!"));
+          /*
           logPlaceDetails(response.geocoded_waypoints[0].place_id);
           logPlaceDetails(response.geocoded_waypoints[1].place_id);
           logPlaceDetails(response.geocoded_waypoints[2].place_id);
+          */
         } else {
           window.alert("Directions request failed due to " + status);
         }
