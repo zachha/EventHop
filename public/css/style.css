@@ -1,22 +1,6 @@
-/*
-Colors:
-
-#647595; //primary text
-#132E5E; //secondary hover
-#e9ecef; //timeline border
-#ffffff; //secondary text
-
-#ced4da; //contact form
-
-#212529; //navbar
-#252628; //favicon
-
-*/
-
-
 
 body {
-  overflow-x: hidden;
+  overflow-x: auto;
   font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 

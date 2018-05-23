@@ -148,9 +148,7 @@ googleMapInit = () => {
   //Create the google directions services
   const directionsService = new google.maps.DirectionsService();
   const directionsDisplay = new google.maps.DirectionsRenderer();
-  //Sets the route map and panel for route directions
-  directionsDisplay.setMap(routemap);
-  directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+  
   
   //this initializes the google category map and the route map and sets the marker in downtown durham
   
@@ -172,10 +170,6 @@ googleMapInit = () => {
         createMarkers(results);
       }
     );  
-  }
-
-  function populateRouteMap() {
-    calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation);
   }
   
   // creates the markers for the google map
@@ -300,6 +294,43 @@ googleMapInit = () => {
     $("#place-list").append(placeInfoBox);
     $("#route-place-list").append(placeInfoBox);
   }
+  // appends the Route Map into the appropriate modal so the map can be moved around the page without initializing several maps
+  function addRouteMap() {
+    const routeMapHTML = `
+      <h1 id="mapTitle">Here's Your Route!</h1>
+      <div id="routemap"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 mx-auto">
+            <div class="modal-body">
+              <div class="container">
+                <div class="row mbr">
+                  <h2 class="text-uppercase" id="create-group-title"></h2>
+                </div>
+                <div class="row mbr">
+                  <div class="col-6">
+                    <button class="btn btn-primary pull-left" id="create_title_button">Preview Title </button>
+                    <input type="text" id="group_title_input" value="Group Name">
+                  </div>
+                </div>
+                <button class="btn btn-primary" id="createGroup" type="button">
+                  <i class="fa"></i>
+                  Create Your Group!
+                </button>
+              </div>
+              <div id="route-place-list" class="container py-3"></div>
+              <div id="directionsPanel"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+        `;
+    $(".routeContainer").append(routeMapHTML);
+  }
+
+  function removeRouteMap() {
+    $(".routeContainer").empty();
+  }
 
   //updates progress bar [WRITE A MORE CONCISE FUNCTION WHEN YOU HAVE TIME!]
   function progressBar() {
@@ -359,33 +390,14 @@ googleMapInit = () => {
       console.log("Last Location: " + lastLoc);
     }
   }
-  
-  // sets the downtown area as the center and then passes through the chosen locations to the Google Directions services to create a route between them
-  /*
-  function displayRoute(firstLocation, secondLocation, lastLocation) {
-    console.log("first: ", firstLocation);
-    console.log("second: ", secondLocation);
-    console.log("third: ", lastLocation);
-    //Create the directions services
-    let directionsService = new google.maps.DirectionsService;
-    let directionsDisplay = new google.maps.DirectionsRenderer;
-    //let durham = { lat: 35.997, lng: -78.904 };
-    let routemap = new google.maps.Map(document.getElementById("routemap"), {
-      zoom: 15,
-      center: durham
-    });
-    $("#route-place-list").text("");
-    directionsDisplay.setMap(routemap);
-    directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 
-    calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation);
-  }
-  */
   // this function uses the Google Directions API to take the three locations the user has selected and form the fastest walking route between the three and give walking directions/walk time/distance in a toggleable section
   function calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation) {
     console.log("origin: ", firstLocation);
     console.log("second: ", secondLocation);
-    console.log("destination: ", lastLocation);
+    console.log("destination: ", lastLocation);  //Sets the route map and panel for route directions
+    directionsDisplay.setMap(routemap);
+    directionsDisplay.setPanel(document.getElementById('directionsPanel'));
     $("#route-place-list").text("");
     directionsService.route(
       {
@@ -404,11 +416,6 @@ googleMapInit = () => {
           directionsDisplay.setDirections(response);
           console.log(response);
           placesRecursion(response, ()=> console.log("Recursion complete!"));
-          /*
-          logPlaceDetails(response.geocoded_waypoints[0].place_id);
-          logPlaceDetails(response.geocoded_waypoints[1].place_id);
-          logPlaceDetails(response.geocoded_waypoints[2].place_id);
-          */
         } else {
           window.alert("Directions request failed due to " + status);
         }
