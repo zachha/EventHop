@@ -43,8 +43,6 @@ module.exports = {
         }
       ]
     })
-    // TAKE OUT THE CONSOLE.LOG WHEN THE FUNCTION IS TESTED AND WORKS!!
-    // TAKE OUT THE CONSOLE.LOG WHEN THE FUNCTION IS TESTED AND WORKS!!
       .then(user => user.get({ plain: true }))
       .catch(err => console.log(err));
   },

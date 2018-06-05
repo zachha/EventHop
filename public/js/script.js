@@ -328,30 +328,53 @@ googleMapInit = () => {
     $(".route-container-active").append(routeMapHTML);
   }
 
-  $(".mapDiv").addClass("route-container-active");
+
+
   $(".mapDiv").removeClass("route-container-active");
   $(".mapDiv").empty();
-  $(".route-container").addClass("route-container-active");
-  $(".route-container").removeClass("route-container-active");
-  $(".route-container").empty();
-  $("#route-container-event-one").addClass("route-container-active");
+
+  $("#eventOne").on('click', () => {
+    $("#route-container-event-one").addClass("route-container-active");
+    addRouteMap();
+  })
+
   $("#route-container-event-one").removeClass("route-container-active");
   $("#route-container-event-one").empty();
-  $("#route-container-event-two").addClass("route-container-active");
+
+  $("#eventTwo").on('click', () => {
+    $("#route-container-event-two").addClass("route-container-active");
+    addRouteMap();
+  })
+
   $("#route-container-event-two").removeClass("route-container-active");
   $("#route-container-event-two").empty();
-  $("#route-container-event-three").addClass("route-container-active");
+
+  $("#eventThree").on('click', () => {
+    $("#route-container-event-three").addClass("route-container-active");
+    addRouteMap();
+  })
+
   $("#route-container-event-three").removeClass("route-container-active");
   $("#route-container-event-three").empty();
-  $("#route-container-event-four").addClass("route-container-active");
+
+  $("#eventFour").on('click', () => {
+    $("#route-container-event-four").addClass("route-container-active");
+    addRouteMap();
+  })
+
   $("#route-container-event-four").removeClass("route-container-active");
   $("#route-container-event-four").empty();
-  $("#route-container-event-five").addClass("route-container-active");
+
+  $("#eventFive").on('click', () => {
+    $("#route-container-event-five").addClass("route-container-active");
+    addRouteMap();
+  })
+
   $("#route-container-event-five").removeClass("route-container-active");
   $("#route-container-event-five").empty();
 
   function removeRouteMap() {
-    $(".routeContainer").empty();
+    $(".route-container-active").empty();
   }
 
   //updates progress bar [WRITE A MORE CONCISE FUNCTION WHEN YOU HAVE TIME!]
@@ -495,6 +518,8 @@ googleMapInit = () => {
 
   $("#openRouteModal").on('click', () => {
     resetProgress();
+    $(".mapDiv").addClass("route-container-active");
+    addRouteMap();
     completeRoute = startLoc + "&";
     completeRoute += secondLoc + "&";
     completeRoute += lastLoc;
