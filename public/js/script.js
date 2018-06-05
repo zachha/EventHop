@@ -327,52 +327,7 @@ googleMapInit = () => {
         `;
     $(".route-container-active").append(routeMapHTML);
   }
-
-
-
-  $(".mapDiv").removeClass("route-container-active");
-  $(".mapDiv").empty();
-
-  $("#eventOne").on('click', () => {
-    $("#route-container-event-one").addClass("route-container-active");
-    addRouteMap();
-  })
-
-  $("#route-container-event-one").removeClass("route-container-active");
-  $("#route-container-event-one").empty();
-
-  $("#eventTwo").on('click', () => {
-    $("#route-container-event-two").addClass("route-container-active");
-    addRouteMap();
-  })
-
-  $("#route-container-event-two").removeClass("route-container-active");
-  $("#route-container-event-two").empty();
-
-  $("#eventThree").on('click', () => {
-    $("#route-container-event-three").addClass("route-container-active");
-    addRouteMap();
-  })
-
-  $("#route-container-event-three").removeClass("route-container-active");
-  $("#route-container-event-three").empty();
-
-  $("#eventFour").on('click', () => {
-    $("#route-container-event-four").addClass("route-container-active");
-    addRouteMap();
-  })
-
-  $("#route-container-event-four").removeClass("route-container-active");
-  $("#route-container-event-four").empty();
-
-  $("#eventFive").on('click', () => {
-    $("#route-container-event-five").addClass("route-container-active");
-    addRouteMap();
-  })
-
-  $("#route-container-event-five").removeClass("route-container-active");
-  $("#route-container-event-five").empty();
-
+  
   function removeRouteMap() {
     $(".route-container-active").empty();
   }
@@ -532,9 +487,6 @@ googleMapInit = () => {
     createGroup("Cupcakes");
   });
 
-  // initializes the map so it is visible when the modal pops up
-  //$("#create-group-button").on("click", () => populateLocMap(service));
-
   // these do google Places search around the downtown area based on the location type the user chooses.  categoryName is saved so the category button is toggled off if the user chooses a location from that group (so they can't choose from the same category twice)
   $("#cafes").on("click", () => {
     categoryName = "#cafes";
@@ -567,26 +519,81 @@ googleMapInit = () => {
     $("#create-group-title").text($("#group_title_input").val());
   });
 
+  // On click events for modal buttons that add route map class and generate the map html inside the specified div
+  $("#eventOne").on('click', () => {
+    $("#route-container-event-one").addClass("route-container-active");
+    addRouteMap();
+  })
+
+  $("#eventTwo").on('click', () => {
+    $("#route-container-event-two").addClass("route-container-active");
+    addRouteMap();
+  })
+
+  $("#eventThree").on('click', () => {
+    $("#route-container-event-three").addClass("route-container-active");
+    addRouteMap();
+  })
+
+  $("#eventFour").on('click', () => {
+    $("#route-container-event-four").addClass("route-container-active");
+    addRouteMap();
+  })
+
+  $("#eventFive").on('click', () => {
+    $("#route-container-event-five").addClass("route-container-active");
+    addRouteMap();
+  })
+
+  // When the map route modals are hidden, the map class is removed and the div emptied
+  $("#show-route-modal").on("hidden.bs.modal", () => {
+    $(".mapDiv").removeClass("route-container-active");
+    $(".mapDiv").empty();
+  })
+
+  $("#portfolioModal1").on("hidden.bs.modal", () => {
+    $("#route-container-event-one").removeClass("route-container-active");
+    $("#route-container-event-one").empty();
+  })
+
+  $("#portfolioModal2").on('hidden.bs.modal', () => {
+    $("#route-container-event-two").removeClass("route-container-active");
+    $("#route-container-event-two").empty();
+  })
+
+  $("#portfolioModal3").on('hidden.bs.modal', () => {
+    $("#route-container-event-three").removeClass("route-container-active");
+    $("#route-container-event-three").empty();
+  })
+
+  $("#portfolioModal4").on('hidden.bs.modal', () => {
+    $("#route-container-event-four").removeClass("route-container-active");
+    $("#route-container-event-four").empty();
+  })
+
+  $("#portfolioModal5").on('hidden.bs.modal', () => {
+    $("#route-container-event-five").removeClass("route-container-active");
+    $("#route-container-event-five").empty();
+  })
+
 
 };                 
 
 $(document).ready(event =>{
-
-            $(window).scrollTop(0);  
-            let userToken = localStorage.getItem('EHUserToken');     
-            $.ajaxSetup({
-              beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
-            });
-            $.get("http://eventhop.herokuapp.com/user/nav")
-            .done((data,status,xhr) => {
-              $('#mainNav_items').append(data);
-            }).fail(xhr => {
-              console.log(xhr.responseText.message);
-              $.get('http://eventhop.herokuapp.com/nav')
-              .done((data,status,xhr) => {
-                $('#mainNav_items').append(data);
-              });
-            });     
-
+  $(window).scrollTop(0);  
+  let userToken = localStorage.getItem('EHUserToken');     
+  $.ajaxSetup({
+    beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
+  });
+  $.get("http://eventhop.herokuapp.com/user/nav")
+  .done((data,status,xhr) => {
+    $('#mainNav_items').append(data);
+  }).fail(xhr => {
+    console.log(xhr.responseText.message);
+    $.get('http://eventhop.herokuapp.com/nav')
+    .done((data,status,xhr) => {
+      $('#mainNav_items').append(data);
+    });
+  });     
 });
 googleMapInit();
