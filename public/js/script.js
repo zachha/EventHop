@@ -325,8 +325,30 @@ googleMapInit = () => {
         </div>
       </div>
         `;
-    $(".routeContainer").append(routeMapHTML);
+    $(".route-container-active").append(routeMapHTML);
   }
+
+  $(".mapDiv").addClass("route-container-active");
+  $(".mapDiv").removeClass("route-container-active");
+  $(".mapDiv").empty();
+  $(".route-container").addClass("route-container-active");
+  $(".route-container").removeClass("route-container-active");
+  $(".route-container").empty();
+  $("#route-container-event-one").addClass("route-container-active");
+  $("#route-container-event-one").removeClass("route-container-active");
+  $("#route-container-event-one").empty();
+  $("#route-container-event-two").addClass("route-container-active");
+  $("#route-container-event-two").removeClass("route-container-active");
+  $("#route-container-event-two").empty();
+  $("#route-container-event-three").addClass("route-container-active");
+  $("#route-container-event-three").removeClass("route-container-active");
+  $("#route-container-event-three").empty();
+  $("#route-container-event-four").addClass("route-container-active");
+  $("#route-container-event-four").removeClass("route-container-active");
+  $("#route-container-event-four").empty();
+  $("#route-container-event-five").addClass("route-container-active");
+  $("#route-container-event-five").removeClass("route-container-active");
+  $("#route-container-event-five").empty();
 
   function removeRouteMap() {
     $(".routeContainer").empty();
