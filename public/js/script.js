@@ -55,7 +55,7 @@ function createGroup(gname) {
 }
 
 const getUser = () => {
-  $.get("http://eventhop.herokuapp.com/user") //request user groups form server
+  $.get("http://eventhop.herokuapp.com/user") //request user groups from server
     .done((data, status, xhr) => {
       data.Groups.forEach(group => {
         //generate buttons for user groups
@@ -138,11 +138,6 @@ googleMapInit = () => {
     center: durham,
     zoom: 15
   });
-  // Initializes the route map.
-  const routemap = new google.maps.Map(document.getElementById("routemap"), {
-    center: durham,
-    zoom: 15
-  });
   // Create the places service.
   const service = new google.maps.places.PlacesService(map);
   //Create the google directions services
@@ -150,8 +145,14 @@ googleMapInit = () => {
   const directionsDisplay = new google.maps.DirectionsRenderer();
   
   
+  // initializes the route map
+  function routeMapInit() {
+    let routemap = new google.maps.Map(document.getElementById("routemap"), {
+      center: durham,
+      zoom: 15
+    });
+  }
   //this initializes the google category map and the route map and sets the marker in downtown durham
-  
   function populateLocMap(service, category) {
     // clears these variables/elements so they can be repopulated based on the location categories when the user changes them
     placesArr = [];
@@ -296,7 +297,7 @@ googleMapInit = () => {
   }
   // appends the Route Map into the appropriate modal so the map can be moved around the page without initializing several maps
   function addRouteMap() {
-    const routeMapHTML = `
+    $(".route-container-active").append(`
       <h1 id="mapTitle">Here's Your Route!</h1>
       <div id="routemap"></div>
       <div class="container">
@@ -324,8 +325,7 @@ googleMapInit = () => {
           </div>
         </div>
       </div>
-        `;
-    $(".route-container-active").append(routeMapHTML);
+        `);
   }
   
   function removeRouteMap() {
@@ -472,15 +472,8 @@ googleMapInit = () => {
   });
 
   $("#openRouteModal").on('click', () => {
-    resetProgress();
-    $(".mapDiv").addClass("route-container-active");
-    addRouteMap();
-    completeRoute = startLoc + "&";
-    completeRoute += secondLoc + "&";
-    completeRoute += lastLoc;
-    console.log(completeRoute);
-    calculateAndDisplayRoute(directionsService, directionsDisplay, startLoc, secondLoc, lastLoc);
-  })
+    
+  });
 
   // Allows the user to Create a Group, pushing the route to the database and allowing others to search for and join the group.
   $("#createGroup").on("click", () => {
@@ -520,61 +513,78 @@ googleMapInit = () => {
   });
 
   // On click events for modal buttons that add route map class and generate the map html inside the specified div
-  $("#eventOne").on('click', () => {
+  $("#show-route-modal").on('show.bs.modal', () => {
+    $(".mapDiv").addClass("route-container-active");
+    addRouteMap();
+    routeMapInit();
+    resetProgress();
+    completeRoute = startLoc + "&";
+    completeRoute += secondLoc + "&";
+    completeRoute += lastLoc;
+    console.log(completeRoute);
+    calculateAndDisplayRoute(directionsService, directionsDisplay, startLoc, secondLoc, lastLoc);
+  });
+
+  $("#portfolioModal1").on('show.bs.modal', () => {
     $("#route-container-event-one").addClass("route-container-active");
     addRouteMap();
-  })
+    routeMapInit();
+  });
 
-  $("#eventTwo").on('click', () => {
+  $("#portfolioModal2").on('show.bs.modal', () => {
     $("#route-container-event-two").addClass("route-container-active");
     addRouteMap();
-  })
+    routeMapInit();
+  });
 
-  $("#eventThree").on('click', () => {
+  $("#portfolioModal3").on('show.bs.modal', () => {
     $("#route-container-event-three").addClass("route-container-active");
     addRouteMap();
-  })
+    routeMapInit();
+  });
 
-  $("#eventFour").on('click', () => {
+  $("#portfolioModal4").on('show.bs.modal', () => {
     $("#route-container-event-four").addClass("route-container-active");
     addRouteMap();
-  })
+    routeMapInit();
+  });
 
-  $("#eventFive").on('click', () => {
+  $("#portfolioModal5").on('show.bs.modal', () => {
     $("#route-container-event-five").addClass("route-container-active");
     addRouteMap();
-  })
+    routeMapInit();
+  });
 
   // When the map route modals are hidden, the map class is removed and the div emptied
   $("#show-route-modal").on("hidden.bs.modal", () => {
     $(".mapDiv").removeClass("route-container-active");
     $(".mapDiv").empty();
-  })
+  });
 
   $("#portfolioModal1").on("hidden.bs.modal", () => {
     $("#route-container-event-one").removeClass("route-container-active");
     $("#route-container-event-one").empty();
-  })
+  });
 
   $("#portfolioModal2").on('hidden.bs.modal', () => {
     $("#route-container-event-two").removeClass("route-container-active");
     $("#route-container-event-two").empty();
-  })
+  });
 
   $("#portfolioModal3").on('hidden.bs.modal', () => {
     $("#route-container-event-three").removeClass("route-container-active");
     $("#route-container-event-three").empty();
-  })
+  });
 
   $("#portfolioModal4").on('hidden.bs.modal', () => {
     $("#route-container-event-four").removeClass("route-container-active");
     $("#route-container-event-four").empty();
-  })
+  });
 
   $("#portfolioModal5").on('hidden.bs.modal', () => {
     $("#route-container-event-five").removeClass("route-container-active");
     $("#route-container-event-five").empty();
-  })
+  });
 
 
 };                 
