@@ -41,10 +41,8 @@
     </div>
   </header>
 
-<!--Popular Groups-->
-<section id="popular">{{>top5}}</section>
   <!-- Planning -->
-  <section id="services">
+  <section id="services" class="bg-light">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -80,10 +78,6 @@
       </div>
     </div>
   </section>
-  <!-- Events -->
-  {{>default-groups}}
-  <!--User Groups-->
-  {{>user-groups}}
   <!-- About -->
   <section id="planning">
     <div class="container">
@@ -95,7 +89,12 @@
       </div>
     </div>
   </section>
-
+  <!-- Events -->
+  {{>default-groups}}
+  <!--User Groups-->
+  {{>user-groups}}
+  <!--Popular Groups-->
+  <section id="popular">{{>top5}}</section>
   <!-- Team -->
   <section class="bg-light" id="team">
     <div class="container">
@@ -147,7 +146,7 @@
       </div>
       <div class="row">
         <div class="col-lg-8 mx-auto text-center">
-          <p class="large text-muted">The EventHop team is a pair of developers based around Durham, North Carolina.  We have a passion for coding (and coffee!) and decided to make EventHop   </p>
+          <p class="large text-muted">The EventHop team is a pair of developers based around Durham, North Carolina.  We have a passion for coding (and coffee!) and decided to make EventHop as a free application for users to plan group events with.  Feel free to check out our github or send us a message using the form at the bottom with any suggestions or bugs you run into!  </p>
         </div>
       </div>
     </div>
@@ -252,5 +251,7 @@
 {{>create-group-modal}}
 <!-- Portfolio Modals -->
 {{>standard-modals}}
+<!-- Group Route Modal -->
+{{>group-route}}
 <!-- Show-Route -->
 {{>show-route}}
