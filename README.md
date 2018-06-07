@@ -1,6 +1,6 @@
 # EventHop
 
-![EventHop Logo](public/img/EH.png "EventHop Logo")
+![EventHop Logo](public/img/favicon-310.png "EventHop Logo")
 
 ## Application Description
 
@@ -42,8 +42,8 @@ EventHop also features pre-planned 'Events' that usually involve a meal, an acti
 
 We've provided a guest login for curious users to check out the application without have to sign up!  The following walkthrough will take you step-by-step through creating a group, joining a group, and joining a pre-planned event.  Here are the guest credentials:
 
-**guest@gmail.com**
-**guest**
+**email: guest@gmail.com**
+**password: guest**
 
 
 
