@@ -138,6 +138,7 @@ googleMapInit = () => {
     center: durham,
     zoom: 15
   });
+  let routemap;
   // Create the places service.
   const service = new google.maps.places.PlacesService(map);
   //Create the google directions services
@@ -147,7 +148,7 @@ googleMapInit = () => {
   
   // initializes the route map
   function routeMapInit() {
-    let routemap = new google.maps.Map(document.getElementById("routemap"), {
+    routemap = new google.maps.Map(document.getElementById("routemap"), {
       center: durham,
       zoom: 15
     });
@@ -392,10 +393,11 @@ googleMapInit = () => {
   }
 
   // this function uses the Google Directions API to take the three locations the user has selected and form the fastest walking route between the three and give walking directions/walk time/distance in a toggleable section
-  function calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation) {
+  function calculateAndDisplayRoute(firstLocation, secondLocation, lastLocation) {
     console.log("origin: ", firstLocation);
-    console.log("second: ", secondLocation);
-    console.log("destination: ", lastLocation);  //Sets the route map and panel for route directions
+    console.log("second stop: ", secondLocation);
+    console.log("destination: ", lastLocation);  
+    //Sets the route map and panel for route directions
     directionsDisplay.setMap(routemap);
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
     $("#route-place-list").text("");
@@ -517,12 +519,12 @@ googleMapInit = () => {
     $(".mapDiv").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
-    resetProgress();
+    resetProgress(); // CAN BE MOVED TO A 'RESET ROUTE' USER BUTTON
     completeRoute = startLoc + "&";
     completeRoute += secondLoc + "&";
     completeRoute += lastLoc;
     console.log(completeRoute);
-    calculateAndDisplayRoute(directionsService, directionsDisplay, startLoc, secondLoc, lastLoc);
+    calculateAndDisplayRoute(startLoc, secondLoc, lastLoc);
   });
 
   $("#portfolioModal1").on('show.bs.modal', () => {
