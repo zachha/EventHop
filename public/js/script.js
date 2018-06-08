@@ -125,6 +125,7 @@ googleMapInit = () => {
   let placesArr = [];
   let routeMarkers = [];
   let routePlaces = [];
+  let groupId;
   let categoryName;
   let mapNum;
   let startLoc = "";
@@ -138,10 +139,11 @@ googleMapInit = () => {
     center: durham,
     zoom: 15
   });
+  // routemap has to be defined/initialized later because the html is dynamically generated so the element isnt 
   let routemap;
-  // Create the places service.
+  // Create the google places service.
   const service = new google.maps.places.PlacesService(map);
-  //Create the google directions services
+  // Create the google directions services
   const directionsService = new google.maps.DirectionsService();
   const directionsDisplay = new google.maps.DirectionsRenderer();
   
@@ -305,7 +307,7 @@ googleMapInit = () => {
         <div class="row">
           <div class="col-lg-12 mx-auto">
             <div class="modal-body">
-              <div class="container">
+              <div class="container canHide">
                 <div class="row mbr">
                   <h2 class="text-uppercase" id="create-group-title"></h2>
                 </div>
@@ -327,10 +329,6 @@ googleMapInit = () => {
         </div>
       </div>
         `);
-  }
-  
-  function removeRouteMap() {
-    $(".route-container-active").empty();
   }
 
   //updates progress bar [WRITE A MORE CONCISE FUNCTION WHEN YOU HAVE TIME!]
@@ -473,8 +471,10 @@ googleMapInit = () => {
     populateRoute();
   });
 
-  $("#openRouteModal").on('click', () => {
-    
+  // grabs the groupId from the clicked groups so database search can be done w/ the ID
+  $(".top5").on('click', function() {
+    groupId = $(this).attr("data-group");
+    console.log("groupId: ", groupId);
   });
 
   // Allows the user to Create a Group, pushing the route to the database and allowing others to search for and join the group.
@@ -527,40 +527,57 @@ googleMapInit = () => {
     calculateAndDisplayRoute(startLoc, secondLoc, lastLoc);
   });
 
+  $("#show-group-route-modal").on('show.bs.modal', () => {
+    $(".groupMapDiv").addClass("route-container-active");
+    addRouteMap();
+    routeMapInit();
+    // WILL HAVE TO DO A DB CALL 
+  });
+
   $("#portfolioModal1").on('show.bs.modal', () => {
     $("#route-container-event-one").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
+    $(".canHide").hide();
   });
 
   $("#portfolioModal2").on('show.bs.modal', () => {
     $("#route-container-event-two").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
+    $(".canHide").hide();
   });
 
   $("#portfolioModal3").on('show.bs.modal', () => {
     $("#route-container-event-three").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
+    $(".canHide").hide();
   });
 
   $("#portfolioModal4").on('show.bs.modal', () => {
     $("#route-container-event-four").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
+    $(".canHide").hide();
   });
 
   $("#portfolioModal5").on('show.bs.modal', () => {
     $("#route-container-event-five").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
+    $(".canHide").hide();
   });
 
   // When the map route modals are hidden, the map class is removed and the div emptied
   $("#show-route-modal").on("hidden.bs.modal", () => {
     $(".mapDiv").removeClass("route-container-active");
     $(".mapDiv").empty();
+  });
+
+  $("#show-group-route-modal").on("hidden.bs.modal", () => {
+    $(".groupMapDiv").removeClass("route-container-active");
+    $(".groupMapDiv").empty();
   });
 
   $("#portfolioModal1").on("hidden.bs.modal", () => {
