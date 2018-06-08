@@ -329,7 +329,7 @@ header.masthead .intro-text .intro-heading {
   -moz-transition: all ease 0.5s;
   transition: all ease 0.5s;
   opacity: 0;
-  background: #132E5E;
+  background: #db0011;
 }
 
 .portfolio-item .portfolio-link .portfolio-hover:hover {
@@ -773,7 +773,7 @@ ul.social-buttons li a {
   background-color: #212529;
 }
 ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover {
-  background-color: #647595;
+  background-color: #db0011;
 }
 
 #routeAdd {
