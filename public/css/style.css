@@ -194,9 +194,8 @@ letter-spacing: 4px;
 }
 #directionsPanel {
   float: right;
-  height: 250px;
-  width: 30%;
-  overflow-y: scroll;
+  margin-top: 60px;
+  overflow-y: auto;
 }
 #map {
   height: 400px;
@@ -971,3 +970,10 @@ ol.pro-meter li.todo:before {
    color: #db0011;
  }
 
+ .eventText {
+   font-size: 20px;
+ }
+
+ .eventDates {
+    font-size: 22px;
+ }
