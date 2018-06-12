@@ -301,7 +301,7 @@ googleMapInit = () => {
   // appends the Route Map into the appropriate modal so the map can be moved around the page without initializing several maps
   function addRouteMap() {
     $(".route-container-active").append(`
-      <h1 id="mapTitle">Here's Your Route!</h1>
+      <h1 id="routeMapTitle">Here's Your Route!</h1>
       <div id="routemap"></div>
       <div class="container">
         <div class="row">
@@ -322,8 +322,10 @@ googleMapInit = () => {
                   Create Your Group!
                 </button>
               </div>
-              <div id="route-place-list" class="container py-3"></div>
-              <div id="directionsPanel"></div>
+              <div class="row">
+                <div id="route-place-list" class="container py-3 col-8"></div>
+                <div id="directionsPanel" class="col-4"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -538,35 +540,60 @@ googleMapInit = () => {
     $("#route-container-event-one").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
-    $(".canHide").hide();
+    eventMapStyling();
+    calculateAndDisplayRoute(
+      "Saladelia Cafe, 406 Blackwell St, Durham, NC 27701, USA",
+      "American Tobacco Campus, 318 Blackwell St, Durham, NC 27701",
+      "Bull City Burger and Brewery, 3318, 107 E Parrish St, Durham, NC 27701, USA"
+    );
   });
 
   $("#portfolioModal2").on('show.bs.modal', () => {
     $("#route-container-event-two").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
-    $(".canHide").hide();
+    eventMapStyling();
+    calculateAndDisplayRoute(
+      "Firebirds Wood Fired Grill, 8030 Renaissance Pkwy, Durham, NC 27713", 
+      "Barnes and Noble, 8030 Renaissance Pkwy, Durham, NC 27713", 
+      "The Cheesecake Factory, 8030 Renaissance Pkwy, Durham, NC 27713"
+    );
   });
 
   $("#portfolioModal3").on('show.bs.modal', () => {
     $("#route-container-event-three").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
-    $(".canHide").hide();
+    eventMapStyling();
+    calculateAndDisplayRoute(
+      "Fullsteam Brewery, 726 Rigsbee Ave, Durham, NC 27701, USA",
+      "NanaSteak, 345 Blackwell St, Durham, NC 27701",
+      "West End Wine Bar of Durham, 601 W Main St, Durham, NC 27701, USA"
+    );
   });
 
   $("#portfolioModal4").on('show.bs.modal', () => {
     $("#route-container-event-four").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
-    $(".canHide").hide();
+    eventMapStyling();
+    calculateAndDisplayRoute(
+      "Saladelia Cafe, 406 Blackwell St, Durham, NC 27701, USA",
+      "American Tobacco Campus, 318 Blackwell St, Durham, NC 27701",
+      "Bull City Burger and Brewery, 3318, 107 E Parrish St, Durham, NC 27701, USA"
+    );
   });
 
   $("#portfolioModal5").on('show.bs.modal', () => {
     $("#route-container-event-five").addClass("route-container-active");
     addRouteMap();
     routeMapInit();
-    $(".canHide").hide();
+    eventMapStyling();
+    calculateAndDisplayRoute(
+      "Saladelia Cafe, 406 Blackwell St, Durham, NC 27701, USA",
+      "American Tobacco Campus, 318 Blackwell St, Durham, NC 27701",
+      "Bull City Burger and Brewery, 3318, 107 E Parrish St, Durham, NC 27701, USA"
+    );
   });
 
   // When the map route modals are hidden, the map class is removed and the div emptied
@@ -604,6 +631,19 @@ googleMapInit = () => {
     $("#route-container-event-five").removeClass("route-container-active");
     $("#route-container-event-five").empty();
   });
+  // These three functions change the map div style depending on where the map is generated
+  function eventMapStyling () {
+      $(".canHide").hide();
+      $("#routeMapTitle").text("Event Route");
+  };
+
+  function groupMapStyling () {
+
+  };
+
+  function createMapStyling () {
+
+  }
 
 
 };                 
