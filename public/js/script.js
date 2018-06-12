@@ -578,9 +578,9 @@ googleMapInit = () => {
     routeMapInit();
     eventMapStyling();
     calculateAndDisplayRoute(
-      "Saladelia Cafe, 406 Blackwell St, Durham, NC 27701, USA",
-      "American Tobacco Campus, 318 Blackwell St, Durham, NC 27701",
-      "Bull City Burger and Brewery, 3318, 107 E Parrish St, Durham, NC 27701, USA"
+      "Brightleaf Square, 905 W Main St, Durham, NC 27701",
+      "Durham Bulls Athletic Park, 409 Blackwell St, Durham, NC 27701, USA",
+      "Tyler's Restaurant & Taproom, 324 Blackwell St, Durham, NC 27701, USA"
     );
   });
 
@@ -590,9 +590,9 @@ googleMapInit = () => {
     routeMapInit();
     eventMapStyling();
     calculateAndDisplayRoute(
-      "Saladelia Cafe, 406 Blackwell St, Durham, NC 27701, USA",
-      "American Tobacco Campus, 318 Blackwell St, Durham, NC 27701",
-      "Bull City Burger and Brewery, 3318, 107 E Parrish St, Durham, NC 27701, USA"
+      "Bar Virgile, 105 S Mangum St, Durham, NC 27701",
+      "Durham Performing Arts Center, 123 Vivian Street, Durham, NC 27701",
+      "Luna Rotisserie and Empanadas, 112 W Main St, Durham, NC 27701"
     );
   });
 
@@ -631,7 +631,7 @@ googleMapInit = () => {
     $("#route-container-event-five").removeClass("route-container-active");
     $("#route-container-event-five").empty();
   });
-  // These three functions change the map div style depending on where the map is generated
+  // These functions change the map div style depending on where the map is generated
   function eventMapStyling () {
       $(".canHide").hide();
       $("#routeMapTitle").text("Event Route");
