@@ -65,3 +65,5 @@ module.exports.createUser("sarah@email.com", "Sarah", "sarah");
 module.exports.createUser("john@email.com", "John", "john");
 module.exports.createUser("tom@email.com", "Tom", "tom");
 */
+
+module.exports.searchAllUsers();

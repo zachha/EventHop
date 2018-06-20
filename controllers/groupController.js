@@ -121,6 +121,15 @@ module.exports = {
       });
   },
 
+  findAllGroups: () => {
+    models.Groups.findAll({
+      order: [["group_members", "DESC"]],
+      raw: true
+    })
+    .catch(err => console.log(err))
+    .then(users => console.log(users));
+  },
+
   // Allows creation of pre-planned 'events' and allows us to set the price and put a limit oh how many people can join the event [eventSpots])
   createEvent: (groupName, eventCost, eventSpots, route) => {
     models.Groups.create({
@@ -159,5 +168,11 @@ module.exports.createGroup("South By Southpoint", 1, "Firebirds Wood Fired Grill
 module.exports.createGroup("Nightlife Cabaret", 1, "Fullsteam Brewery, 726 Rigsbee Ave, Durham, NC 27701, USA&NanaSteak, 345 Blackwell St, Durham, NC 27701&West End Wine Bar of Durham, 601 W Main St, Durham, NC 27701, USA");
 module.exports.createGroup("Baseball and Brews", 1, "Brightleaf Square, 905 W Main St, Durham, NC 27701&Durham Bulls Athletic Park, 409 Blackwell St, Durham, NC 27701, USA&Tyler's Restaurant & Taproom, 324 Blackwell St, Durham, NC 27701, USA");
 module.exports.createGroup("One Night on Broadway", 1, "Bar Virgile, 105 S Mangum St, Durham, NC 27701&Durham Performing Arts Center, 123 Vivian Street, Durham, NC 27701&Luna Rotisserie and Empanadas, 112 W Main St, Durham, NC 27701");
-*/
 
+module.exports.createGroup("BarHop", 10, "Bull City Burger and Brewery, 3318, 107 E Parrish St, Durham, NC 27701, USA&Motorco Parts and Labor, 723 Rigsbee Ave, Durham, NC 27701&Fullsteam Brewery, 726 Rigsbee Ave, Durham, NC 27701");
+module.exports.createGroup("Movie Date Night", 6, "Dos Perros, 200 N Mangum St, Durham, NC 27701&Carolina Theater, 309 W Morgan St, Durham, NC 27701&Pinhook, 117 W Main St, Durham, NC 27701");
+module.exports.createGroup("Spa Day", 7, "Posh the Salon, 610 W Main St #101, Durham, NC 27701&Pine Cone Ice Cream and Coffee, 905 W Main St, Durham, NC 27701&James Kennedy Galleries, 905 W Main St, Durham, NC 27701");
+module.exports.createGroup("Art and Coffee!", 8, "Pleiades Arts, 109 E Chapel Hill St, Durham, NC 27701&Vega Metals Inc, 214 Hunt Street, Durham, NC 27701, United States, Durham, NC 27701&Beyu Caffe, 341 W Main St, Durham, NC 27701");
+module.exports.createGroup("Brunch Crew", 11, "Parker and Otis, 112 S Duke St, Durham, NC 27701&Pine Cone Ice Cream and Coffee, 905 W Main St, Durham, NC 27701&The Retreat at Brightleaf, 2042, 815 W Morgan St, Durham, NC 27701");
+*/
+module.exports.findAllGroups();
