@@ -92,13 +92,20 @@ module.exports = {
     .catch(err => console.log(err))
     .then(groups => {
       let top5 = groups.map(group => {
-        return { id: group.id, members: group.group_members };
+        return { 
+          id: group.id,
+          members: group.group_members,
+          name: group.group_name,
+          route: group.route 
+        };
       });
       let dataOut = {};
       if (top5) {
         for (let i = 0; i < top5.length; i++) {
           dataOut[`id${i + 1}`] = top5[i].id;
           dataOut[`count${i + 1}`] = top5[i].members;
+          dataOut[`name${i + 1}`] = top5[i].name;
+          dataOut[`route${i + 1}`] = top5[i].route;
         }
       }
       res.render("index", dataOut);
