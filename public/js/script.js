@@ -139,7 +139,7 @@ googleMapInit = () => {
     center: durham,
     zoom: 15
   });
-  // routemap has to be defined/initialized later because the html is dynamically generated so the element isnt 
+  // routemap has to be defined/initialized later because the html is dynamically generated
   let routemap;
   // Create the google places service.
   const service = new google.maps.places.PlacesService(map);
@@ -181,11 +181,9 @@ googleMapInit = () => {
     this.bounds = new google.maps.LatLngBounds();
 
     //empties select drop-down so it can be repopulated appropriately
-    $("#map-select").empty();
-    $("#map-select").append($("<option>", { id: 'map-select-title', text: "Select a location!", selected: true, disabled: true }));
+    emptyMapSelect();
     placesRecursion(places, function() {console.log("recursion done!")} );
     // loops through all the found locations in the category and creates appropriate icon
-    //for (let i = 0, place; (place = places[i]); i++) {
     for (let i = 0; i<places.length; i++) {
       
       this.image = {
@@ -366,7 +364,7 @@ googleMapInit = () => {
     }
   }
 
-  // keeps track of the user's previously chosen location markers and repopulates the map with them whenever the user switches categories
+  // keeps track of the user's previously chosen location markers and repopulates the map with them whenever the user adds a route location
   function populateRoute() {
     for (i = 0; i < routeMarkers.length; i++) {
       routeMarkers[i] = new google.maps.Marker({
@@ -396,7 +394,7 @@ googleMapInit = () => {
   function calculateAndDisplayRoute(firstLocation, secondLocation, lastLocation) {
     console.log("origin: ", firstLocation);
     console.log("second stop: ", secondLocation);
-    console.log("destination: ", lastLocation);  
+    console.log("destination: ", lastLocation);
     //Sets the route map and panel for route directions
     directionsDisplay.setMap(routemap);
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
@@ -416,7 +414,8 @@ googleMapInit = () => {
       function(response, status) {
         if (status === "OK") {
           directionsDisplay.setDirections(response);
-          console.log(response);
+          map.fitBounds(directionsDisplay.getDirections().routes[0].bounds);
+          console.log("bounds: ", directionsDisplay.getDirections().routes[0].bounds);
           placesRecursion(response, ()=> console.log("Recursion complete!"));
         } else {
           window.alert("Directions request failed due to " + status);
@@ -431,7 +430,18 @@ googleMapInit = () => {
     startLoc = routeArr[0];
     secondLoc = routeArr[1];
     lastLoc = routeArr[2];
-    displayRoute(startLoc, secondLoc, lastLoc);
+    calculateAndDisplayRoute(startLoc, secondLoc, lastLoc);
+  }
+
+  //empties the map select dropdown so it can be cleared when appropriate
+  function emptyMapSelect() {
+    $("#map-select").empty();
+    $("#map-select").append($("<option>", {
+        id: "map-select-title",
+        text: "Select a location!",
+        selected: true,
+        disabled: true
+      }));
   }
 
   // this function resets the map without doing an area search on downtown durham with no category, to prevent rate limiting between category searches
@@ -439,7 +449,7 @@ googleMapInit = () => {
     placesArr = [];
     markers = [];
     $("#place-list").text("");
-
+    emptyMapSelect();
     // resets location map.
     map = new google.maps.Map(document.getElementById("map"), {
       center: durham,
@@ -475,13 +485,23 @@ googleMapInit = () => {
 
   // grabs the groupId from the clicked groups so database search can be done w/ the ID
   $(".top5").on('click', function() {
-    groupId = $(this).attr("data-group");
-    console.log("groupId: ", groupId);
+    $(".groupMapDiv").addClass("route-container-active");
+    let groupName = $(this).attr("data-name");
+    addRouteMap();
+    routeMapInit();
+    groupMapStyling(groupName);
+    dbStringToRoute($(this).attr("data-route"));
+    
   });
 
   // Allows the user to Create a Group, pushing the route to the database and allowing others to search for and join the group.
   $("#createGroup").on("click", () => {
     createGroup("Cupcakes");
+  });
+
+  // clears the map when the 'create event' button is clicked 
+  $("#paraBtn").on("click", () => {
+    resetMap();
   });
 
   // these do google Places search around the downtown area based on the location type the user chooses.  categoryName is saved so the category button is toggled off if the user chooses a location from that group (so they can't choose from the same category twice)
@@ -527,13 +547,6 @@ googleMapInit = () => {
     completeRoute += lastLoc;
     console.log(completeRoute);
     calculateAndDisplayRoute(startLoc, secondLoc, lastLoc);
-  });
-
-  $("#show-group-route-modal").on('show.bs.modal', () => {
-    $(".groupMapDiv").addClass("route-container-active");
-    addRouteMap();
-    routeMapInit();
-    // WILL HAVE TO DO A DB CALL 
   });
 
   $("#portfolioModal1").on('show.bs.modal', () => {
@@ -607,45 +620,26 @@ googleMapInit = () => {
     $(".groupMapDiv").empty();
   });
 
-  $("#portfolioModal1").on("hidden.bs.modal", () => {
-    $("#route-container-event-one").removeClass("route-container-active");
-    $("#route-container-event-one").empty();
+  $(".eventModal").on("hidden.bs.modal", () => {
+    $(".eventMapDiv").removeClass("route-container-active");
+    $(".eventMapDiv").empty();
   });
 
-  $("#portfolioModal2").on('hidden.bs.modal', () => {
-    $("#route-container-event-two").removeClass("route-container-active");
-    $("#route-container-event-two").empty();
-  });
-
-  $("#portfolioModal3").on('hidden.bs.modal', () => {
-    $("#route-container-event-three").removeClass("route-container-active");
-    $("#route-container-event-three").empty();
-  });
-
-  $("#portfolioModal4").on('hidden.bs.modal', () => {
-    $("#route-container-event-four").removeClass("route-container-active");
-    $("#route-container-event-four").empty();
-  });
-
-  $("#portfolioModal5").on('hidden.bs.modal', () => {
-    $("#route-container-event-five").removeClass("route-container-active");
-    $("#route-container-event-five").empty();
-  });
   // These functions change the map div style depending on where the map is generated
   function eventMapStyling () {
-      $(".canHide").hide();
-      $("#routeMapTitle").text("Event Route");
+    $(".canHide").hide();
+    $("#routeMapTitle").text("Event Route");
   };
 
-  function groupMapStyling () {
-
+  function groupMapStyling (groupName) {
+    $(".canHide").hide();
+    $("#routeMapTitle").text(groupName);
   };
-
+/*
   function createMapStyling () {
 
   }
-
-
+*/
 };                 
 
 $(document).ready(event =>{
