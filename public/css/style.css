@@ -331,6 +331,10 @@ header.masthead .intro-text .intro-heading {
   background: #db0011;
 }
 
+.portfolio-item .portfolio-link #top-5-port-hover {
+  background: black;
+}
+
 .portfolio-item .portfolio-link .portfolio-hover:hover {
   opacity: 1;
 }
