@@ -44,7 +44,10 @@ module.exports = {
       ]
     })
       .catch(err => console.log(err))
-      .then(user => user.get({ plain: true }));
+      .then(user => {
+        console.log(user.get({ plain: true }));
+        user.get({ plain: true });
+        });
   },
 
   // Allows user to see all other users, in descending order by how many groups the users are in
@@ -68,3 +71,4 @@ module.exports.createUser("tom@email.com", "Tom", "tom");
 */
 
 //module.exports.searchAllUsers();
+module.exports.findUser(11);

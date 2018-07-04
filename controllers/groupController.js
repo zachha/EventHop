@@ -2,20 +2,20 @@ const models = require("../models");
 
 module.exports = {
   // Allows the user to create a group and then links the user to the group
-  createGroup: (groupname, groupMembers, userId, route, res) => {
+  createGroup: (req, res) => {
+    console.log("req: ", req);
     models.Groups.create({
-      group_members: groupMembers,
-      group_name: groupname,
-      route: route
+      group_name: req.groupInfo.groupName,
+      route: req.groupInfo.route
     })
       .then(function(group) {
-        models.User.findById(userId)
+        models.User.findById(req.groupInfo.userId)
           .then(function(user) {
             user
               .addGroups(group)
               .then(user => {
                 console.log(
-                  "user: " + userId + " has created group: " + groupname + "!"
+                  "user: " + req.groupInfo.userId + " has created group: " + req.groupInfo.groupName + "!"
                 );
               })
               .then(data => {
@@ -33,10 +33,10 @@ module.exports = {
   },
 
   // Allows user to join a group, increases their group count and the group's user count
-  joinGroup: (groupId, userId) => {
-    models.User.findById(userId)
+  joinGroup: (req, res) => {
+    models.User.findById(req.idInfo.userId)
       .then(user => {
-        models.Groups.findById(groupId)
+        models.Groups.findById(req.idInfo.groupId)
           .then(group => {
             user
               .addGroups(group)
@@ -58,10 +58,10 @@ module.exports = {
   },
 
   // Allows user to leave a group they are a part of, decrements their group count and the group's user count
-  leaveGroup: (groupId, userId) => {
-    models.User.findById(userId)
+  leaveGroup: (req, res) => {
+    models.User.findById(req.idInfo.userId)
       .then(user => {
-        models.Groups.findById(groupId)
+        models.Groups.findById(req.idInfo.groupId)
           .then(group => {
             user
               .removeGroups(group)
@@ -113,10 +113,10 @@ module.exports = {
   },
 
   // Finds and returns a specific group by group name
-  findGroups: ids => {
+  findGroups: (req, res) => {
     models.Groups.findAll({
       where: {
-        group_name: models.Sequelize.or({ id: ids })
+        group_name: req.groupName
       },
       include: [
         {
@@ -131,7 +131,7 @@ module.exports = {
       });
   },
 
-  findAllGroups: () => {
+  findAllGroups: (res) => {
     models.Groups.findAll({
       order: [["id", "DESC"]],
       raw: true
@@ -159,7 +159,7 @@ module.exports = {
     );
   },
 
-  findAllEvents: () => {
+  findAllEvents: (res) => {
     models.Groups.findAll({
       where: {
         is_event: true
@@ -178,7 +178,7 @@ module.exports = {
       }
     })
     .catch(err => console.log(err))
-    .then((events) => console.log("event deleted!"));
+    .then((events) => console.log("events deleted!"));
   }
 };
 
