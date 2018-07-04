@@ -49,9 +49,23 @@
 
 })(jQuery);
 
+/*
+let groupInfo = {
+  groupName: "",
+  userId: 0,
+  route: ""
+}
+*/
+function createGroup(group) {
+  $.post("/create-group", group, () => {console.log("GROUP CREATED!")} );
+}
 
-function createGroup(gname) {
-  $.post("/create-group", gname, () => {console.log("success!")} );
+function joinGroup() {
+  $.put(`/api/group/${groupInfo.userId}/leave`, user, () => {console.log("GROUP JOINED!")} );
+}
+
+function leaveGroup() {
+  $.put(`/api/group/${groupInfo.userId}/leave`, user, () => {console.log("GROUP LEFT!")} );
 }
 
 const getUser = () => {
