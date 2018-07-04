@@ -13,8 +13,19 @@ route.get("/nav", (req, res, next) => {
   res.render("partials/user_nav", { layout: false });
 });
 
-route.post("/create-group", (req, data, res) => {
+// creates group event
+route.post("/api/group/create-group", (req, data, res) => {
   gdb.createGroup(data, req.user.id);
+});
+
+// allows user to join group/event
+route.put("/api/group/:id/join", (req, data, res) => {
+  gdb.joinGroup(req.user.id, data);
+});
+
+// allows user to leave group/event
+route.put("/api/group/:id/leave", (req, data, res) => {
+  gdb.leaveGroup(req.user.id, data);
 });
 
 module.exports = route;
