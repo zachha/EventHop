@@ -4,7 +4,7 @@
 
 ## Application Description
 
-EventHop is an application that allows users to choose from several different activities (restaurants, bars, baseball games, etc) to create a 'route' of activities that they can plan for an afternoon or night out!  
+EventHop is an application that allows users to choose from several different activities (restaurants, bars, baseball games, etc) to create a 'route' of activities that they can plan for an afternoon or night out!  Users can create their own group for other users to join or they can join one of EventHop's pre-planned events.
 
 ### Features
 
@@ -52,7 +52,7 @@ We've provided a guest login for curious users to check out the application with
 * [Google Maps](https://developers.google.com/maps/documentation/javascript/)
 * [Google Places](https://developers.google.com/places/)
 * [Google Maps Directions API](https://developers.google.com/maps/documentation/directions/intro)
-* [Stripe](https://stripe.com/docs/payment-request-api)
+
 
 ## Libraries and Technology
 	• Heroku
