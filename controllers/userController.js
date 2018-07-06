@@ -71,4 +71,4 @@ module.exports.createUser("tom@email.com", "Tom", "tom");
 */
 
 //module.exports.searchAllUsers();
-module.exports.findUser(11);
+//module.exports.findUser(11);
