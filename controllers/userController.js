@@ -1,46 +1,74 @@
-const models = require('../models');
+const models = require("../models");
 
-// function for user to create username and password for user authentication
-function createUser(email, userName, password) {
+module.exports = {
+  // function for user to create username and password for user authentication
+  createUser: (email, userName, password) => {
     models.User.create({
-        email: email,
-        user_name: userName,
-        password: password
+      email: email,
+      user_name: userName,
+      password: password
     })
-    .then(data => console.log(data.dataValues))
-    .catch(err => console.log(err));
-}
+    .catch(err => console.log(err))
+    .then(data => console.log(data.dataValues));
+  },
 
-// Allows user to change their password
-function updatePassword(userId, password) {
-    models.User.update({
+  // Allows user to change their password
+  updatePassword: (userId, password) => {
+    models.User.update(
+      {
         password: password
-    }, {
+      },
+      {
         where: {
-            id: userId
-        }})
-        // result gives back array with user id in it for some reason, look back at this later
-        .then(result => console.log("User: " + userId + "'s password was successfully changed!"))
-        .catch(err => console.log(err));
-}
-
-// Allows user to find another user by their user name
-function findUser(userName) {
-    models.User.findOne({
-        where: {
-            user_name: userName
+          id: userId
         }
-    }).then(user => console.log(user.dataValues)
-    ).catch(err => console.log(err));
-}
+      }
+    )
+      .catch(err => console.log(err))
+      // result gives back array with user id in it for some reason, look back at this later
+      .then(result =>
+        console.log("User: " + userId + "'s password was successfully changed!")
+      );
+  },
 
-// Allows user to see all other users, in descending order by how many groups the users are in
-function searchAllUsers() {
+  // Allows user to find another user by their user name
+  findUser: userId => {
+    models.User.findOne({
+      where: {
+        id: userId
+      },
+      include: [
+        {
+          model: models.Groups
+        }
+      ]
+    })
+      .catch(err => console.log(err))
+      .then(user => {
+        console.log(user.get({ plain: true }));
+        user.get({ plain: true });
+        });
+  },
+
+  // Allows user to see all other users, in descending order by how many groups the users are in
+  searchAllUsers: () => {
     models.User.findAll({
-        order: [
-            ['number_of_Groups', 'DESC']
-        ]
-    }).then(users => console.log(users))
-    .catch(err => console.log(err));
-}
+      order: [["number_of_Groups", "DESC"]],
+      raw: true
+    })
+      .catch(err => console.log(err))
+      .then(users => console.log(users));
+  }
+};
 
+/*
+module.exports.createUser("guest@gmail.com", "guest", "guest");
+module.exports.createUser("zach@email.com", "Zach", "zach");
+module.exports.createUser("kaitlyn@email.com", "Kaitlyn", "kaitlyn");
+module.exports.createUser("sarah@email.com", "Sarah", "sarah");
+module.exports.createUser("john@email.com", "John", "john");
+module.exports.createUser("tom@email.com", "Tom", "tom");
+*/
+
+//module.exports.searchAllUsers();
+//module.exports.findUser(11);

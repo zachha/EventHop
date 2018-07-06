@@ -1,7 +1,8 @@
   <!--Main NavBar-->
+  
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
   <div class="container">
-    <a class="navbar-brand js-scroll-trigger" href="#page-top">EventHop</a>
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">Event<span class="red">Hop</span></a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       Menu
       <i class="fa fa-bars"></i>
@@ -15,10 +16,10 @@
           <a class="nav-link js-scroll-trigger" href="#portfolio">Events</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#about">Planning</a>
+          <a class="nav-link js-scroll-trigger" href="#userCreate">Create</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#team">Team</a>
+          <a class="nav-link js-scroll-trigger" href="#popular">Popular</a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
@@ -29,12 +30,12 @@
 </nav>
 
   <!-- Header -->
- <div class="wrapper">
+<div class="wrapper">
   <header class="masthead">
     <div class="container">
       <div class="intro-text">
-        <div class="intro-lead-in">Welcome To EventHop</div>
-        <div class="intro-heading text-uppercase">"Let's Do Something"</div>
+        <div class="intro-lead-in">Welcome To Event<span class="red bounce-in-top">Hop</span></div>
+        <div class="intro-heading text-uppercase">"Let's <span class="red">Do</span> Something"</div>
         <a class="btn btn-primary btn-xl js-scroll-trigger" href="#services">Durham Style . . .</a>
       </div>
     </div>
@@ -53,36 +54,34 @@
         <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fa fa-circle fa-stack-2x text-primary"></i>
+            <i class="fa fa-meetup fa-stack-1x fa-inverse"></i>
+          </span>
+          <h4 class="service-heading">Join an EventHop Event</h4>
+          <p class="text-muted">Let us do the planning for you! At EventHop, we specialize in planning events. Our Event Planners make all of the arrangements so you can relax. EventHop also partners with Meetup.com Organizers to schedule social events.</p>
+        </div>
+        <div class="col-md-4">
+          <span class="fa-stack fa-4x">
+            <i class="fa fa-circle fa-stack-2x text-primary"></i>
             <i class="fa fa-coffee fa-stack-1x fa-inverse"></i>
           </span>
-          <h4 class="service-heading">Customize Your Event</h4>
-          <p class="text-muted">Using EventHop you are able to create and customize an event. Whether you're planning some much needed "me" time for yourself or you're arranging an evening out with friends, you'll have an itinerary ready in no time.</p>
+          <h4 class="service-heading">Create Your Own Group Meetup</h4>
+          <p class="text-muted">Using EventHop you are able to create and customize an event. Whether you're planning some much needed "me" time for yourself
+            or you're arranging an evening out with friends, you'll have an itinerary ready in no time.</p>
         </div>
         <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fa fa-circle fa-stack-2x text-primary"></i>
             <i class="fa fa-users fa-stack-1x fa-inverse"></i>
           </span>
-          <h4 class="service-heading">Join an EventHop Group</h4>
-          <p class="text-muted">Let us do the planning for you! At EventHop, we specialize in planning events. Our Event Planners make all of the arrangements so you can relax. We specialize in social outings and bringing people together with similar interests.</p>
-        </div>
-        <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-            <i class="fa fa-meetup fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="service-heading">Join a Group meetup</h4>
-          <p class="text-muted">EventHop partners with Meetup.com Organizers to schedule social events. Take the stress out of meeting new people while in a relaxed setting. Talk about similar interests, work, or whatever is on your mind. However you choose, let us help and have fun!</p>
+          <h4 class="service-heading">Join a Group Meetup</h4>
+          <p class="text-muted"> View Group Meetups created by other users and join the ones that look interesting to you.  Take the stress out of meeting new people while in a relaxed setting. Talk about similar interests, work, or whatever is on your mind. However you choose, let us help and have fun!</p>
         </div>
       </div>
     </div>
   </section>
-  <!-- Events -->
-  {{>default-groups}}
-  <!--User Groups-->
-  {{>user-groups}}
   <!-- About -->
-  <section id="about">
+  <!--
+  <section id="planning">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -90,154 +89,28 @@
           <h3 class="section-subheading text-muted">Here is how to plan your own event. Don't worry it's easy!</h3>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <ul class="timeline">
-            <li>
-              <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="public/img/about/1.png" alt="">
-              </div>
-              <div class="timeline-panel">
-                <div class="timeline-heading">
-                  <h4>Step 1</h4>
-                  <h4 class="subheading">Choose Your Event Options</h4>
-                </div>
-                <div class="timeline-body">
-                  <p class="text-muted">The first and most important step! EventHop has done the legwork for you so you simply have to point and click. Choose your events from EventHop's top selections or create your own group route and you'll have an itinerary ready in no time!</p>
-                </div>
-              </div>
-            </li>
-           
-            <li class="timeline-inverted">
-              <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="public/img/about/3.jpeg" alt="">
-              </div>
-              <div class="timeline-panel">
-                <div class="timeline-heading">
-                  <h4>Step 2</h4>
-                  <h4 class="subheading">Don't Forget about Reviews and Websites</h4>
-                </div>
-                <div class="timeline-body">
-                  <p class="text-muted">EventHop makes the searching easy. Our custom analytics helps provide you with top options to streamline planning your events. No more pouring through Internet searches for something to do, all of the information has already been done!</p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="public/img/about/4.jpg" alt="">
-              </div>
-              <div class="timeline-panel">
-                <div class="timeline-heading">
-                  <h4>Step 3</h4>
-                  <h4 class="subheading">Share your Group Route with Friends!</h4>
-                </div>
-                <div class="timeline-body">
-                  <p class="text-muted">Final step! Now that EventHop has helped you with your event planning, don't forget you can keep track of your events and invite your friends! We hope that EventHop has saved you time, effort, and frustration by using our free services. We understand that your time is precious and that planning an event can be tedious. Hopefully you like our services and will return to plan your future events!</p>
-                </div>
-              </div>
-            </li>
-            <li class="timeline-inverted">
-              <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="public/img/about/5.png" alt="">
-              </div>
-              <div class="timeline-panel">
-                <div class="timeline-heading">
-                  <h4>(Optional)</h4>
-                  <h4 class="subheading">Pay it Forward</h4>
-                </div>
-                <div class="timeline-body">
-                  <p class="text-muted">EventHop is a completely free service for members and their guests and we will never ask money for our services. We care about our local community and believe in connecting people with local events. We also believe in giving back. If you would like to donate to a local charity then we have made this a little easier too!</p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
     </div>
   </section>
-
+  -->
+  <!-- Events -->
+  {{>default-groups}}
+  <!--User Groups
+  {{>user-groups}}
+   -->
+  <!--Popular Groups-->
+  <section id="popular" class="bg-light">
+    {{>top5}}
+  </section>
   <!-- Team -->
-  <section class="bg-light" id="team">
+  <section id="team">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Our Amazing Team</h2>
-          <h3 class="section-subheading text-muted">Introducing the hard-working EventHop team members.</h3>
+          <h2 class="section-heading text-uppercase">The EventHop Team</h2>
+          <h3 class="section-subheading text-muted">Introducing the hard-working Event<span class="red">Hop</span> team members.</h3>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="team-member">
-            <img class="mx-auto rounded-circle" src="https://avatars0.githubusercontent.com/u/31162237?s=460&v=4" alt="">
-            <h4>Sharron Cooper</h4>
-            <p class="text-muted">Front End Developer</p>
-            <ul class="list-inline social-buttons">
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fa fa-stack-overflow"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fa fa-facebook"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fa fa-linkedin"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="team-member">
-            <img class="mx-auto rounded-circle" src="https://avatars3.githubusercontent.com/u/29360597?s=400&u=76e082a7b8bbb45a5a9a01e5c957a00e9e8e355b&v=4" alt="">
-            <h4>Tony Gottschalk</h4>
-            <p class="text-muted">UX Developer</p>
-            <ul class="list-inline social-buttons">
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fa fa-stack-overflow"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fa fa-facebook"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fa fa-linkedin"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="team-member">
-            <img class="mx-auto rounded-circle" src="https://secure.meetupstatic.com/photos/member/c/d/0/b/highres_271372491.jpeg" alt="">
-            <h4>Harris Joseph</h4>
-            <p class="text-muted">Full Stack Developer</p>
-            <ul class="list-inline social-buttons">
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fa fa-stack-overflow"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fa fa-facebook"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fa fa-linkedin"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div class="row justify-content-center">
         <div class="col-sm-3">
           <div class="team-member">
             <img class="mx-auto rounded-circle" src="https://avatars0.githubusercontent.com/u/27736963?s=460&v=4" alt="">
@@ -257,17 +130,36 @@
             </ul>
           </div>
         </div>
+        <div class="col-sm-3">
+          <div class="team-member">
+            <img class="mx-auto rounded-circle" src="https://secure.meetupstatic.com/photos/member/c/d/0/b/highres_271372491.jpeg" alt="">
+            <h4>Harris Joseph</h4>
+            <p class="text-muted">Full Stack Developer</p>
+            <ul class="list-inline social-buttons">
+              <li class="list-inline-item">
+                <a href="https://github.com/HarryCaveMan" target="_blank">
+                  <i class="fa fa-github"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.linkedin.com/in/harris-joseph-422605104/" target="_blank">
+                  <i class="fa fa-linkedin"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-lg-8 mx-auto text-center">
-          <p class="large text-muted">The EventHop team is a group of developers based around Durham, North Carolina.  They have a passion for coding (and coffee!) </p>
+          <p class="large text-muted">The EventHop team is a pair of developers based around Durham, North Carolina.  We have a passion for coding (and coffee!) and decided to make EventHop as a free application for users to plan group events with.  Feel free to check out our github or send us a message using the form at the bottom with any suggestions/bugs or just to say Hello!  </p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Technology Needs Updated -->
-  <section class="py-5">
+  <section class="py-5 bg-light">
     <div class="container">
       <div class="row">
         <div class="col-md-3 col-sm-6">
@@ -349,29 +241,9 @@
         <div class="col-md-4">
           <ul class="list-inline social-buttons">
             <li class="list-inline-item">
-              <a href="#">
+              <a href="https://twitter.com/EventHop_" target="_blank">
                 <i class="fa fa-twitter"></i>
               </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">
-                <i class="fa fa-facebook"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">
-                <i class="fa fa-linkedin"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-4">
-          <ul class="list-inline quicklinks">
-            <li class="list-inline-item">
-              <a href="#">Privacy Policy</a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">Terms of Use</a>
             </li>
           </ul>
         </div>
@@ -385,5 +257,7 @@
 {{>create-group-modal}}
 <!-- Portfolio Modals -->
 {{>standard-modals}}
+<!-- Group Route Modal -->
+{{>group-route}}
 <!-- Show-Route -->
 {{>show-route}}

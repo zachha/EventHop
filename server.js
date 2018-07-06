@@ -4,7 +4,6 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 const socket = require('socket.io');
 const PORT = process.env.PORT || 8080;
-
 const app = express();
 const http = require("http").Server(app);
 // requires models to sync database
@@ -36,17 +35,15 @@ app.set("view engine", "hbs");
 require('./controllers/routes/open_api')(app);
 require('./controllers/routes/user_api')(app);
 
-// sets up routes and controllers with the express app
-/*
-require("./controllers/userController.js")(app);
-require("./controllers/groupController.js")(app);
-*/
 
-// syncs the database !!! CHANGE FORCE TO FALSE BEFORE DEPLOYMENT !!! and starts the server
+
+// syncs the database and starts the server
 db.sequelize.sync().then(function() {
   http.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
 });
+
+
 
 

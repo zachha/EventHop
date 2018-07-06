@@ -1,22 +1,6 @@
-/*
-Colors:
-
-#647595; //primary text
-#132E5E; //secondary hover
-#e9ecef; //timeline border
-#ffffff; //secondary text
-
-#ced4da; //contact form
-
-#212529; //navbar
-#252628; //favicon
-
-*/
-
-
 
 body {
-  overflow-x: hidden;
+  overflow-x: auto;
   font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -77,7 +61,7 @@ section h3.section-subheading {
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 500;
   font-style: italic;
-  border-radius: 50%;
+  border-radius: 20px;
 }
 
 .btn-xl {
@@ -86,18 +70,24 @@ section h3.section-subheading {
 }
 
 .btn-primary {
-  background-color: #647595;
-  border-color: #647595;
+  background-color: #db0011;
+  border-color: #db0011;
+}
+
+.loc-btn {
+  background-color: #fff;
+  border-color: #fff;
+  color: #db0011;
 }
 
 .btn-primary:active, .btn-primary:focus, .btn-primary:hover {
-  background-color: #132E5E !important;
-  border-color: #132E5E !important;
-  color: white;
+  background-color: white !important;
+  border-color: #db0011 !important;
+  color: #db0011;
 }
 
 .btn-primary:active, .btn-primary:focus {
-  box-shadow: 0 0 0 0.2rem #132E5E !important;
+  box-shadow: 0 0 0 0.2rem white !important;
 }
 
 ::-moz-selection {
@@ -129,7 +119,7 @@ img::-moz-selection {
   text-transform: uppercase;
   color: white;
   border: 0;
-  background-color: #647595;
+  background-color: #db0011;
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -140,7 +130,7 @@ img::-moz-selection {
 }
 
 #mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
-  color: #647595;
+  color: #db0011;
 }
 
 #mainNav .navbar-nav .nav-item .nav-link {
@@ -153,7 +143,7 @@ img::-moz-selection {
 }
 
 #mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
-  color: #647595;
+  color: #db0011;
 }
 
 #login-modal-header{
@@ -204,13 +194,15 @@ letter-spacing: 4px;
 }
 #directionsPanel {
   float: right;
-  height: 250px;
-  width: 30%;
-  overflow-y: scroll;
+  margin-top: 60px;
+  overflow-y: auto;
 }
 #map {
   height: 400px;
   width: 100%;
+}
+#mapTitle {
+  font-size: 325%;
 }
 #map-select-div{
   width: 200px;
@@ -235,7 +227,7 @@ letter-spacing: 4px;
 }
 #create_title_button{
   margin-left:0;
-  border-radius:5px 5px 0 0;
+  border-radius:5px 0;
 }
 header.masthead {
   text-align: center;
@@ -336,7 +328,11 @@ header.masthead .intro-text .intro-heading {
   -moz-transition: all ease 0.5s;
   transition: all ease 0.5s;
   opacity: 0;
-  background: #132E5E;
+  background: #db0011;
+}
+
+.portfolio-item .portfolio-link #top-5-port-hover {
+  background: black;
 }
 
 .portfolio-item .portfolio-link .portfolio-hover:hover {
@@ -775,12 +771,12 @@ ul.social-buttons li a {
   -moz-transition: all 0.3s;
   transition: all 0.3s;
   color: white;
-  border-radius: 100%;
+  border-radius: 12px;
   outline: none;
   background-color: #212529;
 }
 ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover {
-  background-color: #647595;
+  background-color: #db0011;
 }
 
 #routeAdd {
@@ -803,10 +799,13 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
 
 .card {
   margin: 45px;
+  background-color:#DCDCDC;
+  border-radius: 8px;
 }
 
 img.progress {
   height: auto;
+  border-radius: 8px;
 }
 
 .pro-holder {
@@ -905,7 +904,7 @@ ol.pro-meter li.todo:before {
   /* Needed for children to be absolutely positioned relative to the parent. */
   position: relative;
   /* The height of the container. Must be set, but it doesn't really matter what the value is. */
-  height: 700px;
+  height: 100%;
   
   /* For text formatting. */
   display: flex;
@@ -937,17 +936,16 @@ ol.pro-meter li.todo:before {
 .bg1::after {
   background-image: url('../img/darkPara.jpeg');
   background-position: 50%, 70%;
-}
-
-.bg2::after {
-  background-image: url('https://placekitten.com/g/800/600');
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-x: hidden;
 }
 
 .paraText {
   color: white;
 }
 
-#about {
+.paraSection {
   position: relative;
   display: block;
   background-color: white;
@@ -966,4 +964,20 @@ ol.pro-meter li.todo:before {
 #paraBtn:hover  {
      color:  #db0011;
      border: 2px solid #db0011;
+ }
+
+ .red {
+   color: #db0011;
+ }
+
+ h1, h2, h3, h4, h5 {
+   color: #db0011;
+ }
+
+ .eventText {
+   font-size: 20px;
+ }
+
+ .eventDates {
+    font-size: 22px;
  }
