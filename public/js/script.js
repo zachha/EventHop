@@ -49,13 +49,13 @@
 
 })(jQuery);
 
-/*
 let groupInfo = {
   groupName: "",
+  groupId: 0,
   userId: 0,
   route: ""
 }
-*/
+
 function createGroup(group) {
   $.post("/create-group", group, () => {console.log("GROUP CREATED!")} );
 }
@@ -115,6 +115,7 @@ const authenticate =(user) => {
       $("#loginModal").modal('toggle');
       console.log(data.user);
       getUserId = data.user.id;
+      groupInfo.userId = getUserId;
       $('.def-nav').remove();
        $.get("http://eventhop.herokuapp.com/user/nav")
             .done((data,status,xhr) => {
