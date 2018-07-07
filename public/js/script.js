@@ -68,7 +68,7 @@ function leaveGroup() {
   $.put(`/api/group/${groupInfo.userId}/leave`, user, () => {console.log("GROUP LEFT!")} );
 }
 
-/*
+
 const getUser = () => {
   $.get("http://eventhop.herokuapp.com/user") //request user groups from server
     .done((data, status, xhr) => {
@@ -95,7 +95,7 @@ const getUser = () => {
       )
     ); //no user, no groups D`:
 };
-*/
+
 
 //front end handshake
 //
