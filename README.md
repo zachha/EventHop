@@ -71,6 +71,7 @@ We've provided a guest login for curious users to check out the application with
 
 - Google Maps is *sometimes* loading the map with a zoomed out view of the U.S. instead of zoomed in
 - Google maps uncommonly creates location duplicates in the list 
+- If another bug is found, please open an issue on the Eventhop Github page!
 
 ## Things to Come
 
