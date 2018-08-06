@@ -49,17 +49,19 @@
 
 })(jQuery);
 
+// keeps track of the group being viewed/built by the user
 let groupInfo = {
   groupName: "",
   groupId: 0,
   userId: 0,
   route: ""
 }
-
+// function to create group
 function createGroup(group) {
   $.post("/create-group", group, () => {console.log("GROUP CREATED!")} );
 }
 
+// function to join group
 function joinGroup() {
   $.put(`/api/group/${groupInfo.userId}/leave`, user, () => {console.log("GROUP JOINED!")} );
 }
@@ -68,7 +70,7 @@ function leaveGroup() {
   $.put(`/api/group/${groupInfo.userId}/leave`, user, () => {console.log("GROUP LEFT!")} );
 }
 
-
+// if user is logged in, displays their groups if they have any
 const getUser = () => {
   $.get("http://eventhop.herokuapp.com/user") //request user groups from server
     .done((data, status, xhr) => {
