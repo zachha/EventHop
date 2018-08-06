@@ -66,6 +66,7 @@ function joinGroup() {
   $.put(`/api/group/${groupInfo.userId}/leave`, user, () => {console.log("GROUP JOINED!")} );
 }
 
+// function to leave group
 function leaveGroup() {
   $.put(`/api/group/${groupInfo.userId}/leave`, user, () => {console.log("GROUP LEFT!")} );
 }
