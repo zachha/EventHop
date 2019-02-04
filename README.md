@@ -84,7 +84,7 @@ We are planning on adding/making changes! Check back soon to see:
 - Make the form at the bottom of the page usable
 
 - UI improvements
-## Our Dev Team - Worthless Without #c0ffee
+## Our Dev Team 
 	
 * Zach Harmon [Github](https://www.github.com/zachha) - zachha@gmail.com
 * Harris Joseph [Github](https://www.github.com/HarryCaveMan) - harris.joseph.088@gmail.com
