@@ -43,6 +43,7 @@ EventHop also features pre-planned 'Events' that usually involve a meal, an acti
 We've provided a guest login for curious users to check out the application without have to sign up!  The following walkthrough will take you step-by-step through creating a group, joining a group, and joining a pre-planned event.  Here are the guest credentials:
 
 **email: guest@gmail.com**
+
 **password: guest**
 
 
@@ -66,6 +67,8 @@ We've provided a guest login for curious users to check out the application with
 	• MySQL
 	• Sequelize
 	• Handlebars
+	• SendGrid
+
 
 ## Known Bugs Being Investigated
 
