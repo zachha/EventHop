@@ -1,3 +1,5 @@
+** Being Remade as a multi-page application and cleaner code in EventHop-Grid Repo!**
+
 # EventHop
 
 ![EventHop Logo](public/img/favicon-310.png "EventHop Logo")
